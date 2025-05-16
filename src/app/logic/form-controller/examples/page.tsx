@@ -41,9 +41,8 @@ export default function FormControllerExamples() {
           {/* Examples Tabs */}
           <div className="mb-8">
             <Tabs defaultValue="single-step" className="w-full">
-              <TabsList className="mb-4 w-full justify-start gap-2">
-                <TabsTrigger value="single-step" className="py-2 px-4 flex items-center gap-1.5" onClick={() => {
-                  document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
+              <TabsList className="mb-4 w-full justify-start gap-2">                <TabsTrigger value="single-step" className="py-2 px-4 flex items-center gap-1.5" onClick={() => {
+                  document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                     panel.classList.add('hidden');
                     panel.setAttribute('data-state', 'inactive');
                   });
@@ -56,9 +55,8 @@ export default function FormControllerExamples() {
                     <path d="M12 16V8" />
                   </svg>
                   Single-Step Form
-                </TabsTrigger>
-                <TabsTrigger value="multi-step" className="py-2 px-4 flex items-center gap-1.5" onClick={() => {
-                  document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
+                </TabsTrigger>                <TabsTrigger value="multi-step" className="py-2 px-4 flex items-center gap-1.5" onClick={() => {
+                  document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                     panel.classList.add('hidden');
                     panel.setAttribute('data-state', 'inactive');
                   });
@@ -74,9 +72,8 @@ export default function FormControllerExamples() {
                     <line x1="3" x2="3.01" y1="18" y2="18" />
                   </svg>
                   Multi-Step Form
-                </TabsTrigger>
-                <TabsTrigger value="advanced-validation" className="py-2 px-4 flex items-center gap-1.5" onClick={() => {
-                  document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
+                </TabsTrigger>                <TabsTrigger value="advanced-validation" className="py-2 px-4 flex items-center gap-1.5" onClick={() => {
+                  document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                     panel.classList.add('hidden');
                     panel.setAttribute('data-state', 'inactive');
                   });
@@ -92,7 +89,7 @@ export default function FormControllerExamples() {
               </TabsList>
 
               {/* Single-Step Form Tab */}
-              <div className="space-y-6" id="single-step" data-state="active" role="tabpanel">
+              <div className="space-y-6" id="single-step" data-state="active" data-example-tab="true" role="tabpanel">
                 <Card className="overflow-hidden border-primary/10">
                   <CardContent className="p-6">                    <h3 className="text-2xl font-bold tracking-tight mb-4">Single-Step Form Example</h3>
                     <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 mb-6">
@@ -521,7 +518,7 @@ form.addEventListener("submit", (e) => {
               </div>
 
               {/* Multi-Step Form Tab */}
-              <div className="space-y-6 hidden" id="multi-step" data-state="inactive" role="tabpanel">
+              <div className="space-y-6 hidden" id="multi-step" data-state="inactive" data-example-tab="true" role="tabpanel">
                 <Card className="overflow-hidden border-primary/10">
                   <CardContent className="p-6">                    <h3 className="text-2xl font-bold tracking-tight mb-4">Multi-Step Form Example</h3>
                     <div className="bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-500 p-4 mb-6">
@@ -1380,7 +1377,7 @@ renderFields(controller.getState());`}
               </div>
 
               {/* Advanced Validation Tab */}
-              <div className="space-y-6 hidden" id="advanced-validation" data-state="inactive" role="tabpanel">
+              <div className="space-y-6 hidden" id="advanced-validation" data-state="inactive" data-example-tab="true" role="tabpanel">
                 <Card className="overflow-hidden border-primary/10">
                   <CardContent className="p-6">                    <h3 className="text-2xl font-bold tracking-tight mb-4">Advanced Validation Example</h3>
                     <div className="bg-purple-50 dark:bg-purple-900/20 border-l-4 border-purple-500 p-4 mb-6">
