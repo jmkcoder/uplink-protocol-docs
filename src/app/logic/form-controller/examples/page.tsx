@@ -115,7 +115,7 @@ export default function FormControllerExamples() {
                         <li>Debug panel to view current form state</li>
                       </ul>
                       <p className="text-muted-foreground">
-                        The form uses the actual <code className="bg-primary/10 text-primary px-1 py-0.5 rounded mx-1">@uplink/react</code> and
+                        The form uses the actual <code className="bg-primary/10 text-primary px-1 py-0.5 rounded mx-1"> @uplink-protocol/react</code> and
                         <code className="bg-primary/10 text-primary px-1 py-0.5 rounded mx-1">@uplink-protocol/form-controller</code>
                         packages for form state management and validation. This is the simplest form type - for more complex examples like multi-step forms,
                         dynamic field generation, and advanced validation, see the documentation.
@@ -150,7 +150,7 @@ export default function FormControllerExamples() {
                           <TabsContent value="react" className="space-y-4">
                             <SyntaxHighlighter
                               code={`import React from "react";
-import { useUplink } from "@uplink/react";
+import { useUplink } from " @uplink-protocol/react";
 import { FormController } from "@uplink-protocol/form-controller";
 
 function DynamicFormStepper() {
@@ -247,7 +247,7 @@ function DynamicFormStepper() {
                           <TabsContent value="vue" className="space-y-4">
                             <SyntaxHighlighter
                               code={`<script setup>
-import { useUplink } from "@uplink/vue";
+import { useUplink } from " @uplink-protocol/vue";
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Define your form configuration
@@ -339,7 +339,7 @@ const handleSubmit = (e) => {
                           <TabsContent value="svelte" className="space-y-4">
                             <SyntaxHighlighter
                               code={`<script>
-  import { useUplink } from "@uplink/svelte";
+  import { useUplink } from " @uplink-protocol/svelte";
   import { FormController } from "@uplink-protocol/form-controller";
 
   // Define your form configuration
@@ -432,7 +432,7 @@ const handleSubmit = (e) => {
 
                           <TabsContent value="vanilla" className="space-y-4">
                             <SyntaxHighlighter
-                              code={`import { createController } from "@uplink/core";
+                              code={`import { createController } from " @uplink-protocol/core";
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Define your form configuration
@@ -580,7 +580,7 @@ form.addEventListener("submit", (e) => {
                           <TabsContent value="react" className="space-y-4">
                             <SyntaxHighlighter
                               code={`import React from "react";
-import { useUplink } from "@uplink/react";
+import { useUplink } from " @uplink-protocol/react";
 import { FormController } from "@uplink-protocol/form-controller";
 
 function MultiStepForm() {
@@ -774,7 +774,7 @@ function MultiStepForm() {
                           <TabsContent value="vue" className="space-y-4">
                             <SyntaxHighlighter
                               code={`<script setup>
-import { useUplink } from "@uplink/vue";
+import { useUplink } from " @uplink-protocol/vue";
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Define your form configuration with multiple steps
@@ -966,7 +966,7 @@ const renderReviewStep = () => {
                           <TabsContent value="svelte" className="space-y-4">
                             <SyntaxHighlighter
                               code={`<script>
-  import { useUplink } from "@uplink/svelte";
+  import { useUplink } from " @uplink-protocol/svelte";
   import { FormController } from "@uplink-protocol/form-controller";
 
   // Define your form configuration with multiple steps
@@ -1152,7 +1152,7 @@ const renderReviewStep = () => {
 
                           <TabsContent value="vanilla" className="space-y-4">
                             <SyntaxHighlighter
-                              code={`import { createController } from "@uplink/core";
+                              code={`import { createController } from " @uplink-protocol/core";
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Define your form configuration with multiple steps
@@ -1440,7 +1440,7 @@ renderFields(controller.getState());`}
                           <TabsContent value="react" className="space-y-4">
                             <SyntaxHighlighter
                               code={`import React, { useEffect } from "react";
-import { useUplink } from "@uplink/react";
+import { useUplink } from " @uplink-protocol/react";
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Typescript interfaces for the validator context
@@ -1694,7 +1694,7 @@ function AdvancedValidationForm() {
                           <TabsContent value="vue" className="space-y-4">
                             <SyntaxHighlighter
                               code={`<script setup>
-import { useUplink } from "@uplink/vue";
+import { useUplink } from " @uplink-protocol/vue";
 import { FormController } from "@uplink-protocol/form-controller";
 import { onMounted, onUnmounted } from 'vue';
 
@@ -1926,7 +1926,7 @@ const handleSubmit = (e) => {
                           <TabsContent value="svelte" className="space-y-4">
                             <SyntaxHighlighter
                               code={`<script>
-  import { useUplink } from "@uplink/svelte";
+  import { useUplink } from " @uplink-protocol/svelte";
   import { FormController } from "@uplink-protocol/form-controller";
   import { onMount, onDestroy } from 'svelte';
 
@@ -2155,7 +2155,7 @@ const handleSubmit = (e) => {
 
                           <TabsContent value="vanilla" className="space-y-4">
                             <SyntaxHighlighter
-                              code={`import { createController } from "@uplink/core";
+                              code={`import { createController } from " @uplink-protocol/core";
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Define your form configuration

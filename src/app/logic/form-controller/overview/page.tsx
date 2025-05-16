@@ -163,13 +163,13 @@ export default function FormControllerOverview() {
                 </div>
                 <SyntaxHighlighter
                   code={`# React
-npm install @uplink/react
+npm install  @uplink-protocol/react
 
 # Vue
-npm install @uplink/vue
+npm install  @uplink-protocol/vue
 
 # Svelte
-npm install @uplink/svelte`}
+npm install  @uplink-protocol/svelte`}
                   language="shell"
                 />
               </CardContent>
@@ -1393,7 +1393,7 @@ form.bindings.isFirstStep.subscribe(isFirst => {
                       <span className="text-zinc-400">react</span>
                     </div>
                     <SyntaxHighlighter
-                      code={`import { useUplinkController } from "@uplink/react"
+                      code={`import { useUplinkController } from " @uplink-protocol/react"
 import { FormController } from "@uplink-protocol/form-controller"
 
 function MyForm() {
@@ -1435,7 +1435,7 @@ function MyForm() {
                     </div>
                     <SyntaxHighlighter
                       code={`<script setup>
-  import { useUplinkController } from "@uplink/vue"
+  import { useUplinkController } from " @uplink-protocol/vue"
   import { FormController } from "@uplink-protocol/form-controller"
 
   const formConfig = {
@@ -1468,7 +1468,7 @@ function MyForm() {
                     </div>
                     <SyntaxHighlighter
                       code={`<script>
-  import { useUplinkController } from "@uplink/svelte"
+  import { useUplinkController } from " @uplink-protocol/svelte"
   import { FormController } from "@uplink-protocol/form-controller"
 
   const formConfig = {

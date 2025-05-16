@@ -78,7 +78,7 @@ function MultiStepForm() {
   );
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const result = methods.submitForm();
 
