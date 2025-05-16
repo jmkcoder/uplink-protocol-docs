@@ -226,11 +226,11 @@ function MyForm() {
                   <span className="text-zinc-400">javascript</span>
                 </div>
                 <SyntaxHighlighter
-                  code={`import { createController } from "@uplink/core"
+                  code={`import { connectController } from "@uplink/core"
 import { FormController } from "@uplink/form"
 
 // Create a controller instance
-const controller = createController(FormController)
+const controller = connectController(FormController)
 
 // Listen for state changes
 controller.subscribe((state) => {

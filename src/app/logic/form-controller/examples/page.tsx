@@ -432,7 +432,7 @@ const handleSubmit = (e) => {
 
                           <TabsContent value="vanilla" className="space-y-4">
                             <SyntaxHighlighter
-                              code={`import { createController } from " @uplink-protocol/core";
+                              code={`import { connectController } from " @uplink-protocol/core";
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Define your form configuration
@@ -465,7 +465,7 @@ const formConfig = {
 };
 
 // Create a controller instance
-const controller = createController(() => FormController(formConfig));
+const controller = connectController(() => FormController(formConfig));
 
 // Get DOM elements
 const nameInput = document.getElementById("name");
@@ -1152,7 +1152,7 @@ const renderReviewStep = () => {
 
                           <TabsContent value="vanilla" className="space-y-4">
                             <SyntaxHighlighter
-                              code={`import { createController } from " @uplink-protocol/core";
+                              code={`import { connectController } from " @uplink-protocol/core";
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Define your form configuration with multiple steps
@@ -1224,7 +1224,7 @@ const formConfig = {
 };
 
 // Create a controller instance
-const controller = createController(() => FormController(formConfig));
+const controller = connectController(() => FormController(formConfig));
 
 // DOM element references
 const form = document.getElementById('multi-step-form');
@@ -2155,7 +2155,7 @@ const handleSubmit = (e) => {
 
                           <TabsContent value="vanilla" className="space-y-4">
                             <SyntaxHighlighter
-                              code={`import { createController } from " @uplink-protocol/core";
+                              code={`import { connectController } from " @uplink-protocol/core";
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Define your form configuration
@@ -2228,7 +2228,7 @@ const formConfig = {
 };
 
 // Create a controller instance
-const controller = createController(() => FormController(formConfig));
+const controller = connectController(() => FormController(formConfig));
 
 // Get DOM elements
 const form = document.getElementById('validation-form');
