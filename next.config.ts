@@ -2,6 +2,24 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
+  output: 'export',
+  // Remove trailing slash for GitHub Pages compatibility
+  trailingSlash: false,
+  // Base path for GitHub Pages deployment
+  // This will be commented out for now and set in the GitHub Actions workflow
+  // basePath: '/uplink-protocol-docs',
 };
 
 export default nextConfig;

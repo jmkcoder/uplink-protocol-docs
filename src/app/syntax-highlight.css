@@ -1,0 +1,150 @@
+/* VS Code-like syntax highlighting */
+.syntax-highlight {
+  color: #D4D4D4;
+  font-family: "Menlo", "Monaco", "Consolas", "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;  background-color: #1E1E1E;
+  padding: 1rem 0.75rem;
+  border-radius: 0 0 0.5rem 0.5rem; /* Adjust border-radius to exclude the top part when headers present */
+  overflow-x: auto;
+  width: 100%;
+  display: table;
+  position: relative;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+/* Copy button styles */
+.syntax-highlight button {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.syntax-highlight:hover button, .syntax-highlight button:focus, .syntax-highlight button:active {
+  opacity: 1;
+}
+
+/* Ensure the copy button appears on touch devices too */
+@media (pointer: coarse) {
+  .syntax-highlight button {
+    opacity: 0.8;
+  }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 640px) {
+  .syntax-highlight {
+    font-size: 0.8rem;
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .syntax-highlight .table-cell {
+    word-break: break-all;
+  }
+}
+
+/* Fix for nested code blocks inside Card components */
+.rounded-xl .syntax-highlight {
+  border-radius: 0 0 0.75rem 0.75rem;
+  margin: 0;
+}
+
+.code-block-header + .syntax-highlight {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Fix table layout for code display */
+.syntax-highlight code {
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  display: table;
+  table-layout: fixed;
+  box-sizing: border-box;
+}
+
+.syntax-highlight .table-row {
+  width: 100%;
+  display: table-row;
+  vertical-align: top;
+  white-space: pre;
+}
+
+.syntax-highlight .table-cell {
+  vertical-align: top;
+  white-space: pre-wrap; /* Change to pre-wrap to enable wrapping */
+  word-break: break-word;
+  max-width: 100%;
+}
+
+/* Special styling for line number cells */
+.syntax-highlight .table-cell.pr-4.text-right {
+  white-space: normal; 
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  width: 2.5rem;
+  min-width: 2.5rem;
+  max-width: 2.5rem;
+}
+
+/* Code block header style */
+.code-block-header {
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+
+.syntax-highlight .keyword {
+  color: #569CD6;
+}
+
+.syntax-highlight .function {
+  color: #DCDCAA;
+}
+
+.syntax-highlight .variable {
+  color: #9CDCFE;
+}
+
+.syntax-highlight .string {
+  color: #CE9178;
+}
+
+.syntax-highlight .comment {
+  color: #6A9955;
+}
+
+.syntax-highlight .tag {
+  color: #808080;
+}
+
+.syntax-highlight .attribute {
+  color: #9CDCFE;
+}
+
+.syntax-highlight .class {
+  color: #4EC9B0;
+}
+
+.syntax-highlight .operator {
+  color: #D4D4D4;
+}
+
+.syntax-highlight .number {
+  color: #B5CEA8;
+}
+
+.syntax-highlight .boolean {
+  color: #569CD6;
+}
+
+.syntax-highlight .constant {
+  color: #4FC1FF;
+}
+
+/* Important for HTML tags */
+.syntax-highlight .element {
+  color: #569CD6;
+}
