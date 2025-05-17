@@ -10,6 +10,7 @@ import { DocsSidebar } from "@/components/docs/sidebar"
 import DynamicFormStepper from "@/components/examples/single-step"
 import MultiStepForm from "@/components/examples/multi-step"
 import AdvancedValidationForm from "@/components/examples/advanced-validation"
+import AsyncValidatorExample from "@/components/docs/form-controller/api/examples/AsyncValidatorExample"
 
 export default function FormControllerExamples() {
   return (
@@ -41,7 +42,8 @@ export default function FormControllerExamples() {
           {/* Examples Tabs */}
           <div className="mb-8">
             <Tabs defaultValue="single-step" className="w-full">
-              <TabsList className="mb-4 w-full justify-start gap-2">                <TabsTrigger value="single-step" className="py-2 px-4 flex items-center gap-1.5" onClick={() => {
+              <TabsList className="mb-8 md:mb-4 w-full flex flex-wrap justify-start gap-2">
+                <TabsTrigger value="single-step" className="py-2 px-4 flex items-center gap-1.5 text-xs sm:text-sm" onClick={() => {
                   document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                     panel.classList.add('hidden');
                     panel.setAttribute('data-state', 'inactive');
@@ -49,13 +51,14 @@ export default function FormControllerExamples() {
                   document.getElementById('single-step')?.classList.remove('hidden');
                   document.getElementById('single-step')?.setAttribute('data-state', 'active');
                 }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block mr-1">
                     <rect width="18" height="18" x="3" y="3" rx="2" />
                     <path d="M8 12h8" />
                     <path d="M12 16V8" />
                   </svg>
-                  Single-Step Form
-                </TabsTrigger>                <TabsTrigger value="multi-step" className="py-2 px-4 flex items-center gap-1.5" onClick={() => {
+                  <span>Single-Step</span>
+                </TabsTrigger>
+                <TabsTrigger value="multi-step" className="py-2 px-4 flex items-center gap-1.5 text-xs sm:text-sm" onClick={() => {
                   document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                     panel.classList.add('hidden');
                     panel.setAttribute('data-state', 'inactive');
@@ -63,7 +66,7 @@ export default function FormControllerExamples() {
                   document.getElementById('multi-step')?.classList.remove('hidden');
                   document.getElementById('multi-step')?.setAttribute('data-state', 'active');
                 }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block mr-1">
                     <line x1="8" x2="21" y1="6" y2="6" />
                     <line x1="8" x2="21" y1="12" y2="12" />
                     <line x1="8" x2="21" y1="18" y2="18" />
@@ -71,8 +74,9 @@ export default function FormControllerExamples() {
                     <line x1="3" x2="3.01" y1="12" y2="12" />
                     <line x1="3" x2="3.01" y1="18" y2="18" />
                   </svg>
-                  Multi-Step Form
-                </TabsTrigger>                <TabsTrigger value="advanced-validation" className="py-2 px-4 flex items-center gap-1.5" onClick={() => {
+                  <span>Multi-Step</span>
+                </TabsTrigger>
+                <TabsTrigger value="advanced-validation" className="py-2 px-4 flex items-center gap-1.5 text-xs sm:text-sm" onClick={() => {
                   document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                     panel.classList.add('hidden');
                     panel.setAttribute('data-state', 'inactive');
@@ -80,11 +84,25 @@ export default function FormControllerExamples() {
                   document.getElementById('advanced-validation')?.classList.remove('hidden');
                   document.getElementById('advanced-validation')?.setAttribute('data-state', 'active');
                 }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block mr-1">
                     <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
                     <path d="m9 12 2 2 4-4" />
                   </svg>
-                  Advanced Validation
+                  <span>Advanced</span>
+                </TabsTrigger>
+                <TabsTrigger value="async-validation" className="py-2 px-4 flex items-center gap-1.5 text-xs sm:text-sm" onClick={() => {
+                  document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
+                    panel.classList.add('hidden');
+                    panel.setAttribute('data-state', 'inactive');
+                  });
+                  document.getElementById('async-validation')?.classList.remove('hidden');
+                  document.getElementById('async-validation')?.setAttribute('data-state', 'active');
+                }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block mr-1">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <span>Async</span>
                 </TabsTrigger>
               </TabsList>
 
@@ -655,16 +673,6 @@ function MultiStepForm() {
     { trackBindings: "all" }
   );
 
-  // Move to next step after validating current step
-  const handleNext = () => {
-    const currentStepId = state.currentStep.id;
-    const isValid = methods.validateStep(currentStepId);
-    
-    if (isValid) {
-      methods.nextStep();
-    }
-  };
-
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -676,6 +684,18 @@ function MultiStepForm() {
     } else {
       alert("Please fix the errors before submitting.");
     }
+  };
+
+  // Move to next step after validating current step
+  const handleNext = (e) => {
+    e.preventDefault();
+    methods.nextStep();
+  };
+
+  // Move to previous step
+  const handlePrevious = (e) => {
+    e.preventDefault();
+    methods.prevStep();
   };
 
   // Render current step fields
@@ -1152,7 +1172,7 @@ const renderReviewStep = () => {
                               code={`import { connectController } from " @uplink-protocol/core";
 import { FormController } from "@uplink-protocol/form-controller";
 
-// Define your form configuration with multiple steps
+// Define your form configuration
 const formConfig = {
   steps: [
     {
@@ -2159,13 +2179,20 @@ import { FormController } from "@uplink-protocol/form-controller";
 const formConfig = {
   steps: [
     {
-      id: 'contact',
-      title: 'Contact Information',
+      id: 'personal',
+      title: 'Personal Info',
       fields: {
-        name: {
-          id: 'name',
+        firstName: {
+          id: 'firstName',
           value: '',
-          label: 'Full Name',
+          label: 'First Name',
+          type: 'text',
+          required: true,
+        },
+        lastName: {
+          id: 'lastName',
+          value: '',
+          label: 'Last Name',
           type: 'text',
           required: true,
         },
@@ -2179,47 +2206,39 @@ const formConfig = {
             pattern: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/
           }
         },
-        subscribe: {
-          id: 'subscribe',
-          value: false,
-          label: 'Subscribe to newsletter',
-          type: 'checkbox',
-        },
-        phoneNumber: {
-          id: 'phoneNumber',
+      }
+    },
+    {
+      id: 'address',
+      title: 'Address',
+      fields: {
+        street: {
+          id: 'street',
           value: '',
-          label: 'Phone Number',
-          type: 'tel',
-          validation: {
-            dynamicValidator: 'requiredIf',
-            dynamicValidatorParams: {
-              dependsOn: 'subscribe',
-              dependsOnValue: true
-            }
-          }
-        },
-        password: {
-          id: 'password',
-          value: '',
-          label: 'Password',
-          type: 'password',
+          label: 'Street Address',
+          type: 'text',
           required: true,
         },
-        confirmPassword: {
-          id: 'confirmPassword',
+        city: {
+          id: 'city',
           value: '',
-          label: 'Confirm Password',
-          type: 'password',
+          label: 'City',
+          type: 'text',
           required: true,
-          validation: {
-            dynamicValidator: 'equals',
-            dynamicValidatorParams: {
-              matchField: 'password',
-              errorMessage: 'Passwords must match'
-            }
-          }
+        },
+        zipCode: {
+          id: 'zipCode',
+          value: '',
+          label: 'ZIP / Postal Code',
+          type: 'text',
+          required: true,
         }
       }
+    },
+    {
+      id: 'review',
+      title: 'Review',
+      fields: {}
     }
   ]
 };
@@ -2365,6 +2384,47 @@ window.addEventListener('unload', () => {
                   </CardContent>
                 </Card>
               </div>
+
+              {/* Async Validation Tab */}
+              <TabsContent value="async-validation">
+                <div className="space-y-6">
+                  <Card className="overflow-hidden border-primary/10">
+                    <CardContent className="p-6">
+                      <h3 className="text-2xl font-bold tracking-tight mb-4">Asynchronous Validation Example</h3>
+                      <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 mb-6">
+                        <h4 className="text-base font-medium text-blue-700 dark:text-blue-300 mb-1">Advanced example</h4>
+                        <p className="text-muted-foreground">
+                          Learn advanced techniques for implementing asynchronous validation with the FormController.
+                          Essential for validations that require server-side processing or external API calls.
+                        </p>
+                      </div>
+
+                      <AsyncValidatorExample />
+                      
+                      <div className="mt-8 pt-6 border-t border-gray-200 space-y-4">
+                        <h3 className="text-lg font-semibold">Best Practices</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                          <li>
+                            <strong>Provide visual feedback</strong> during validation with loading indicators
+                          </li>
+                          <li>
+                            <strong>Debounce validation calls</strong> for fields that validate on change to prevent API overload
+                          </li>
+                          <li>
+                            <strong>Cache validation results</strong> when appropriate to improve performance
+                          </li>
+                          <li>
+                            <strong>Handle errors gracefully</strong> to prevent disrupting the user experience if validation fails
+                          </li>
+                          <li>
+                            <strong>Consider rate limiting</strong> for server-side validation endpoints to prevent abuse
+                          </li>
+                        </ul>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
             </Tabs>
           </div>
 

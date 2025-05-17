@@ -31,7 +31,6 @@ function DynamicFormStepper() {
       }
     ]
   };
-
   // Initialize the form controller with useUplink
   const { state, methods } = useUplink(
     () => FormController(formConfig),

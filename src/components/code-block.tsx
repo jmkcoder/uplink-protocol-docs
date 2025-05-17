@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SyntaxHighlighter } from "./syntax-highlighter";
+import { SyntaxHighlighter } from "@/components/syntax-highlighter";
 
 // Import types from the syntax highlighter
 type SyntaxHighlighterLanguage = "js" | "jsx" | "ts" | "tsx" | "html" | "css" | "shell" | "vue" | "svelte";

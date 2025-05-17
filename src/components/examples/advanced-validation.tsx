@@ -84,7 +84,7 @@ function DynamicFormStepper() {
             validation: {
               dynamicValidator: 'equals',
               dynamicValidatorParams: {
-                matchField: 'password',
+                targetField: 'password',
                 errorMessage: 'Passwords must match'
               }
             }
@@ -127,22 +127,6 @@ function DynamicFormStepper() {
       }
       
       // Otherwise valid
-      return true;
-    });
-
-    // Register a validator that checks if two fields match
-    methods.registerValidator('equals', (value: unknown, context: ValidationContext) => {
-      const { matchField, errorMessage } = context.field.validation.dynamicValidatorParams || {};
-      
-      if (!matchField) return true;
-      
-      const stepId = context.field.stepId;
-      const fieldToMatch = context.formData[stepId]?.[matchField];
-      
-      if (value !== fieldToMatch) {
-        return errorMessage || `Must match ${matchField}`;
-      }
-      
       return true;
     });
   }, [methods]);

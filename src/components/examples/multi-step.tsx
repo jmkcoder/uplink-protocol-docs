@@ -70,7 +70,6 @@ function MultiStepForm() {
       }
     ]
   };
-
   // Initialize the form controller with useUplink
   const { state, methods } = useUplink(
     () => FormController(formConfig),
@@ -91,17 +90,14 @@ function MultiStepForm() {
   };
 
   // Move to next step after validating current step
-  const handleNext = () => {
-    const currentStepId = state.currentStep.id;
-    const isValid = methods.validateStep(currentStepId);
-    
-    if (isValid) {
-      methods.nextStep();
-    }
+  const handleNext = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    methods.nextStep();
   };
 
   // Move to previous step
-  const handlePrevious = () => {
+  const handlePrevious = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     methods.prevStep();
   };
 
