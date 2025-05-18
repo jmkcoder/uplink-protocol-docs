@@ -10,7 +10,7 @@
 
 import { useEffect, useRef } from 'react';
 import { event } from './gtag';
-import { isAnalyticsEnabled } from './config';
+import { shouldEnableAnalytics } from './config';
 
 type SearchTrackingOptions = {
   /**
@@ -53,9 +53,8 @@ export const useSearchTracking = (options?: SearchTrackingOptions) => {
   
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastSearchRef = useRef<string>('');
-  
-  const trackSearch = (query: string, resultCount?: number) => {
-    if (!isAnalyticsEnabled) return;
+    const trackSearch = (query: string, resultCount?: number) => {
+    if (!shouldEnableAnalytics()) return;
     
     // Don't track if query is too short
     if (query.length < minQueryLength) return;
@@ -108,7 +107,7 @@ export const useSearchInputTracking = (options?: SearchTrackingOptions & {
   const trackSearch = useSearchTracking(rest);
   
   useEffect(() => {
-    if (!isAnalyticsEnabled || !inputId) return;
+    if (!shouldEnableAnalytics || !inputId) return;
     
     const inputElement = document.getElementById(inputId) as HTMLInputElement;
     if (!inputElement) return;

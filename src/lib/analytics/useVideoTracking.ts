@@ -9,7 +9,7 @@
 
 import { useEffect, useRef } from 'react';
 import { event } from './gtag';
-import { isAnalyticsEnabled } from './config';
+import { shouldEnableAnalytics } from './config';
 
 // Default progress milestones to track (percentage)
 const DEFAULT_MILESTONES = [10, 25, 50, 75, 90, 100];
@@ -74,7 +74,7 @@ export const useVideoTracking = (
   const trackedMilestones = useRef<Set<number>>(new Set());
   
   useEffect(() => {
-    if (!isAnalyticsEnabled || !videoRef.current) return;
+    if (!shouldEnableAnalytics() || !videoRef.current) return;
     
     const video = videoRef.current;
     const videoSource = videoSrc || video.currentSrc || 'unknown';

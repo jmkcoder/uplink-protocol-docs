@@ -6,7 +6,7 @@
  */
 
 import { event } from './gtag';
-import { isAnalyticsEnabled } from './config';
+import { shouldEnableAnalytics } from './config';
 
 /**
  * Set up global error tracking
@@ -15,7 +15,7 @@ import { isAnalyticsEnabled } from './config';
  * to capture and report errors to Google Analytics
  */
 export const setupErrorTracking = () => {
-  if (!isAnalyticsEnabled) return;
+  if (typeof window === 'undefined' || !shouldEnableAnalytics()) return;
 
   // Track unhandled promise rejections
   window.addEventListener('unhandledrejection', (e) => {

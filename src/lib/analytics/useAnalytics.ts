@@ -10,7 +10,7 @@
 import { useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { pageview, event } from './gtag';
-import { isAnalyticsEnabled } from './config';
+import { shouldEnableAnalytics } from './config';
 
 export const useAnalytics = () => {
   const pathname = usePathname();
@@ -19,7 +19,7 @@ export const useAnalytics = () => {
   useEffect(() => {
     // Always run the effect but only perform tracking if enabled
     const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
-    if (isAnalyticsEnabled) {
+    if (shouldEnableAnalytics()) {
       pageview(url);
     }
   }, [pathname, searchParams]);

@@ -9,7 +9,7 @@
 
 import { useEffect, useState } from 'react';
 import { event as trackEvent } from './gtag';
-import { isAnalyticsEnabled } from './config';
+import { shouldEnableAnalytics } from './config';
 
 type ScrollDepthOptions = {
   thresholds?: number[]; // Percentage thresholds to trigger events at (0-100)
@@ -29,9 +29,8 @@ export const useScrollDepthTracking = (options?: ScrollDepthOptions) => {
 
   const [trackedThresholds, setTrackedThresholds] = useState<number[]>([]);
   const [isThrottled, setIsThrottled] = useState(false);
-
   useEffect(() => {
-    if (!isAnalyticsEnabled) return;
+    if (!shouldEnableAnalytics()) return;
 
     const handleScroll = () => {
       if (isThrottled) return;

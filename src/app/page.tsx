@@ -4,10 +4,47 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
+import { useScrollDepthTracking, useTimeOnPage } from "@/lib/analytics"
+import { useEffect } from "react"
+import { event as trackEvent } from "@/lib/analytics"
+import { VideoPlayer } from "@/components/ui/video-player"
 
 export default function HomePage() {
+  // Track scroll depth for the homepage
+  useScrollDepthTracking();
+  
+  // Track time on page
+  useTimeOnPage();
+  
+  // Track page load as a view
+  useEffect(() => {
+    trackEvent({
+      action: 'page_view',
+      category: 'Engagement',
+      label: 'Home Page'
+    });
+  }, []);
+  
+  // Track button clicks
+  const trackButtonClick = (buttonName: string) => {
+    trackEvent({
+      action: 'button_click',
+      category: 'Navigation',
+      label: buttonName
+    });
+  };
   return (
     <main className="min-h-screen bg-background text-foreground">
+      {/* Development Analytics Banner - only shown in dev */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="bg-primary/10 border-b border-primary/20 py-2 px-4 text-center">
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-primary">Analytics Development Mode</span> – 
+            Analytics events are being tracked and sent to Google Analytics with user consent. 
+            <a href="/analytics" className="ml-1 underline">View analytics documentation</a>
+          </p>
+        </div>
+      )}
       {/* Hero Section */}
       <section className="py-24 px-4 md:px-6 text-center relative overflow-hidden">
         {/* Background elements */}
@@ -113,7 +150,7 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 pt-8 animate-fade-in animation-delay-500">
-            <Link href="/getting-started">
+            <Link href="/getting-started" onClick={() => trackButtonClick('Hero Get Started')}>
               <Button size="lg" className="w-full sm:w-auto shadow-lg cursor-pointer">
                 Get Started
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2">
@@ -122,7 +159,7 @@ export default function HomePage() {
                 </svg>
               </Button>
             </Link>
-            <Link href="/logic/datepicker">
+            <Link href="/logic/datepicker" onClick={() => trackButtonClick('Hero View Logic Packages')}>
               <Button variant="outline" size="lg" className="w-full sm:w-auto cursor-pointer">View Logic Packages</Button>
             </Link>
           </div>
@@ -217,6 +254,27 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Video Tutorials Section */}
+      <section className="py-16 px-4 bg-gradient-to-r from-primary/5 to-secondary/5">
+        <div className="max-w-5xl mx-auto space-y-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Video Tutorials</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Learn how to integrate and use Uplink Protocol through our video tutorials.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
+            <VideoPlayer 
+              src="/videos/form-controller.mp4" 
+              title="Building Forms with FormController" 
+              poster="/images/form-controller-placeholder.png"
+              aspectRatio="16:9"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA Section */}
       <section className="py-20 px-4">
         <div className="max-w-5xl mx-auto text-center space-y-6">
@@ -226,10 +284,10 @@ export default function HomePage() {
             Uplink provides a clean architecture for your projects, allowing teams to work in parallel with consistent behavior across all platforms.
           </p>
           <div className="flex flex-wrap justify-center gap-4 pt-4">
-            <Link href="/getting-started">
+            <Link href="/getting-started" onClick={() => trackButtonClick('Footer Get Started')}>
               <Button size="lg" className="shadow-md cursor-pointer">Get Started</Button>
             </Link>
-            <Link href="https://github.com/jmkcoder/odyssey-uplink-protocol" target="_blank">
+            <Link href="https://github.com/jmkcoder/odyssey-uplink-protocol" target="_blank" onClick={() => trackButtonClick('Footer View on GitHub')}>
               <Button variant="outline" size="lg" className="cursor-pointer">View on GitHub</Button>
             </Link>
           </div>

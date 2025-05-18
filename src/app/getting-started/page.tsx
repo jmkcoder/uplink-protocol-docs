@@ -8,8 +8,27 @@ import Link from "next/link"
 import "../syntax-highlight.css"
 import { SyntaxHighlighter } from "@/components/syntax-highlighter"
 import { DocsSidebar } from "@/components/docs/sidebar"
+import { useEffect } from "react"
+import { useAnalytics, useScrollDepthTracking } from "@/lib/analytics"
 
 export default function GettingStarted() {  
+  // Get analytics tracking function
+  const { trackEvent } = useAnalytics();
+  
+  // Track scroll depth for better engagement metrics
+  useScrollDepthTracking({
+    thresholds: [25, 50, 75, 100],
+    trackPagePath: true
+  });
+  
+  // Track page view
+  useEffect(() => {
+    trackEvent({
+      action: 'page_view',
+      category: 'Documentation',
+      label: 'Getting Started'
+    });
+  }, [trackEvent]);
   return (
     <main className="min-h-screen flex flex-col lg:flex-row bg-background text-foreground">
       {/* Sidebar */}
@@ -258,9 +277,15 @@ document.querySelector('#name-input').addEventListener('change', (e) => {
         </section>
 
         {/* Continue CTA */}
-        <section className="pt-12 space-y-6">
-          <h2 className="text-3xl font-bold tracking-tight">Ready to Explore?</h2>
-          <div className="grid gap-4 md:grid-cols-2">            <Link href="/logic/form-controller">
+        <section className="pt-12 space-y-6">          <h2 className="text-3xl font-bold tracking-tight">Ready to Explore?</h2>
+          <div className="grid gap-4 md:grid-cols-2">            <Link 
+              href="/logic/form-controller" 
+              onClick={() => trackEvent({
+                action: 'click_card_link',
+                category: 'Navigation',
+                label: 'Form Controller Card'
+              })}
+            >
               <Card className="overflow-hidden transition-all hover:shadow-lg hover:bg-primary/5 h-full">
                 <CardContent className="p-6 space-y-4">
                   <div className="flex items-center gap-3">
@@ -289,7 +314,14 @@ document.querySelector('#name-input').addEventListener('change', (e) => {
               </CardContent>
             </Card>
           </div>          <div className="flex justify-center pt-4">
-            <Link href="/logic/form-controller">
+            <Link 
+              href="/logic/form-controller"
+              onClick={() => trackEvent({
+                action: 'click_button_link',
+                category: 'Navigation',
+                label: 'Explore Form Controller Button'
+              })}
+            >
               <Button size="lg" className="gap-2">
                 <span>Explore the Form Controller Logic</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

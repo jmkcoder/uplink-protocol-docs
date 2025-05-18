@@ -10,7 +10,7 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { event } from './gtag';
-import { isAnalyticsEnabled } from './config';
+import { shouldEnableAnalytics } from './config';
 
 type TimeOnPageOptions = {
   minTimeMs?: number; // Minimum time in ms to track (to filter out bounces)
@@ -29,12 +29,11 @@ export const useTimeOnPage = (options?: TimeOnPageOptions) => {
     sendInterval = 30000, // Send time-on-page every 30 seconds
     includeSeconds = true, // Include seconds in the time string
   } = options || {};
-  
-  const pathname = usePathname();
+    const pathname = usePathname();
   const [startTime] = useState<number>(Date.now());
   
   useEffect(() => {
-    if (!isAnalyticsEnabled) return;
+    if (!shouldEnableAnalytics()) return;
     
     let intervalId: NodeJS.Timeout | null = null;
     

@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { event } from './gtag';
-import { isAnalyticsEnabled } from './config';
+import { shouldEnableAnalytics } from './config';
 
 // Common file extensions to track as downloads
 const DOWNLOAD_EXTENSIONS = [
@@ -108,8 +108,7 @@ export const DownloadLink: React.FC<DownloadLinkProps> = ({
   className,
   children,
   ...props
-}) => {
-  // Extract file information from the URL if not provided
+}) => {  // Extract file information from the URL if not provided
   const fileNameValue = fileName || getFileNameFromUrl(href);
   const fileTypeValue = fileType || getFileExtensionFromUrl(href);
   
@@ -120,8 +119,8 @@ export const DownloadLink: React.FC<DownloadLinkProps> = ({
       props.onClick(e);
     }
     
-    // Don't track non-production
-    if (!isAnalyticsEnabled) return;
+    // Only track if analytics is enabled and user has consented
+    if (!shouldEnableAnalytics()) return;
     
     // Track the download
     event({
@@ -157,12 +156,11 @@ export const DownloadLink: React.FC<DownloadLinkProps> = ({
  */
 export const useDownloadTracking = () => {
   React.useEffect(() => {
-    if (!isAnalyticsEnabled) return;
+    if (!shouldEnableAnalytics()) return;
     
     const handleLinkClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const link = target.closest('a');
-      
       if (!link || !link.href) return;
       
       const extension = getFileExtensionFromUrl(link.href);

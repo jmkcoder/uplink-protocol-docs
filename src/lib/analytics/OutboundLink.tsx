@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { event } from './gtag';
-import { isAnalyticsEnabled } from './config';
+import { shouldEnableAnalytics } from './config';
 
 interface OutboundLinkProps {
   /**
@@ -67,7 +67,6 @@ export const OutboundLink: React.FC<OutboundLinkProps> = ({
   // Determine if this is an external link
   const isExternal = href.startsWith('http') || href.startsWith('//');
   const shouldOpenNewTab = newTab && isExternal;
-  
   // Handle the click event
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Call any existing onClick handler
@@ -75,8 +74,8 @@ export const OutboundLink: React.FC<OutboundLinkProps> = ({
       onClick(e);
     }
     
-    // Don't track non-production
-    if (!isAnalyticsEnabled) return;
+    // Only track if analytics is enabled and user has consented
+    if (!shouldEnableAnalytics()) return;
     
     // Track the click
     event({

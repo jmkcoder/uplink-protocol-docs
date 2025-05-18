@@ -14,4 +14,4 @@ export { default as OutboundLink } from './OutboundLink';
 export { default as DownloadLink, useDownloadTracking } from './DownloadTracking';
 export { default as setupErrorTracking } from './errorTracking';
 export { pageview, event } from './gtag';
-export { GA_MEASUREMENT_ID, isAnalyticsEnabled } from './config';
+export { GA_MEASUREMENT_ID, isAnalyticsEnabled, shouldEnableAnalytics, hasUserConsented } from './config';

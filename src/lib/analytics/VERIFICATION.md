@@ -6,7 +6,7 @@ This guide helps you verify that your Google Analytics tracking is properly conf
 
 - You are running the application in development mode (NODE_ENV = 'development')
 - You have set up the Google Analytics Measurement ID in .env.local
-- You have access to the Google Analytics 4 property (G-F2YGT22T1L) for viewing results
+- You have access to the Google Analytics 4 property (*******) for viewing results
 - You have the appropriate permissions to view reports
 
 ## Step 1: Verify Basic Tracking
@@ -63,7 +63,7 @@ Create custom reports to better visualize your analytics data:
 If events aren't appearing:
 
 1. Check browser console for JavaScript errors
-2. Verify that the Google Analytics measurement ID is correct (G-F2YGT22T1L)
+2. Verify that the Google Analytics measurement ID is correct (********)
 3. Ensure Analytics code is loading in the production environment
 4. Check for ad-blockers or privacy extensions that might be blocking analytics
 5. Verify that `isProduction` variable is correctly detecting the production environment

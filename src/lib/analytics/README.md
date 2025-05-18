@@ -4,12 +4,16 @@ This document outlines how Google Analytics is implemented in the Uplink Documen
 
 ## Configuration and Setup
 
-Analytics only runs in development mode for testing purposes. The Google Analytics Measurement ID is stored securely as an environment variable.
+Analytics runs in all environments (development and production) and requires explicit user consent. The Google Analytics Measurement ID is stored securely as an environment variable.
 
 ```
 # .env.local
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-F2YGT22T1L
+NEXT_PUBLIC_GA_MEASUREMENT_ID=*********
 ```
+
+### User Consent
+
+A cookie consent banner is displayed to users, allowing them to accept or decline analytics tracking. User preferences are stored in localStorage. Analytics events are only sent if the user has explicitly accepted analytics tracking.
 
 The analytics implementation is organized in the following structure:
 

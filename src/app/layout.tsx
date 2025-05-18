@@ -8,6 +8,8 @@ import Link from "next/link"
 import { SidebarProvider } from "@/components/docs/sidebar-context";
 import { SidebarToggle } from "@/components/docs/sidebar-toggle";
 import { Footer } from "@/components/ui/footer";
+import { AnalyticsProvider } from "@/lib/analytics";
+import { Search } from "@/components/ui/search";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +31,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Check if environment is development
+  const isDevelopment = process.env.NODE_ENV === 'development';
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SidebarProvider>
+        <AnalyticsProvider>
+          <SidebarProvider>
           {/* Header */}
           <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
             <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -43,6 +49,9 @@ export default function RootLayout({
                 <Link href="/" className="flex items-center gap-2">
                   <h1 className="text-xl font-bold tracking-tight text-primary">Uplink Protocol</h1>
                 </Link>
+              </div>
+              <div className="hidden md:block w-64">
+                <Search />
               </div>
               <nav>
                 <ul className="flex items-center gap-6">
@@ -85,6 +94,30 @@ export default function RootLayout({
                       </Button>
                     </Link>
                   </li>
+                  {isDevelopment && (
+                    <li>
+                      <Link href="/analytics" className="text-muted-foreground hover:text-foreground transition-colors">
+                        <Button variant="ghost" size="sm" className="gap-2 cursor-pointer">
+                          <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            className="h-5 w-5"
+                          >
+                            <path d="M3 3v18h18" />
+                            <path d="M18 17V9" />
+                            <path d="M13 17V5" />
+                            <path d="M8 17v-3" />
+                          </svg>
+                          <span className="hidden sm:inline">Analytics</span>
+                        </Button>
+                      </Link>
+                    </li>
+                  )}
                   <li>
                     <Link href="/getting-started">
                       <Button size="sm" className="cursor-pointer">Get Started</Button>
@@ -99,6 +132,7 @@ export default function RootLayout({
           
           <Footer />
         </SidebarProvider>
+        </AnalyticsProvider>
       </body>
     </html>
   );

@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useAnalytics, useScrollDepthTracking, useTimeOnPage } from '@/lib/analytics';
 import { Button } from '@/components/ui/button';
 
 export default function AnalyticsPage() {
-  const { trackEvent } = useAnalytics();  const [events, setEvents] = useState<Array<{
+  const { trackEvent } = useAnalytics();
+  const [events, setEvents] = useState<Array<{
     timestamp: string;
     action: string;
     category: string;
@@ -14,12 +15,13 @@ export default function AnalyticsPage() {
     extra?: Record<string, unknown>;
   }>>([]);
   const demoVideoRef = useRef<HTMLVideoElement>(null);
-    // Track scroll depth and time on page for this documentation
+  
+  // Track scroll depth and time on page for this documentation
   useScrollDepthTracking();
   useTimeOnPage();
   
   // Function to log events to our demo console and send to analytics
-  const logEvent = (action: string, category: string, label?: string, extra?: Record<string, unknown>) => {
+  const logEvent = useCallback((action: string, category: string, label?: string, extra?: Record<string, unknown>) => {
     const now = new Date();
     const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
     
@@ -38,7 +40,8 @@ export default function AnalyticsPage() {
       label,
       ...(extra || {})
     });
-  };
+  }, [trackEvent]);
+  
   // Setup video tracking
   useEffect(() => {
     if (!demoVideoRef.current) return;
@@ -64,7 +67,8 @@ export default function AnalyticsPage() {
     const handleEnded = () => {
       logEvent('video_ended', 'Demo', 'Tutorial Video');
     };
-      // Add event listeners
+    
+    // Add event listeners
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
     video.addEventListener('ended', handleEnded);
@@ -76,8 +80,9 @@ export default function AnalyticsPage() {
       video.removeEventListener('ended', handleEnded);
     };
   }, [logEvent]);
+  
+  // Track page view when component mounts - only run once
   useEffect(() => {
-    // Track page view when component mounts
     logEvent('page_view', 'Documentation', 'Analytics Guide');
   }, [logEvent]);
 
@@ -136,9 +141,9 @@ export default function AnalyticsPage() {
 
         <ol className="list-decimal pl-6 mb-6 space-y-2">
           <li><strong>Separation of concerns</strong>: Analytics logic is isolated from application logic</li>
-          <li><strong>Comprehensive tracking</strong>: Multiple user engagement metrics are tracked</li>
-          <li><strong>Privacy-first</strong>: Analytics only runs in production and respects user preferences</li>
+          <li><strong>Comprehensive tracking</strong>: Multiple user engagement metrics are tracked</li>          <li><strong>Privacy-first</strong>: Analytics only runs in development mode and requires explicit user consent</li>
           <li><strong>Performance optimized</strong>: Minimal impact on page load and runtime performance</li>
+          <li><strong>Consent-aware</strong>: Users must explicitly opt-in to analytics tracking</li>
         </ol>
 
         <h2 id="capabilities" className="text-2xl font-bold mt-10 mb-4">Available Tracking Capabilities</h2>
@@ -163,7 +168,7 @@ export default function AnalyticsPage() {
         <h2 id="verification" className="text-2xl font-bold mt-10 mb-4">Verifying Your Implementation</h2>
 
         <p className="mb-4">
-          To ensure your analytics is working correctly after deployment:
+          To ensure your analytics is working correctly:
         </p>
 
         <ol className="list-decimal pl-6 mb-6 space-y-2">
@@ -261,7 +266,8 @@ export function TutorialVideo() {
               >
                 Track Secondary Button
               </Button>
-                <a 
+              
+              <a 
                 href="https://github.com/jmkcoder/odyssey-uplink-protocol" 
                 target="_blank"
                 rel="noopener"
@@ -273,7 +279,8 @@ export function TutorialVideo() {
               >
                 Track Outbound Link
               </a>
-                <div className="border rounded p-4 mt-4">
+              
+              <div className="border rounded p-4 mt-4">
                 <label htmlFor="demo-search" className="block text-sm font-medium mb-1">Search (type at least 3 chars)</label>
                 <div className="flex gap-2">
                   <input 
@@ -300,9 +307,9 @@ export function TutorialVideo() {
                 </p>
                 <video 
                   ref={demoVideoRef}
-                  src="/videos/tutorial-intro.mp4"
+                  src="/videos/form-controller.mp4"
                   className="w-full rounded"
-                  poster="/images/tutorial-placeholder.jpg"
+                  poster="/images/form-controller-placeholder.png"
                   controls
                   preload="metadata"
                 />
@@ -311,7 +318,8 @@ export function TutorialVideo() {
           </div>
           
           <div>
-            <h3 className="text-xl font-bold mb-4">Events Console</h3>              <div className="bg-black text-green-400 font-mono text-sm p-4 rounded-md h-[420px] overflow-y-auto">
+            <h3 className="text-xl font-bold mb-4">Events Console</h3>
+            <div className="bg-black text-green-400 font-mono text-sm p-4 rounded-md h-[420px] overflow-y-auto">
               {events.length === 0 ? (
                 <div className="text-gray-500">No events tracked yet. Interact with the demo elements to see events appear here.</div>
               ) : (
@@ -328,9 +336,9 @@ export function TutorialVideo() {
                     )}
                   </div>
                 ))
-              )}            </div>
-            <div className="mt-2 text-xs text-gray-500">
-              Note: In development mode, events are logged but not sent to Google Analytics.
+              )}
+            </div>            <div className="mt-2 text-xs text-gray-500">
+              Note: In development mode, events are logged only if the user has accepted cookie consent.
             </div>
           </div>
         </div>
@@ -341,18 +349,20 @@ export function TutorialVideo() {
           If you encounter issues with analytics tracking:
         </p>
 
-        <ol className="list-decimal pl-6 mb-6 space-y-2">
-          <li>Ensure the Google Analytics Measurement ID is correctly set (<code>G-F2YGT22T1L</code>)</li>
+        <ol className="list-decimal pl-6 mb-6 space-y-2">          <li>Ensure the Google Analytics Measurement ID is correctly set in your .env.local file</li>
           <li>Verify that the analytics scripts are loading in the browser</li>
-          <li>Check that the <code>isAnalyticsEnabled</code> variable is correctly detecting production environment</li>
+          <li>Check that the <code>shouldEnableAnalytics()</code> function is working correctly</li>
+          <li>Make sure users have accepted cookie consent</li>
           <li>Ensure events are properly formatted according to GA4 requirements</li>
         </ol>
 
-        <h2 id="resources" className="text-2xl font-bold mt-10 mb-4">Resources</h2>        <ul className="list-disc pl-6 mb-6 space-y-2">
+        <h2 id="resources" className="text-2xl font-bold mt-10 mb-4">Resources</h2>
+        <ul className="list-disc pl-6 mb-6 space-y-2">
           <li><a href="https://developers.google.com/analytics/devguides/collection/ga4" className="text-primary hover:underline" target="_blank" rel="noopener">Google Analytics 4 Documentation</a></li>
           <li><a href="https://support.google.com/analytics/answer/9216061?hl=en" className="text-primary hover:underline" target="_blank" rel="noopener">GA4 Event Parameters Reference</a></li>
           <li><a href="https://chrome.google.com/webstore/detail/google-analytics-debugger/jnkmfdileelhofjcijamephohjechhna" className="text-primary hover:underline" target="_blank" rel="noopener">GA4 Debugger Chrome Extension</a></li>
-        </ul>        <div className="border-t pt-8 mt-16">
+        </ul>
+        <div className="border-t pt-8 mt-16">
           <p className="text-center text-muted-foreground">
             Was this documentation helpful? <Link href="/contact-us" className="text-primary hover:underline">Provide feedback</Link>
           </p>

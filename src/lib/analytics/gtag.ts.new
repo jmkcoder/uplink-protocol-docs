@@ -57,14 +57,6 @@ declare global {
   }
 }
 
-// Extend the Window interface to include gtag
-declare global {
-  interface Window {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    gtag: (...args: any[]) => void;
-  }
-}
-
 /**
  * Setup error tracking with Google Analytics
  */

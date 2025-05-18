@@ -174,7 +174,7 @@ For detailed verification steps, see the [VERIFICATION.md](./VERIFICATION.md) gu
 
 ## Technical Details
 
-- **Measurement ID**: G-F2YGT22T1L
+- **Measurement ID**: ********
 - **Environment Detection**: Analytics are disabled in development
 - **Event Batching**: Events are batched where appropriate
 - **Client-Side Only**: All tracking runs on the client side

@@ -110,13 +110,15 @@ export function Footer() {
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <p className="text-muted-foreground text-sm">
                             Made with ❤️ by <a href="https://github.com/jmkcoder" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">@jmkcoder</a>
-                        </p>
-                        <div className="flex items-center space-x-6 mt-4 md:mt-0">
-                            <Link href="#" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
+                        </p>                        <div className="flex items-center space-x-6 mt-4 md:mt-0">
+                            <Link href="/terms" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
                                 Terms of Service
                             </Link>
-                            <Link href="#" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
+                            <Link href="/privacy-policy" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
                                 Privacy Policy
+                            </Link>
+                            <Link href="/privacy-policy#cookie-settings" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
+                                Cookie Settings
                             </Link>
                         </div>
                     </div>
