@@ -9,7 +9,6 @@ import { SidebarProvider } from "@/components/docs/sidebar-context";
 import { SidebarToggle } from "@/components/docs/sidebar-toggle";
 import { Footer } from "@/components/ui/footer";
 import { AnalyticsProvider } from "@/lib/analytics";
-import { Search } from "@/components/ui/search";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,7 +50,6 @@ export default function RootLayout({
                 </Link>
               </div>
               <div className="hidden md:block w-64">
-                <Search />
               </div>
               <nav>
                 <ul className="flex items-center gap-6">

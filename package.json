@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "cross-env NEXT_PUBLIC_RENDER_MODE=dynamic next build",
+    "build:static": "next build",
+    "build:export": "rm -rf .next && rm -rf out && cross-env NODE_ENV=production next build && next export",
+    "build:no-suspense": "cross-env NEXT_PUBLIC_BUILD_MODE=production USE_SERVER_COMPONENTS=false next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -15,7 +18,7 @@
     "@radix-ui/react-tooltip": "^1.2.6",
     "@uplink-protocol/core": "^0.0.6",
     "@uplink-protocol/form-controller": "^0.2.0",
-    "@uplink-protocol/react": "^0.0.5",
+    "@uplink-protocol/react": "^0.0.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "html-react-parser": "^5.2.5",
@@ -32,6 +35,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
+    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "glob": "^11.0.2",

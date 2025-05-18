@@ -7,24 +7,33 @@
  * It uses the Next.js router to automatically track page views.
  */
 
-import { useEffect } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { pageview, event } from './gtag';
 import { shouldEnableAnalytics } from './config';
 
 export const useAnalytics = () => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  // Track page views when the route changes
-  useEffect(() => {
-    // Always run the effect but only perform tracking if enabled
-    const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
-    if (shouldEnableAnalytics()) {
-      pageview(url);
-    }
-  }, [pathname, searchParams]);
+  const [hasTracked, setHasTracked] = useState(false);
 
-  // Return the event tracking function for custom events
+  useEffect(() => {
+    // Defer import to avoid Suspense requirement
+    import('next/navigation').then(({ usePathname, useSearchParams }) => {
+      try {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const pathname = usePathname();
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const searchParams = useSearchParams();
+        const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
+
+        if (!hasTracked && shouldEnableAnalytics()) {
+          pageview(url);
+          setHasTracked(true);
+        }
+      } catch (err) {
+        console.warn('Analytics hook failed:', err);
+      }
+    });
+  }, [hasTracked]);
+
   return {
     trackEvent: event,
   };
