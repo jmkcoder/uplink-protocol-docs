@@ -1,0 +1,54 @@
+'use client'
+
+import { Badge } from "@/components/ui/badge"
+import "../../syntax-highlight.css"
+import { DocsSidebar } from "@/components/docs/sidebar"
+import { Introduction } from "@/components/docs/uplink-protocol/Introduction"
+import { Installation } from "@/components/docs/uplink-protocol/Installation"
+import { Architecture } from "@/components/docs/uplink-protocol/Architecture"
+import { BasicUsage } from "@/components/docs/uplink-protocol/BasicUsage"
+import { AdvancedFeatures } from "@/components/docs/uplink-protocol/AdvancedFeatures"
+import { RelatedDocs } from "@/components/docs/uplink-protocol/RelatedDocs"
+
+export default function UplinkProtocolPage() {  
+  return (
+    <main className="min-h-screen flex flex-col lg:flex-row bg-background text-foreground">
+      {/* Sidebar */}
+      <DocsSidebar />
+      
+      {/* Main Content */}
+      <div className="flex-1 px-6 py-12 lg:max-w-4xl">
+        {/* Header & Navigation */}
+        <div className="space-y-2 mb-8">
+          <Badge variant="outline">Getting Started</Badge>
+          <h1 className="text-4xl font-bold tracking-tight">Uplink Protocol</h1>
+          <p className="text-muted-foreground text-lg">
+            A framework-agnostic protocol for building reusable frontend logic that works across UI frameworks.
+          </p>
+          
+          <div className="flex gap-3 pt-4">
+            <Badge className="bg-blue-500 text-white hover:bg-blue-600">React</Badge>
+            <Badge className="bg-green-500 text-white hover:bg-green-600">Vue</Badge>
+            <Badge className="bg-orange-500 text-white hover:bg-orange-600">Svelte</Badge>
+            <Badge className="bg-gray-700 text-white hover:bg-gray-800">Vanilla JS</Badge>
+          </div>
+        </div>
+
+        {/* Document Sections */}
+        <section className="space-y-12">
+          <Introduction />
+          
+          <Installation />
+          
+          <Architecture />
+          
+          <BasicUsage />
+          
+          <AdvancedFeatures />
+          
+          <RelatedDocs />
+        </section>
+      </div>
+    </main>
+  )
+}

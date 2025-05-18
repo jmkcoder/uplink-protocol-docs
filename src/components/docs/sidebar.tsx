@@ -98,8 +98,7 @@ export function DocsSidebar() {
       `}>        {/* Sidebar content */}
         <div className="h-full overflow-hidden">
           <div className="h-full overflow-y-auto p-6">
-            <nav className="space-y-4 pr-2">
-              <div className="text-sm font-semibold uppercase text-muted-foreground">Getting Started</div>
+            <nav className="space-y-4 pr-2">              <div className="text-sm font-semibold uppercase text-muted-foreground">Getting Started</div>
               <ul className="space-y-2">
                 <li><Link href="/getting-started" className={getLinkClassName("/getting-started")} onClick={closeSidebar}>Introduction</Link></li>
                 <li className="ml-4 flex items-center">
@@ -110,7 +109,8 @@ export function DocsSidebar() {
                   <span className="text-muted-foreground mr-1 text-xs">§</span>
                   <Link href="/getting-started#usage" className={getLinkClassName("/getting-started#usage")} onClick={closeSidebar}>Framework Integrations</Link>
                 </li>
-              </ul>              <div className="text-sm font-semibold uppercase text-muted-foreground pt-6">Logic</div>
+                <li><Link href="/getting-started/uplink-protocol" className={getLinkClassName("/getting-started/uplink-protocol")} onClick={closeSidebar}>Uplink Protocol</Link></li>
+              </ul><div className="text-sm font-semibold uppercase text-muted-foreground pt-6">Logic</div>
               <ul className="space-y-2">
                 {/* Form Controller with nested links */}
                 <li className="space-y-1">
