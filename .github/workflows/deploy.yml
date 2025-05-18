@@ -35,7 +35,8 @@ jobs:
         uses: actions/configure-pages@v4
 
       - name: Install dependencies
-        run: npm ci
+        # Changed from npm ci to npm ci with legacy-peer-deps flag
+        run: npm ci --legacy-peer-deps
         
       - name: Build with Next.js
         run: npm run build
