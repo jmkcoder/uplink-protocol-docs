@@ -907,11 +907,11 @@ const handleSubmit = () => {
                   <span className="text-zinc-400">vanilla-validation.js</span>
                 </div>
                 <SyntaxHighlighter
-                  code={`import { connectController } from "@uplink-protocol/core";
+                  code={`
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Initialize the form controller with proper configuration
-const form = connectController(FormController({
+const form = FormController({
   steps: [
     {
       id: 'registration',
@@ -948,8 +948,6 @@ const form = connectController(FormController({
       }
     }
   ]
-}), {
-  trackBindings: "all" // For this example, we track all bindings since we use multiple fields
 });
 
 // Add custom cross-field validation
@@ -977,63 +975,33 @@ const confirmPasswordError = document.querySelector('#confirmPasswordError');
 const submitButton = document.querySelector('#submitButton');
 
 // Subscribe to form state changes to update UI
-form.subscribe((state) => {
+form.bindings.formData.subscribe((data) => {
   // Update field values
-  usernameInput.value = state.values.username || '';
-  passwordInput.value = state.values.password || '';
-  confirmPasswordInput.value = state.values.confirmPassword || '';
-  
+  usernameInput.value = data.registration?.username || '';
+  passwordInput.value = data.registration?.password || '';
+  confirmPasswordInput.value = data.registration?.confirmPassword || '';
+});
+
+// Subscribe to field errors
+form.bindings.fieldErrors.subscribe((errors) => {
   // Update error messages
-  usernameError.textContent = state.fieldErrors.username || '';
-  usernameError.style.display = state.fieldErrors.username ? 'block' : 'none';
+  usernameError.textContent = errors.registration?.username || '';
+  usernameError.style.display = errors.registration?.username ? 'block' : 'none';
   
-  passwordError.textContent = state.fieldErrors.password || '';
-  passwordError.style.display = state.fieldErrors.password ? 'block' : 'none';
+  passwordError.textContent = errors.registration?.password || '';
+  passwordError.style.display = errors.registration?.password ? 'block' : 'none';
   
-  confirmPasswordError.textContent = state.fieldErrors.confirmPassword || '';
-  confirmPasswordError.style.display = state.fieldErrors.confirmPassword ? 'block' : 'none';
-  
-  // Update button state
-  submitButton.disabled = !state.isFormValid || !state.isFormDirty;
+  confirmPasswordError.textContent = errors.registration?.confirmPassword || '';
+  confirmPasswordError.style.display = errors.registration?.confirmPassword ? 'block' : 'none';
 });
 
-// Set up form handlers
-document.addEventListener('DOMContentLoaded', () => {
-  // Input event handlers
-  usernameInput.addEventListener('input', (e) => {
-    form.methods.setValue('username', e.target.value);
-  });
-  
-  usernameInput.addEventListener('blur', () => {
-    form.methods.touchField('username');
-  });
-  
-  passwordInput.addEventListener('input', (e) => {
-    form.methods.setValue('password', e.target.value);
-  });
-  
-  passwordInput.addEventListener('blur', () => {
-    form.methods.touchField('password');
-  });
-  
-  confirmPasswordInput.addEventListener('input', (e) => {
-    form.methods.setValue('confirmPassword', e.target.value);
-  });
-  
-  confirmPasswordInput.addEventListener('blur', () => {
-    form.methods.touchField('confirmPassword');
-  });
-  
-  // Form submission
-  document.querySelector('form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    form.methods.submit();
-  });
+// Subscribe to form validity and dirty state
+form.bindings.isFormValid.subscribe((isValid) => {
+  submitButton.disabled = !isValid || !form.bindings.isFormDirty.value;
 });
 
-// Clean up when page unloads
-window.addEventListener('unload', () => {
-  form.methods.unregisterValidator('passwordsMatch');
+form.bindings.isFormDirty.subscribe((isDirty) => {
+  submitButton.disabled = !form.bindings.isFormValid.value || !isDirty;
 });`}
                   language="js"
                 />

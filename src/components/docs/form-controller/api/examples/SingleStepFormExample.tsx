@@ -450,8 +450,7 @@ const handleSubmit = (e) => {
 
           <TabsContent value="vanilla" className="space-y-4">
             <SyntaxHighlighter
-              code={`import { connectController } from " @uplink-protocol/core";
-import { FormController } from "@uplink-protocol/form-controller";
+              code={`import { FormController } from "@uplink-protocol/form-controller";
 
 // Define your form configuration
 const formConfig = {
@@ -482,47 +481,52 @@ const formConfig = {
   ]
 };
 
-// Create a controller instance
-const controller = connectController(() => FormController(formConfig));
+// Create a form controller instance
+const form = FormController(formConfig);
 
 // Get DOM elements
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
 const submitButton = document.getElementById("submit");
-const form = document.getElementById("contact-form");
+const contactForm = document.getElementById("contact-form");
 const nameError = document.getElementById("name-error");
 const emailError = document.getElementById("email-error");
 
-// Listen for state changes
-controller.subscribe((state) => {
+// Listen for state changes with individual bindings
+form.bindings.formData.subscribe((data) => {
   // Update inputs with current values
-  nameInput.value = state.formData.contact?.name || "";
-  emailInput.value = state.formData.contact?.email || "";
-  
+  nameInput.value = data.contact?.name || "";
+  emailInput.value = data.contact?.email || "";
+});
+
+form.bindings.fieldErrors.subscribe((errors) => {
   // Update error messages
-  nameError.textContent = state.fieldErrors.contact?.name || "";
-  nameError.style.display = state.fieldErrors.contact?.name ? "block" : "none";
+  nameError.textContent = errors.contact?.name || "";
+  nameError.style.display = errors.contact?.name ? "block" : "none";
   
-  emailError.textContent = state.fieldErrors.contact?.email || "";
-  emailError.style.display = state.fieldErrors.contact?.email ? "block" : "none";
+  emailError.textContent = errors.contact?.email || "";
+  emailError.style.display = errors.contact?.email ? "block" : "none";
 });
 
 // Setup input change handlers
 nameInput.addEventListener("input", (e) => {
-  controller.methods.updateField('contact', 'name', e.target.value);
+  form.methods.updateField('contact', 'name', e.target.value);
 });
 
 emailInput.addEventListener("input", (e) => {
-  controller.methods.updateField('contact', 'email', e.target.value);
+  form.methods.updateField('contact', 'email', e.target.value);
 });
 
 // Handle form submission
-form.addEventListener("submit", (e) => {
+contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const result = controller.methods.submitForm();
-
-  if (result.success) {
-    console.log('Form data:', result.data);
+  
+  // Validate the form first
+  const isValid = form.methods.validateForm(true);
+  
+  if (isValid) {
+    const formData = form.methods.getFlatData();
+    console.log('Form data:', formData);
     alert("Form submitted successfully!");
   } else {
     alert("Please fix the errors before submitting.");

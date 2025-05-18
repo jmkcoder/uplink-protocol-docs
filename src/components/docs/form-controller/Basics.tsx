@@ -168,12 +168,12 @@ const form = FormController(formConfig);`}
                   <span className="text-zinc-400">react</span>
                 </div>                
                 <SyntaxHighlighter
-                  code={`import { useUplinkController } from "@uplink-protocol/react";
+                  code={`import { useUplink } from "@uplink-protocol/react";
 import { FormController } from "@uplink-protocol/form-controller";
 
 function MyForm() {
-  const { state, methods } = useUplinkController(
-    FormController({
+  const { state, methods } = useUplink(
+    () => FormController({
       steps: [
         {
           id: 'personal',
@@ -188,16 +188,17 @@ function MyForm() {
   );
   
   return (
-    <form onSubmit={(e) => { e.preventDefault(); methods.submit(); }}>
+    <form onSubmit={(e) => { e.preventDefault(); methods.submitForm(); }}>
       <input 
         type="text" 
-        value={state.values.name} 
-        onChange={(e) => methods.setValue("name", e.target.value)}
+        value={state.formData.personal?.name || ""} 
+        onChange={(e) => methods.updateField("personal", "name", e.target.value)}
       />
       <input 
         type="email" 
-        value={state.values.email} 
-        onChange={(e) => methods.setValue("email", e.target.value)}
+        value={state.formData.personal?.email || ""} 
+        onChange={(e) => methods.updateField("personal", "email", e.target.value)}
+      />
       />
       <button type="submit">Submit</button>
     </form>
@@ -313,43 +314,58 @@ function handleSubmit() {
                   <span className="text-zinc-400">javascript</span>
                 </div>
                 <SyntaxHighlighter
-                  code={`import { connectController } from "@uplink-protocol/core";
-import { FormController } from "@uplink-protocol/form-controller";
+                  code={`import { FormController } from "@uplink-protocol/form-controller";
 
-// Create a controller instance
-const controller = connectController(
-  FormController({
-    // Form configuration
-    steps: [
-      {
-        id: 'personal',
-        fields: {
-          name: { id: 'name', type: 'text', required: true },
-          email: { id: 'email', type: 'email', required: true }
-        }
+// Define form configuration
+const formConfig = {
+  steps: [
+    {
+      id: 'personal',
+      fields: {
+        name: { id: 'name', type: 'text', required: true },
+        email: { id: 'email', type: 'email', required: true }
       }
-    ]
-  }),
-  { trackBindings: "all" }
-);
+    }
+  ]
+};
 
-// Listen for state changes
-controller.subscribe((state) => {
-  document.querySelector('#name-input').value = state.values.name;
-  document.querySelector('#email-input').value = state.values.email;
+// Initialize the form controller
+const form = FormController(formConfig);
+
+// Subscribe to form data changes
+form.bindings.formData.subscribe((data) => {
+  document.querySelector('#name-input').value = data.personal?.name || '';
+  document.querySelector('#email-input').value = data.personal?.email || '';
+});
+
+// Subscribe to validation errors
+form.bindings.fieldErrors.subscribe((errors) => {
+  const nameError = document.querySelector('#name-error');
+  if (nameError) {
+    nameError.textContent = errors.personal?.name || '';
+  }
+  
+  const emailError = document.querySelector('#email-error');
+  if (emailError) {
+    emailError.textContent = errors.personal?.email || '';
+  }
 });
 
 // Setup UI interactions
-document.querySelector('#submit-btn').addEventListener('click', () => {
-  controller.methods.submit();
+document.querySelector('#submit-btn').addEventListener('click', (e) => {
+  e.preventDefault();
+  if (form.methods.validateForm(true)) {
+    const formData = form.methods.getFlatData();
+    console.log('Form data:', formData);
+  }
 });
 
 document.querySelector('#name-input').addEventListener('input', (e) => {
-  controller.methods.setValue('name', e.target.value);
+  form.methods.updateField('personal', 'name', e.target.value);
 });
 
 document.querySelector('#email-input').addEventListener('input', (e) => {
-  controller.methods.setValue('email', e.target.value);
+  form.methods.updateField('personal', 'email', e.target.value);
 });`}
                   language="js"
                 />

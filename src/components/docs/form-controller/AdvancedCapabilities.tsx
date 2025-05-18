@@ -465,11 +465,11 @@ const handleSubmit = () => {
                   <span className="text-zinc-400">vanilla-conditional-fields.js</span>
                 </div>
                 <SyntaxHighlighter
-                  code={`import { connectController } from "@uplink-protocol/core";
+                  code={`
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Initialize the form controller
-const form = connectController(FormController({
+const form = (FormController({
   steps: [
     {
       id: 'contact',
@@ -978,11 +978,11 @@ const handleSubmit = () => {
                   <span className="text-zinc-400">vanilla-cross-field-validation.js</span>
                 </div>
                 <SyntaxHighlighter
-                  code={`import { connectController } from "@uplink-protocol/core";
+                  code={`
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Initialize the form controller
-const form = connectController(FormController({
+const form = (FormController({
   steps: [
     {
       id: 'credentials',
@@ -1037,15 +1037,15 @@ const submitButton = document.getElementById('submit-button');
 
 // Setup event listeners
 passwordInput.addEventListener('input', (e) => {
-  form.methods.setValue('password', e.target.value);
+  form.methods.updateField('credentials', 'password', e.target.value);
 });
 
 passwordInput.addEventListener('blur', () => {
-  form.methods.touchField('password');
+  form.methods.touchField('credentials', 'password');
 });
 
 confirmPasswordInput.addEventListener('input', (e) => {
-  form.methods.setValue('confirmPassword', e.target.value);
+  form.methods.updateField('credentials', 'confirmPassword', e.target.value);
 });
 
 confirmPasswordInput.addEventListener('blur', () => {
@@ -1054,26 +1054,31 @@ confirmPasswordInput.addEventListener('blur', () => {
 
 document.getElementById('password-form').addEventListener('submit', (e) => {
   e.preventDefault();
-  if (form.state.isFormValid.value) {
-    console.log('Form submitted:', form.state.formData.value);
+  if (form.methods.validateForm(true)) {
+    const formData = form.methods.getFlatData();
+    console.log('Form submitted:', formData);
   }
 });
 
 // Subscribe to form state changes
-form.subscribe((state) => {
-  // Update UI based on state changes
-  passwordInput.value = state.values.password || '';
-  confirmPasswordInput.value = state.values.confirmPassword || '';
-  
+form.bindings.formData.subscribe((data) => {
+  // Update UI based on data changes
+  passwordInput.value = data.credentials?.password || '';
+  confirmPasswordInput.value = data.credentials?.confirmPassword || '';
+});
+
+form.bindings.fieldErrors.subscribe((errors) => {
   // Update error messages
-  passwordError.textContent = state.fieldErrors.password || '';
-  passwordError.style.display = state.fieldErrors.password ? 'block' : 'none';
+  passwordError.textContent = errors.credentials?.password || '';
+  passwordError.style.display = errors.credentials?.password ? 'block' : 'none';
   
-  confirmPasswordError.textContent = state.fieldErrors.confirmPassword || '';
-  confirmPasswordError.style.display = state.fieldErrors.confirmPassword ? 'block' : 'none';
-  
+  confirmPasswordError.textContent = errors.credentials?.confirmPassword || '';
+  confirmPasswordError.style.display = errors.credentials?.confirmPassword ? 'block' : 'none';
+});
+
+form.bindings.isFormValid.subscribe((isValid) => {
   // Update button state
-  submitButton.disabled = !state.isFormValid;
+  submitButton.disabled = !isValid;
 });
 
 // Cleanup when no longer needed
@@ -1546,11 +1551,11 @@ const handleSubmit = () => {
                   <span className="text-zinc-400">vanilla-form-persistence.js</span>
                 </div>
                 <SyntaxHighlighter
-                  code={`import { connectController } from "@uplink-protocol/core";
+                  code={`
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Initialize the form controller
-const form = connectController(FormController({
+const form = (FormController({
   steps: [
     {
       id: 'userInfo',

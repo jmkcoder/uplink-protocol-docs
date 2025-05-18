@@ -8,7 +8,7 @@ export function Installation() {
     <div className="space-y-4">
       <h2 className="text-3xl font-bold tracking-tight" id="installation">Installation</h2>
       <p className="text-muted-foreground text-lg">
-        Install the core package along with any framework-specific adapters you need:
+        Install the core package :
       </p>
       
       <Card>
@@ -16,17 +16,22 @@ export function Installation() {
           <div className="flex items-center p-2 bg-zinc-900 border-b border-zinc-800 code-block-header">
             <span className="text-zinc-400">npm</span>
           </div>
-          <SyntaxHighlighter code="# Install the core package
-npm install @uplink-protocol/core
+          <SyntaxHighlighter code="
+npm install @uplink-protocol/core" language="shell" />
+        </CardContent>
+      </Card>
 
-# Install framework-specific package (if needed)
-npm install @uplink-protocol/react
-# or
-npm install @uplink-protocol/vue
-# or
-npm install @uplink-protocol/svelte
-# or
-npm install @uplink-protocol/angular" language="shell" />
+      <p className="text-muted-foreground text-lg">
+        Install along framework-specific adapters you need :
+      </p>
+      
+      <Card>
+        <CardContent className="p-0 rounded-xl overflow-hidden">
+          <div className="flex items-center p-2 bg-zinc-900 border-b border-zinc-800 code-block-header">
+            <span className="text-zinc-400">npm</span>
+          </div>
+          <SyntaxHighlighter code="
+npm install @uplink-protocol/react // or /vue or /svelte or /angular" language="shell" />
         </CardContent>
       </Card>
     </div>

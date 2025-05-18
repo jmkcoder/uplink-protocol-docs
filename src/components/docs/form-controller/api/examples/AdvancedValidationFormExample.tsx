@@ -916,7 +916,7 @@ const handleSubmit = (e) => {
 
           <TabsContent value="vanilla" className="space-y-4">
             <SyntaxHighlighter
-              code={`import { connectController } from " @uplink-protocol/core";
+              code={`import {  } from " @uplink-protocol/core";
 import { FormController } from "@uplink-protocol/form-controller";
 
 // Define your form configuration
@@ -988,11 +988,11 @@ const formConfig = {
   ]
 };
 
-// Create controller instance
-const controller = connectController(() => FormController(formConfig));
+// Create form controller instance
+const form = FormController(formConfig);
 
 // DOM element references
-const form = document.getElementById('validation-form');
+const formElement = document.getElementById('validation-form');
 const nameInput = document.getElementById('name');
 const emailInput = document.getElementById('email');
 const subscribeCheckbox = document.getElementById('subscribe');
@@ -1008,7 +1008,7 @@ const passwordError = document.getElementById('password-error');
 const confirmPasswordError = document.getElementById('confirm-password-error');
 
 // Register custom validators
-controller.methods.registerValidator('requiredIf', (value, context) => {
+form.methods.registerValidator('requiredIf', (value, context) => {
   const { dependsOn, dependsOnValue } = context.field.validation.dynamicValidatorParams || {};
   
   if (dependsOn) {
@@ -1028,7 +1028,7 @@ controller.methods.registerValidator('requiredIf', (value, context) => {
   return true; // validation passes
 });
 
-controller.methods.registerValidator('equals', (value, context) => {
+form.methods.registerValidator('equals', (value, context) => {
   const { matchField, errorMessage } = context.field.validation.dynamicValidatorParams || {};
   
   if (matchField) {
@@ -1045,15 +1045,15 @@ controller.methods.registerValidator('equals', (value, context) => {
 
 // Setup event listeners for inputs
 nameInput.addEventListener('input', (e) => {
-  controller.methods.updateField('contact', 'name', e.target.value);
+  form.methods.updateField('contact', 'name', e.target.value);
 });
 
 emailInput.addEventListener('input', (e) => {
-  controller.methods.updateField('contact', 'email', e.target.value);
+  form.methods.updateField('contact', 'email', e.target.value);
 });
 
 subscribeCheckbox.addEventListener('change', (e) => {
-  controller.methods.updateField('contact', 'subscribe', e.target.checked);
+  form.methods.updateField('contact', 'subscribe', e.target.checked);
   
   // Update phone number required label
   const phoneLabel = document.querySelector('label[for="phone"] .required');
@@ -1070,24 +1070,27 @@ subscribeCheckbox.addEventListener('change', (e) => {
 });
 
 phoneInput.addEventListener('input', (e) => {
-  controller.methods.updateField('contact', 'phoneNumber', e.target.value);
+  form.methods.updateField('contact', 'phoneNumber', e.target.value);
 });
 
 passwordInput.addEventListener('input', (e) => {
-  controller.methods.updateField('contact', 'password', e.target.value);
+  form.methods.updateField('contact', 'password', e.target.value);
 });
 
 confirmPasswordInput.addEventListener('input', (e) => {
-  controller.methods.updateField('contact', 'confirmPassword', e.target.value);
+  form.methods.updateField('contact', 'confirmPassword', e.target.value);
 });
 
 // Handle form submission
-form.addEventListener('submit', (e) => {
+formElement.addEventListener('submit', (e) => {
   e.preventDefault();
-  const result = controller.methods.submitForm();
-
-  if (result.success) {
-    console.log('Form data:', result.data);
+  
+  // Validate the entire form
+  const isValid = form.methods.validateForm(true);
+  
+  if (isValid) {
+    const formData = form.methods.getFlatData();
+    console.log('Form data:', formData);
     alert("Form submitted successfully!");
   } else {
     alert("Please fix the errors before submitting.");
@@ -1095,39 +1098,59 @@ form.addEventListener('submit', (e) => {
 });
 
 // Update UI based on state changes
-controller.subscribe((state) => {
+// Subscribe to form data changes
+form.bindings.formData.subscribe((data) => {
   // Update input values
-  nameInput.value = state.formData.contact?.name || '';
-  emailInput.value = state.formData.contact?.email || '';
-  subscribeCheckbox.checked = !!state.formData.contact?.subscribe;
-  phoneInput.value = state.formData.contact?.phoneNumber || '';
-  passwordInput.value = state.formData.contact?.password || '';
-  confirmPasswordInput.value = state.formData.contact?.confirmPassword || '';
+  nameInput.value = data.contact?.name || '';
+  emailInput.value = data.contact?.email || '';
+  subscribeCheckbox.checked = !!data.contact?.subscribe;
+  phoneInput.value = data.contact?.phoneNumber || '';
+  passwordInput.value = data.contact?.password || '';
+  confirmPasswordInput.value = data.contact?.confirmPassword || '';
   
+  // Update required status for phone based on subscription status
+  const existingRequiredMark = phoneLabel.querySelector('.required');
+  if (data.contact?.subscribe) {
+    if (!existingRequiredMark) {
+      const requiredSpan = document.createElement('span');
+      requiredSpan.className = 'required';
+      requiredSpan.textContent = '*';
+      phoneLabel.appendChild(requiredSpan);
+    }
+  } else if (existingRequiredMark) {
+    existingRequiredMark.remove();
+  }
+});
+
+// Subscribe to error changes
+form.bindings.fieldErrors.subscribe((errors) => {
   // Update error messages
-  nameError.textContent = state.fieldErrors.contact?.name || '';
-  nameError.style.display = state.fieldErrors.contact?.name ? 'block' : 'none';
+  nameError.textContent = errors.contact?.name || '';
+  nameError.style.display = errors.contact?.name ? 'block' : 'none';
   
-  emailError.textContent = state.fieldErrors.contact?.email || '';
-  emailError.style.display = state.fieldErrors.contact?.email ? 'block' : 'none';
+  emailError.textContent = errors.contact?.email || '';
+  emailError.style.display = errors.contact?.email ? 'block' : 'none';
   
-  phoneError.textContent = state.fieldErrors.contact?.phoneNumber || '';
-  phoneError.style.display = state.fieldErrors.contact?.phoneNumber ? 'block' : 'none';
+  phoneError.textContent = errors.contact?.phoneNumber || '';
+  phoneError.style.display = errors.contact?.phoneNumber ? 'block' : 'none';
   
-  passwordError.textContent = state.fieldErrors.contact?.password || '';
-  passwordError.style.display = state.fieldErrors.contact?.password ? 'block' : 'none';
+  passwordError.textContent = errors.contact?.password || '';
+  passwordError.style.display = errors.contact?.password ? 'block' : 'none';
   
-  confirmPasswordError.textContent = state.fieldErrors.contact?.confirmPassword || '';
-  confirmPasswordError.style.display = state.fieldErrors.contact?.confirmPassword ? 'block' : 'none';
-  
+  confirmPasswordError.textContent = errors.contact?.confirmPassword || '';
+  confirmPasswordError.style.display = errors.contact?.confirmPassword ? 'block' : 'none';
+});
+
+// Subscribe to form validity changes
+form.bindings.isFormValid.subscribe((isValid) => {
   // Update submit button state
-  submitButton.disabled = !state.isFormValid;
+  submitButton.disabled = !isValid;
 });
 
 // Clean up validators when page unloads
 window.addEventListener('unload', () => {
-  controller.methods.unregisterValidator('requiredIf');
-  controller.methods.unregisterValidator('equals');
+  form.methods.unregisterValidator('requiredIf');
+  form.methods.unregisterValidator('equals');
 });`}
               language="js"
             />

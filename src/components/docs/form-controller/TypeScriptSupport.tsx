@@ -56,7 +56,7 @@ export function TypeScriptSupport() {
               </div>
             </div>
             <SyntaxHighlighter
-              code={`import { FormController, FormConfig, Field } from '@uplink-protocol/form-controller';
+              code={`import { FormController, FormConfig } from '@uplink-protocol/form-controller';
 
 // Define your form configuration with proper types
 const formConfig: FormConfig = {
@@ -587,7 +587,7 @@ export default defineComponent({
                   <span className="text-zinc-400">vanilla-typescript.ts</span>
                 </div>
                 <SyntaxHighlighter
-                  code={`import { connectController } from "@uplink-protocol/core";
+                  code={`
 import { FormController, FormConfig, Field } from "@uplink-protocol/form-controller";
 
 // Define your form data type
@@ -664,7 +664,7 @@ const formConfig: FormConfig<UserForm> = {
 };
 
 // Initialize the form controller with type parameters
-const form = connectController(() => FormController<UserForm>(formConfig));
+const form = FormController<UserForm>(formConfig);
 
 // DOM elements
 const nameInput = document.getElementById('name') as HTMLInputElement;
@@ -683,23 +683,27 @@ nameInput.addEventListener('blur', () => {
 });
 
 // Subscribe to form state with types
-form.subscribe((state) => {
+form.bindings.formData.subscribe((data) => {
   // TypeScript ensures type safety
-  const name: string = state.values.name || '';
-  const isValid: boolean = state.isFormValid;
+  const name: string = data.personal?.name || '';
   
   // Update UI with typed values
   nameInput.value = name;
-  nextButton.disabled = !state.stepsValidity.personal;
   
-  // Control step visibility
+  // Control step visibility based on current step
   const personalStep = document.getElementById('personal-step');
   const preferencesStep = document.getElementById('preferences-step');
   
   if (personalStep && preferencesStep) {
-    personalStep.style.display = state.currentStep === 'personal' ? 'block' : 'none';
-    preferencesStep.style.display = state.currentStep === 'preferences' ? 'block' : 'none';
+    personalStep.style.display = form.methods.getCurrentStep() === 'personal' ? 'block' : 'none';
+    preferencesStep.style.display = form.methods.getCurrentStep() === 'preferences' ? 'block' : 'none';
   }
+});
+
+// Subscribe to validity
+form.bindings.stepsValidity.subscribe((validity) => {
+  // Enable/disable next button based on step validity
+  nextButton.disabled = !validity.personal;
 });
 
 // Type-safe event handlers
@@ -710,9 +714,10 @@ document.getElementById('next-button')?.addEventListener('click', () => {
 document.getElementById('form')?.addEventListener('submit', (e) => {
   e.preventDefault();
   
-  if (form.state.isFormValid.value) {
+  const isValid = form.methods.validateForm(true);
+  if (isValid) {
     // Type-safe access to form data
-    const formData = form.state.formData.value;
+    const formData = form.methods.getFlatData();
     console.log('Form submitted with:', formData);
   }
 });`}
@@ -794,7 +799,7 @@ form.methods.onSubmit(() => {
               </div>
             </div>
             <SyntaxHighlighter
-              code={`import { FormController, FormConfig, Field } from '@uplink-protocol/form-controller';
+              code={`import { FormController, FormConfig } from '@uplink-protocol/form-controller';
 
 // Define a custom form data model with specific types
 interface UserFormData {

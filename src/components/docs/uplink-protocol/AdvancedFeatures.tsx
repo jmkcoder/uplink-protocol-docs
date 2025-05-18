@@ -61,7 +61,7 @@ class CustomAdapter implements AdapterInterface {
     // Initialization logic
   }
   
-  connectController(controller: Controller, element: HTMLElement): void {
+  (controller: Controller, element: HTMLElement): void {
     // Connect controller to the element
   }
   
