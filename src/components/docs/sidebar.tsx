@@ -91,10 +91,10 @@ export function DocsSidebar() {
         />
       )}      {/* Sidebar */}
       <div className={`
-        fixed top-16 left-0 z-40 h-[calc(100vh-4rem)] w-[280px] bg-background border-r border-border shadow-lg
+        fixed top-15 left-0 z-40 h-[calc(100vh-4rem)] w-[280px] bg-background border-r border-border shadow-lg
         transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-        lg:translate-x-0 lg:w-64 lg:shadow-none lg:sticky lg:top-16
+        lg:translate-x-0 lg:w-64 lg:shadow-none lg:sticky
       `}>        {/* Sidebar content */}
         <div className="h-full overflow-hidden">
           <div className="h-full overflow-y-auto p-6">
