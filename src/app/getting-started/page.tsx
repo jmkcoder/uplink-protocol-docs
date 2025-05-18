@@ -76,7 +76,7 @@ export default function GettingStarted() {
                 <div className="flex items-center p-2 bg-zinc-900 border-b border-zinc-800 code-block-header">
                   <span className="text-zinc-400">npm</span>
                 </div>
-                <SyntaxHighlighter code="npm install @uplink-protocol/core   @uplink-protocol/form-controller-controller" language="shell" />
+                <SyntaxHighlighter code="npm install @uplink-protocol/core   @uplink-protocol/form-controller" language="shell" />
               </CardContent>
             </Card>
           </div>
