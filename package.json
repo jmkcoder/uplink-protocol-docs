@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
-    "build:github": "cross-env NODE_ENV=production NEXT_PUBLIC_BASE_PATH=/uplink-docs next build && next export",
+    "build:github": "cross-env NEXT_PUBLIC_BASE_PATH=/uplink-docs next build",
     "start": "next start",
     "lint": "next lint"
   },
