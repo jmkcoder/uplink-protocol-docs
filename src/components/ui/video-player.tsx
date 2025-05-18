@@ -41,13 +41,18 @@ export function VideoPlayer({
     '1:1': 'aspect-square',
   }[aspectRatio];
   
+  // Prefix src and poster with basePath if they're relative URLs
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const fullSrc = src.startsWith('http') ? src : `${basePath}${src}`;
+  const fullPoster = poster && !poster.startsWith('http') ? `${basePath}${poster}` : poster;
+  
   return (
     <Card className={`overflow-hidden ${className}`}>
       <div className={`${aspectRatioClass} relative bg-gray-100`}>
         <video
           ref={videoRef}
-          src={src}
-          poster={poster}
+          src={fullSrc}
+          poster={fullPoster}
           controls
           preload="metadata"
           className={`absolute inset-0 w-full h-full ${objectFit === 'contain' ? 'object-contain' : 'object-cover'}`}

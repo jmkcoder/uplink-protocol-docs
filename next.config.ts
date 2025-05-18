@@ -19,12 +19,14 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   output: 'export',
-  // Remove trailing slash for GitHub Pages compatibility
-  trailingSlash: false,
-  // Base path for GitHub Pages deployment
-  basePath: basePath,
-  // Add asset prefix for GitHub Pages
-  assetPrefix: basePath,
+  // Use the environment variable for basePath
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  // Add trailing slash for GitHub Pages compatibility
+  trailingSlash: true,
+  // Disable image optimization for static exports
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
