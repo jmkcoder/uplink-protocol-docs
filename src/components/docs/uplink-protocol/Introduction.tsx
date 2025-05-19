@@ -4,22 +4,21 @@ import { Card, CardContent } from "@/components/ui/card"
 
 export function Introduction() {
   return (
-    <div className="space-y-6">
-      <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-6 rounded-lg">
-        <h2 className="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-4">Uplink Protocol: Write Once, Use Everywhere</h2>
-        <p className="text-lg mb-4">
+    <div className="space-y-6">      <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 sm:p-6 rounded-lg">
+        <h2 className="text-xl sm:text-2xl font-bold text-blue-700 dark:text-blue-300 mb-3 sm:mb-4">Uplink Protocol: Write Once, Use Everywhere</h2>
+        <p className="text-base sm:text-lg mb-3 sm:mb-4">
           The Uplink Protocol is a comprehensive system for building UI-agnostic logic that can be reused across different frontend frameworks. It solves the problem of duplicating business logic when working with multiple frameworks or migrating between them.
         </p>
-        <p className="text-muted-foreground">
+        <p className="text-sm sm:text-base text-muted-foreground">
           With Uplink, you can write your core functionality once and then use it with React, Vue, Svelte, or plain JavaScript without any rewrites.
         </p>
       </div>
       
-      <p className="text-lg leading-relaxed">
+      <p className="text-base sm:text-lg leading-relaxed">
         Uplink takes a declarative approach to application logic, allowing developers to define controllers, bindings, and events independently of the UI layer. This results in cleaner separation of concerns, improved testability, and enhanced code reuse.
       </p>
       
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
         <Card className="overflow-hidden border-primary/10 transition-all hover:shadow-md">
           <CardContent className="p-6 space-y-2">
             <div className="flex items-center gap-3">

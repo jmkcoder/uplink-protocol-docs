@@ -247,9 +247,8 @@ export default function ContactUs() {
     };
 
     return (
-        <main className="min-h-screen bg-background text-foreground">
-            {/* Hero Section */}
-            <section className="py-16 px-4 md:px-6 text-center relative overflow-hidden">
+        <main className="min-h-screen bg-background text-foreground">            {/* Hero Section */}
+            <section className="py-10 md:py-16 px-4 md:px-6 text-center relative overflow-hidden">
                 {/* Background elements */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-background z-0"></div>
                 <div className="absolute inset-0 z-0">
@@ -301,11 +300,9 @@ export default function ContactUs() {
                         Our team is here to help you succeed.
                     </p>
                 </div>
-            </section>
-
-            {/* Contact Form Section */}
+            </section>            {/* Contact Form Section */}
             <section className="py-12 px-4 md:px-6 max-w-5xl mx-auto relative z-10">
-                <div className="grid md:grid-cols-[2fr_1fr] gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 md:gap-8">
                     <div className="animate-fade-in animation-delay-300">
                         <Card className="border border-primary/10 overflow-hidden">
                             <CardHeader className="px-6 py-5 bg-gradient-to-r from-primary/5 to-secondary/5">
@@ -403,8 +400,7 @@ export default function ContactUs() {
                                         type="submit"
                                         className="w-full md:w-auto mt-2"
                                         disabled={isSubmitting}
-                                    >
-                                        {isSubmitting ? (
+                                    >                                        {isSubmitting ? (
                                             <>
                                                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -412,7 +408,7 @@ export default function ContactUs() {
                                                 </svg>
                                                 Sending...
                                             </>
-                                        ) : isSubmitting ? (
+                                        ) : state.formSubmissionStatus === 'success' ? (
                                             <>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
                                                     <path d="M20 6L9 17l-5-5" />
@@ -483,11 +479,10 @@ export default function ContactUs() {
                                                 <path d="M9 18c-4.51 2-5-2-7-2" />
                                         </svg>
                                         </div>
-                                        <div>
-                                            <h4 className="text-sm font-medium">GitHub Repository</h4>
+                                        <div>                                            <h4 className="text-sm font-medium">GitHub Repository</h4>
                                             <a
                                                 href="https://github.com/jmkcoder/odyssey-uplink-protocol"
-                                                className="text-primary text-sm hover:underline"
+                                                className="text-primary text-sm hover:underline break-all"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 onClick={() => trackEvent({
@@ -505,11 +500,9 @@ export default function ContactUs() {
                         </Card>
                     </div>
                 </div>
-            </section>
-
-            {/* Quote Section */}
-            <section className="py-10 px-4 md:px-6 max-w-5xl mx-auto relative z-10">
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-8 md:p-12 relative overflow-hidden shadow-lg border border-primary/20 animate-fade-in animation-delay-200">
+            </section>            {/* Quote Section */}
+            <section className="py-8 md:py-10 px-4 md:px-6 max-w-5xl mx-auto relative z-10">
+                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-6 md:p-12 relative overflow-hidden shadow-lg border border-primary/20 animate-fade-in animation-delay-200">
                     {/* Abstract data flow graphic */}
                     <div className="absolute inset-0 opacity-10">
                         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -523,19 +516,19 @@ export default function ContactUs() {
                     </div>
                     
                     <div className="relative z-10">
-                        <svg className="text-primary w-12 h-12 mb-6 opacity-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg className="text-primary w-8 md:w-12 h-8 md:h-12 mb-4 md:mb-6 opacity-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
                             <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" />
                         </svg>
                         
-                        <blockquote className="text-lg md:text-2xl font-medium italic text-primary mb-4 md:mb-6">
+                        <blockquote className="text-base md:text-2xl font-medium italic text-primary mb-4 md:mb-6 break-words">
                             This contact experience isn't just a form — it's a showcase of Uplink Protocol's real-time data binding and state management capabilities in action.
                         </blockquote>
                         
                         <div className="flex items-center">
-                            <div className="mr-4">
-                                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                            <div className="mr-3 md:mr-4">
+                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
                                         <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                                     </svg>
                                 </div>
@@ -545,10 +538,9 @@ export default function ContactUs() {
                                 <p className="text-xs md:text-sm text-muted-foreground">Powered by Uplink Protocol</p>
                             </div>
                         </div>
-                        
-                        <div className="absolute bottom-4 right-4 md:bottom-6 md:right-8">
-                            <Badge variant="outline" className="bg-background/80 text-xs">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                          <div className="absolute bottom-3 right-3 md:bottom-6 md:right-8">
+                            <Badge variant="outline" className="bg-background/80 text-[10px] md:text-xs flex items-center whitespace-nowrap">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1 flex-shrink-0">
                                     <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
                                     <path d="m12 18 3-4.5a2.5 2.5 0 0 0 0-2.9l-2.95-2.95a3.2 3.2 0 0 0-4.5 0l-3 2.95a2.5 2.5 0 0 0 0 2.9L9 18a4.24 4.24 0 0 0 3 0z" />
                                 </svg>
@@ -557,16 +549,14 @@ export default function ContactUs() {
                         </div>
                     </div>
                 </div>
-            </section>
-
-            {/* FAQ Section */}
-            <section className="py-16 px-4 md:px-6 max-w-5xl mx-auto">
-                <div className="text-center mb-12">
+            </section>            {/* FAQ Section */}
+            <section className="py-12 md:py-16 px-4 md:px-6 max-w-5xl mx-auto">
+                <div className="text-center mb-8 md:mb-12">
                     <h3 className="text-2xl md:text-3xl font-bold text-primary">Frequently Asked Questions</h3>
                     <p className="text-muted-foreground mt-2">Quick answers to common questions</p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Card className="border border-primary/10 bg-gradient-to-br from-background to-primary/5 animate-fade-in animation-delay-500">
                         <CardContent className="p-6">
                             <h4 className="text-lg font-semibold mb-2">How quickly will you respond to my inquiry?</h4>

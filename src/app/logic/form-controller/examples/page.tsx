@@ -18,34 +18,30 @@ export default function FormControllerExamples() {
   return (
     <main className="min-h-screen flex flex-col lg:flex-row bg-background text-foreground">
       {/* Sidebar */}
-      <DocsSidebar />
-      {/* Main Content */}
-      <div className="flex-1 px-6 py-12 lg:max-w-4xl">
+      <DocsSidebar />      {/* Main Content */}
+      <div className="flex-1 px-4 sm:px-6 py-8 sm:py-12 lg:max-w-4xl">
         {/* Header & Navigation */}
-        <div className="space-y-2 mb-8">
+        <div className="space-y-2 mb-6 sm:mb-8">
           <Badge variant="outline">Logic</Badge>
-          <h1 className="text-4xl font-bold tracking-tight">Form Controller</h1>
-          <p className="text-muted-foreground text-lg">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Form Controller</h1>
+          <p className="text-muted-foreground text-base sm:text-lg">
             A lightweight yet powerful form management system for building dynamic, multi-step forms with advanced validation capabilities.
-          </p>
-
-          <div className="flex gap-4 pt-4 border-b border-border">
-            <Link href="/logic/form-controller/overview" className="text-muted-foreground hover:text-foreground pb-2">Overview</Link>
-            <Link href="/logic/form-controller/api" className="text-muted-foreground hover:text-foreground pb-2">API</Link>
-            <Link href="/logic/form-controller/examples" className="font-medium text-primary border-b-2 border-primary pb-2">Examples</Link>
+          </p>          <div className="flex flex-wrap gap-3 sm:gap-4 pt-4 border-b border-border">
+            <Link href="/logic/form-controller/overview" className="text-muted-foreground hover:text-foreground pb-2 text-sm sm:text-base">Overview</Link>
+            <Link href="/logic/form-controller/api" className="text-muted-foreground hover:text-foreground pb-2 text-sm sm:text-base">API</Link>
+            <Link href="/logic/form-controller/examples" className="font-medium text-primary border-b-2 border-primary pb-2 text-sm sm:text-base">Examples</Link>
           </div>
         </div>        {/* Examples Content */}
         <section className="space-y-4">
-          <h2 className="text-3xl font-bold tracking-tight mb-2">Examples</h2>
-          <p className="text-muted-foreground text-lg mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Examples</h2>
+          <p className="text-muted-foreground text-base sm:text-lg mb-4 sm:mb-6">
             Explore interactive examples of Form Controller in action.
           </p>
 
-          {/* Examples Tabs */}
-          <div className="mb-8">
+          {/* Examples Tabs */}          <div className="mb-6 sm:mb-8">
             <Tabs defaultValue="single-step" className="w-full">
-              <TabsList className="mb-8 md:mb-4 w-full flex flex-wrap justify-start gap-2">
-                <TabsTrigger value="single-step" className="py-2 px-4 flex items-center gap-1.5 text-xs sm:text-sm" onClick={() => {
+              <TabsList className="mb-6 sm:mb-4 w-full grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-start gap-2 sm:gap-3">
+                <TabsTrigger value="single-step" className="py-1.5 sm:py-2 px-2 sm:px-4 flex items-center gap-1 text-xs sm:text-sm" onClick={() => {
                   document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                     panel.classList.add('hidden');
                     panel.setAttribute('data-state', 'inactive');
@@ -59,8 +55,7 @@ export default function FormControllerExamples() {
                     <path d="M12 16V8" />
                   </svg>
                   <span>Single-Step</span>
-                </TabsTrigger>
-                <TabsTrigger value="multi-step" className="py-2 px-4 flex items-center gap-1.5 text-xs sm:text-sm" onClick={() => {
+                </TabsTrigger>                <TabsTrigger value="multi-step" className="py-1.5 sm:py-2 px-2 sm:px-4 flex items-center gap-1 text-xs sm:text-sm" onClick={() => {
                   document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                     panel.classList.add('hidden');
                     panel.setAttribute('data-state', 'inactive');
@@ -78,7 +73,7 @@ export default function FormControllerExamples() {
                   </svg>
                   <span>Multi-Step</span>
                 </TabsTrigger>
-                <TabsTrigger value="advanced-validation" className="py-2 px-4 flex items-center gap-1.5 text-xs sm:text-sm" onClick={() => {
+                <TabsTrigger value="advanced-validation" className="py-1.5 sm:py-2 px-2 sm:px-4 flex items-center gap-1 text-xs sm:text-sm" onClick={() => {
                   document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                     panel.classList.add('hidden');
                     panel.setAttribute('data-state', 'inactive');
@@ -91,8 +86,7 @@ export default function FormControllerExamples() {
                     <path d="m9 12 2 2 4-4" />
                   </svg>
                   <span>Advanced</span>
-                </TabsTrigger>
-                <TabsTrigger value="async-validation" className="py-2 px-4 flex items-center gap-1.5 text-xs sm:text-sm" onClick={() => {
+                </TabsTrigger>                <TabsTrigger value="async-validation" className="py-1.5 sm:py-2 px-2 sm:px-4 flex items-center gap-1 text-xs sm:text-sm" onClick={() => {
                   document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                     panel.classList.add('hidden');
                     panel.setAttribute('data-state', 'inactive');

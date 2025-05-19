@@ -60,19 +60,18 @@ export default function RootLayout({
         <AnalyticsProvider>
           <ToastProvider>
             <SidebarProvider>
-          {/* Header */}
-          <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
-            <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-              <div className="flex items-center gap-2">
+          {/* Header */}          <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
+            <div className="max-w-6xl mx-auto px-3 md:px-4 py-3 flex justify-between items-center">
+              <div className="flex items-center gap-1 md:gap-2">
                 <SidebarToggle />
-                <Link href="/" className="flex items-center gap-2">
-                  <h1 className="text-xl font-bold tracking-tight text-primary">Uplink Protocol</h1>
+                <Link href="/" className="flex items-center">
+                  <h1 className="text-lg md:text-xl font-bold tracking-tight text-primary">Uplink Protocol</h1>
                 </Link>
               </div>
               <div className="hidden md:block w-64">
               </div>
               <nav>
-                <ul className="flex items-center gap-6">
+                <ul className="flex items-center gap-2 md:gap-6">
                   <li>
                     <Link href="/contact-us" className="text-muted-foreground hover:text-foreground transition-colors">
                       <Button variant="ghost" size="sm" className="gap-2 cursor-pointer">

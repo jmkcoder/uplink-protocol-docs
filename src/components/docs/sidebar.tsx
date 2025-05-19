@@ -95,9 +95,8 @@ export function DocsSidebar() {
         transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
         lg:translate-x-0 lg:w-64 lg:shadow-none lg:sticky
-      `}>        {/* Sidebar content */}
-        <div className="h-full overflow-hidden">
-          <div className="h-full overflow-y-auto p-6">
+      `}>        {/* Sidebar content */}        <div className="h-full overflow-hidden">
+          <div className="h-full overflow-y-auto px-4 py-6 sm:p-6">
             <nav className="space-y-4 pr-2">              <div className="text-sm font-semibold uppercase text-muted-foreground">Getting Started</div>
               <ul className="space-y-2">
                 <li><Link href="/getting-started" className={getLinkClassName("/getting-started")} onClick={closeSidebar}>Introduction</Link></li>

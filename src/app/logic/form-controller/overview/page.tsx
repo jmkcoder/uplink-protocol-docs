@@ -92,26 +92,23 @@ Yes, Form Controller works perfectly with vanilla JavaScript without any framewo
       
       {/* Sidebar */}
       <DocsSidebar />
-      
-      {/* Main Content */}
-      <div className="flex-1 px-6 py-12 lg:max-w-4xl">
+        {/* Main Content */}
+      <div className="flex-1 px-4 sm:px-6 py-8 sm:py-12 lg:max-w-4xl">
         {/* Header & Navigation */}
-        <div className="space-y-2 mb-8">
+        <div className="space-y-2 mb-6 sm:mb-8">
           <Badge variant="outline">Logic</Badge>
-          <h1 className="text-4xl font-bold tracking-tight">Form Controller</h1>
-          <p className="text-muted-foreground text-lg">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Form Controller</h1>
+          <p className="text-muted-foreground text-base sm:text-lg">
             A flexible, reactive form management system for both multi-step and single-step forms with advanced validation capabilities.
           </p>
           
-          <div className="flex gap-4 pt-4 border-b border-border">
-            <Link href="/logic/form-controller/overview" className="font-medium text-primary border-b-2 border-primary pb-2">Overview</Link>
-            <Link href="/logic/form-controller/api" className="text-muted-foreground hover:text-foreground pb-2">API</Link>
-            <Link href="/logic/form-controller/examples" className="text-muted-foreground hover:text-foreground pb-2">Examples</Link>
+          <div className="flex flex-wrap gap-3 sm:gap-4 pt-4 border-b border-border">
+            <Link href="/logic/form-controller/overview" className="font-medium text-primary border-b-2 border-primary pb-2 text-sm sm:text-base">Overview</Link>
+            <Link href="/logic/form-controller/api" className="text-muted-foreground hover:text-foreground pb-2 text-sm sm:text-base">API</Link>
+            <Link href="/logic/form-controller/examples" className="text-muted-foreground hover:text-foreground pb-2 text-sm sm:text-base">Examples</Link>
           </div>
-        </div>
-
-        {/* Overview Content */}
-        <section className="space-y-12">
+        </div>        {/* Overview Content */}
+        <section className="space-y-8 sm:space-y-12">
           {/* Introduction Component */}
           <Introduction />
           

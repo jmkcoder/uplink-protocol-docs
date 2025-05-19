@@ -61,9 +61,8 @@ export default function HomePage() {
             <a href="/analytics" className="ml-1 underline">View analytics documentation</a>
           </p>
         </div>
-      )}
-      {/* Hero Section */}
-      <section className="py-24 px-4 md:px-6 text-center relative overflow-hidden">
+      )}      {/* Hero Section */}
+      <section className="py-16 md:py-24 px-4 md:px-6 text-center relative overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-background z-0"></div>
         <div className="absolute inset-0 z-0">

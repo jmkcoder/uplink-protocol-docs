@@ -4,22 +4,21 @@ import { Card, CardContent } from "@/components/ui/card"
 
 export function Introduction() {
   return (
-    <div className="space-y-6">
-      <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-6 rounded-lg">
-        <h2 className="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-4">Form Controller: The Complete Solution for Form Management</h2>
-        <p className="text-lg mb-4">
+    <div className="space-y-6">      <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 sm:p-6 rounded-lg">
+        <h2 className="text-xl sm:text-2xl font-bold text-blue-700 dark:text-blue-300 mb-3 sm:mb-4">Form Controller: The Complete Solution for Form Management</h2>
+        <p className="text-base sm:text-lg mb-3 sm:mb-4">
           Form Controller is a powerful, reactive form management system designed to handle all aspects of form interaction in modern web applications. From simple contact forms to complex multi-page wizards with conditional logic, Form Controller provides a comprehensive solution with minimal boilerplate code.
         </p>
-        <p className="text-muted-foreground">
+        <p className="text-sm sm:text-base text-muted-foreground">
           It handles state management, validation, data collection, error handling, and UI interactions through a well-structured, predictable system that integrates with all major frontend frameworks.
         </p>
       </div>
       
-      <p className="text-lg leading-relaxed">
+      <p className="text-base sm:text-lg leading-relaxed">
         Form Controller takes a declarative approach to form management, allowing developers to define form structure and behavior through configuration rather than imperative code. This results in cleaner codebases, improved maintainability, and faster development cycles.
       </p>
       
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
         <Card className="overflow-hidden border-primary/10 transition-all hover:shadow-md">
           <CardContent className="p-6 space-y-2">
             <div className="flex items-center gap-3">

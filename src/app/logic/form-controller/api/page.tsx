@@ -14,10 +14,8 @@ const FormControllerApiPage: React.FC = () => {
   return (
     <main className="min-h-screen flex flex-col lg:flex-row bg-background text-foreground">
       {/* Sidebar */}
-      <DocsSidebar />
-
-      {/* Main Content */}
-      <div className="flex-1 px-6 py-12 lg:max-w-4xl">
+      <DocsSidebar />      {/* Main Content */}
+      <div className="flex-1 px-4 sm:px-6 py-8 sm:py-12 lg:max-w-4xl">
         {/* Header & Navigation */}
         <div className="space-y-2 mb-8">
           <Badge variant="outline">Logic</Badge>
@@ -27,24 +25,22 @@ const FormControllerApiPage: React.FC = () => {
           <p className="text-muted-foreground text-lg">
             Detailed documentation for the FormController, its methods,
             configuration, state management, and validation capabilities.
-          </p>
-
-          <div className="flex gap-4 pt-4 border-b border-border">
+          </p>          <div className="flex flex-wrap gap-3 sm:gap-4 pt-4 border-b border-border">
             <Link
               href="/logic/form-controller/overview"
-              className="text-muted-foreground hover:text-foreground pb-2"
+              className="text-muted-foreground hover:text-foreground pb-2 text-sm sm:text-base"
             >
               Overview
             </Link>
             <Link
               href="/logic/form-controller/api"
-              className="font-medium text-primary border-b-2 border-primary pb-2"
+              className="font-medium text-primary border-b-2 border-primary pb-2 text-sm sm:text-base"
             >
               API
             </Link>
             <Link
               href="/logic/form-controller/examples"
-              className="text-muted-foreground hover:text-foreground pb-2"
+              className="text-muted-foreground hover:text-foreground pb-2 text-sm sm:text-base"
             >
               Examples
             </Link>

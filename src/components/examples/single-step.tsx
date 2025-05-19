@@ -49,12 +49,11 @@ function DynamicFormStepper() {
       alert("Please fix the errors before submitting.");
     }
   };
-
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "15px" }}>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "16px" }}>
-          <label style={{ display: "block", marginBottom: "8px" }}>
+          <label style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}>
             Full Name <span style={{ color: "red" }}>*</span>
           </label>
           <input 
@@ -66,17 +65,16 @@ function DynamicFormStepper() {
               padding: "8px 12px",
               borderRadius: "4px",
               border: state.fieldErrors.contact?.name ? "1px solid red" : "1px solid #ccc",
+              fontSize: "14px"
             }}
           />
           {state.fieldErrors.contact?.name && (
-            <div style={{ color: "red", fontSize: "14px", marginTop: "4px" }}>
+            <div style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>
               {state.fieldErrors.contact.name}
             </div>
           )}
-        </div>
-
-        <div style={{ marginBottom: "16px" }}>
-          <label style={{ display: "block", marginBottom: "8px" }}>
+        </div>        <div style={{ marginBottom: "16px" }}>
+          <label style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}>
             Email Address <span style={{ color: "red" }}>*</span>
           </label>
           <input 
@@ -88,24 +86,24 @@ function DynamicFormStepper() {
               padding: "8px 12px",
               borderRadius: "4px",
               border: state.fieldErrors.contact?.email ? "1px solid red" : "1px solid #ccc",
+              fontSize: "14px" 
             }}
           />
           {state.fieldErrors.contact?.email && (
-            <div style={{ color: "red", fontSize: "14px", marginTop: "4px" }}>
+            <div style={{ color: "red", fontSize: "12px", marginTop: "4px" }}>
               {state.fieldErrors.contact.email}
             </div>
           )}
-        </div>
-
-        <button 
+        </div>        <button 
           type="submit" 
           style={{
-            padding: "10px 20px",
+            padding: "8px 16px",
             backgroundColor: "#3498db",
             color: "white",
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
+            fontSize: "14px",
           }}
         >
           Submit
@@ -115,23 +113,24 @@ function DynamicFormStepper() {
       {/* Debug information */}
       <div
         style={{
-          marginTop: "40px",
-          padding: "15px",
+          marginTop: "30px",
+          padding: "12px",
           backgroundColor: "#f8f9fa",
           borderRadius: "4px",
-          fontSize: "14px",
+          fontSize: "13px",
           border: "1px solid #dee2e6",
         }}
       >
-        <h3 style={{ margin: "0 0 10px 0" }}>Debug Information</h3>
-        <div style={{ marginTop: "10px" }}>
+        <h3 style={{ margin: "0 0 8px 0", fontSize: "15px" }}>Debug Information</h3>
+        <div style={{ marginTop: "8px" }}>
           <strong>Form Data:</strong>
           <pre
             style={{
               backgroundColor: "#f1f1f1",
-              padding: "10px",
+              padding: "8px",
               overflowX: "auto",
               margin: "5px 0 0 0",
+              fontSize: "12px",
             }}
           >
             {JSON.stringify(state.formData, null, 2)}
