@@ -34,7 +34,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/",
+  "start_url": "/uplink-protocol-docs",
   "display": "standalone",
   "theme_color": "#3b82f6",
   "background_color": "#ffffff",
