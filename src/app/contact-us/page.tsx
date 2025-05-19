@@ -486,7 +486,7 @@ export default function ContactUs() {
                                         <div>
                                             <h4 className="text-sm font-medium">GitHub Repository</h4>
                                             <a
-                                                href="https://github.com/your-repo-url"
+                                                href="https://github.com/jmkcoder/odyssey-uplink-protocol"
                                                 className="text-primary text-sm hover:underline"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
@@ -496,7 +496,7 @@ export default function ContactUs() {
                                                     label: 'GitHub Repository'
                                                 })}
                                             >
-                                                github.com/your-repo-url
+                                                github.com/jmkcoder/odyssey-uplink-protocol
                                             </a>
                                         </div>
                                     </div>
@@ -556,6 +556,60 @@ export default function ContactUs() {
                             </Badge>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="py-16 px-4 md:px-6 max-w-5xl mx-auto">
+                <div className="text-center mb-12">
+                    <h3 className="text-2xl md:text-3xl font-bold text-primary">Frequently Asked Questions</h3>
+                    <p className="text-muted-foreground mt-2">Quick answers to common questions</p>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                    <Card className="border border-primary/10 bg-gradient-to-br from-background to-primary/5 animate-fade-in animation-delay-500">
+                        <CardContent className="p-6">
+                            <h4 className="text-lg font-semibold mb-2">How quickly will you respond to my inquiry?</h4>
+                            <p className="text-muted-foreground text-sm">We typically respond to all inquiries within 24-48 business hours. For urgent matters, please indicate so in your message subject.</p>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="border border-primary/10 bg-gradient-to-br from-background to-primary/5 animate-fade-in animation-delay-600">
+                        <CardContent className="p-6">
+                            <h4 className="text-lg font-semibold mb-2">Do you offer technical support?</h4>
+                            <p className="text-muted-foreground text-sm">Yes, our team provides technical support for all Uplink Protocol implementations. Please provide details about your issue in the contact form.</p>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="border border-primary/10 bg-gradient-to-br from-background to-primary/5 animate-fade-in animation-delay-700">
+                        <CardContent className="p-6">
+                            <h4 className="text-lg font-semibold mb-2">Can I request a custom integration?</h4>
+                            <p className="text-muted-foreground text-sm">Absolutely! We work with teams to create custom integrations for Uplink Protocol. Please describe your requirements in detail.</p>
+                        </CardContent>
+                    </Card>
+                    <Card className="border border-primary/10 bg-gradient-to-br from-background to-primary/5 animate-fade-in animation-delay-800">
+                        <CardContent className="p-6 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg">
+                            <h4 className="text-lg font-semibold mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary mr-2">
+                                    <path d="M17 8h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2v4l-4-4H9a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2"></path>
+                                    <path d="M14 15a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2l4 4z"></path>
+                                </svg>
+                                Is there a community forum?
+                            </h4>              <p className="text-muted-foreground text-sm">
+                                Yes, we have an active community forum where developers share ideas, solutions, and best practices.
+                                <a href="https://github.com/jmkcoder/odyssey-uplink-protocol/discussions"
+                                    className="ml-1 inline-flex items-center text-primary font-medium hover:underline"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    Join our community discussions
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1">
+                                        <path d="M5 12h14"></path>
+                                        <path d="m12 5 7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            </p>
+                        </CardContent>
+                    </Card>
                 </div>
             </section>
         </main>
