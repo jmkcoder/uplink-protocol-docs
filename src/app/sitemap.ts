@@ -8,6 +8,8 @@ export const revalidate = false;
 
 // Get the base URL from environment variables
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://jmkcoder.github.io/uplink-protocol-docs/';
+// Remove trailing slash if present to avoid double slash
+const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 
 // Core pages to be included in the sitemap
 const corePages = [
@@ -63,12 +65,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     
     // Create a set of unique routes (avoid duplicates)
     const uniqueRoutes = new Set([...corePages, ...dynamicRoutes]);
-    
-    // Map routes to sitemap entries
+      // Map routes to sitemap entries
     const routes = Array.from(uniqueRoutes).map((route) => ({
-      url: `${baseUrl}${route}`,
+      url: `${normalizedBaseUrl}${route === '/' ? '' : route}`,
       lastModified: new Date(),
-      changeFrequency: route === '/' ? 'daily' : 'weekly' as const,
+      changeFrequency: (route === '/' ? 'daily' : 'weekly') as 'daily' | 'weekly',
       priority: route === '/' 
         ? 1.0 
         : route.split('/').length === 2 
@@ -78,10 +79,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     
     return routes;  } catch (error) {
     console.error('Error generating sitemap:', error);
-    
-    // Fallback to core pages if there's an error
+      // Fallback to core pages if there's an error
     return corePages.map((route) => ({
-      url: `${baseUrl}${route}`,
+      url: `${normalizedBaseUrl}${route === '/' ? '' : route}`,
       lastModified: new Date(),
       changeFrequency: (route === '/' ? 'daily' : 'weekly') as 'daily' | 'weekly',
       priority: route === '/' ? 1.0 : 0.8,

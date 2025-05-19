@@ -8,6 +8,8 @@ const fs = require('fs');
 
 // Base URL for your site
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://jmkcoder.github.io/uplink-protocol-docs/';
+// Remove trailing slash if present to avoid double slash
+const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 
 async function generateSitemaps() {
   try {
@@ -55,9 +57,8 @@ async function generateSitemaps() {
         priority: 0.7,
       });
     }
-    
-    // Create a sitemap stream
-    const stream = new SitemapStream({ hostname: baseUrl });
+      // Create a sitemap stream
+    const stream = new SitemapStream({ hostname: normalizedBaseUrl });
     
     // Create a readable stream from our links
     const sitemapOutput = await streamToPromise(
@@ -71,15 +72,14 @@ async function generateSitemaps() {
     );
     
     console.log('Sitemap generated successfully!');
-    
-    // Create a robots.txt file
+      // Create a robots.txt file
     const robotsTxt = `
 # robots.txt for ${baseUrl}
 User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: ${baseUrl}/sitemap.xml
+Sitemap: ${normalizedBaseUrl}/sitemap.xml
 
 # Disallow patterns
 Disallow: /api/
