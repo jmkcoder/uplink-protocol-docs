@@ -86,10 +86,10 @@ const formConfig = {
 ## Documentation
 
 For full documentation, visit:
-- [Usage Guide](https://github.com/uplink-protocol/form-controller/docs/usage-guide.md)
-- [Validation Guide](https://github.com/uplink-protocol/form-controller/docs/validation-guide.md)
-- [API Reference](https://github.com/uplink-protocol/form-controller/docs/api/README.md)
+- [Usage Guide](https://github.com/jmkcoder/odyssey-uplink-protocol/docs/usage-guide.md)
+- [Validation Guide](https://github.com/jmkcoder/odyssey-uplink-protocol/docs/validation-guide.md)
+- [API Reference](https://github.com/jmkcoder/odyssey-uplink-protocol/docs/api/README.md)
 
 ## Feedback
 
-We value your feedback! Please submit any issues or feature requests through our [GitHub Issues](https://github.com/uplink-protocol/form-controller/issues) page.
+We value your feedback! Please submit any issues or feature requests through our [GitHub Issues](https://github.com/jmkcoder/odyssey-uplink-protocol/issues) page.

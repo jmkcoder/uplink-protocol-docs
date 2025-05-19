@@ -216,4 +216,4 @@ For detailed documentation and examples, see:
 
 ## License
 
-MIT © Odyssey Uplink Protocol Team
+MIT © JmkCoder

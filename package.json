@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-sitemaps": "node scripts/generate-sitemaps.js",
+    "prebuild": "npm run generate-sitemaps"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.2",
@@ -23,6 +25,9 @@
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "remark": "^15.0.1",
+    "sitemap": "^7.1.2",
+    "strip-markdown": "^6.0.0",
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {

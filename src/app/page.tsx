@@ -7,7 +7,7 @@ import Link from "next/link"
 import { useScrollDepthTracking, useTimeOnPage } from "@/lib/analytics"
 import { useEffect } from "react"
 import { event as trackEvent } from "@/lib/analytics"
-import { VideoPlayer } from "@/components/ui/video-player"
+import { SEO } from "@/components/seo"
 
 export default function HomePage() {
   // Track scroll depth for the homepage
@@ -31,10 +31,27 @@ export default function HomePage() {
       action: 'button_click',
       category: 'Navigation',
       label: buttonName
-    });
-  };
+    });  };
   return (
     <main className="min-h-screen bg-background text-foreground">
+      {/* Add enhanced SEO components */}
+      <SEO 
+        type="software"
+        title="Uplink Protocol | Logic as a Service"
+        description="Decouple logic from UI. Write once, use anywhere across React, Vue, Web Components, and beyond."
+        keywords={[
+          'uplink protocol',
+          'logic as a service',
+          'decoupled logic',
+          'framework agnostic',
+          'form controller',
+          'react',
+          'vue',
+          'web components'
+        ]}
+        showSocialShare={false}
+      />
+      
       {/* Development Analytics Banner - only shown in dev */}
       {process.env.NODE_ENV === 'development' && (
         <div className="bg-primary/10 border-b border-primary/20 py-2 px-4 text-center">

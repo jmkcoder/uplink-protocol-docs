@@ -10,6 +10,8 @@ import { SidebarToggle } from "@/components/docs/sidebar-toggle";
 import { Footer } from "@/components/ui/footer";
 import { AnalyticsProvider } from "@/lib/analytics";
 import { ToastProvider } from "@/components/ui/toast-provider";
+import { defaultMetadata } from "@/lib/metadata";
+import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/json-ld";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,10 +23,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Uplink | Logic as a Service",
-  description: "Decouple logic from UI. Write once, use anywhere across React, Vue, Web Components, and beyond.",
-};
+export const metadata: Metadata = defaultMetadata;
 
 export default function RootLayout({
   children,
@@ -35,6 +34,28 @@ export default function RootLayout({
   const isDevelopment = process.env.NODE_ENV === 'development';
   return (
     <html lang="en">
+      <head>
+        <OrganizationJsonLd />
+        <WebsiteJsonLd />
+        {/* Add schema.org data for site structure */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              url: process.env.NEXT_PUBLIC_BASE_URL || 'https://jmkcoder.github.io/uplink-protocol-docs/',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                  '@type': 'EntryPoint',
+                  urlTemplate: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://jmkcoder.github.io/uplink-protocol-docs/'}/search?q={search_term_string}`
+                },
+                'query-input': 'required name=search_term_string'
+              }
+            })
+          }}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AnalyticsProvider>
           <ToastProvider>
