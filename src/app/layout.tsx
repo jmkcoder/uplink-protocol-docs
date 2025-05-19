@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="manifest" href={isDevelopment ? "/site.webmanifest" : "/uplink-protocol-docs/site.webmanifest" } />
+        <link rel="manifest" href={ isDevelopment ? "/site.webmanifest" : "/uplink-protocol-docs/site.webmanifest" } />
         <OrganizationJsonLd />
         <WebsiteJsonLd />
         {/* Add schema.org data for site structure */}
