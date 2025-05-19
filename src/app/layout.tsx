@@ -9,6 +9,7 @@ import { SidebarProvider } from "@/components/docs/sidebar-context";
 import { SidebarToggle } from "@/components/docs/sidebar-toggle";
 import { Footer } from "@/components/ui/footer";
 import { AnalyticsProvider } from "@/lib/analytics";
+import { ToastProvider } from "@/components/ui/toast-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,14 +33,12 @@ export default function RootLayout({
 }>) {
   // Check if environment is development
   const isDevelopment = process.env.NODE_ENV === 'development';
-
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AnalyticsProvider>
-          <SidebarProvider>
+          <ToastProvider>
+            <SidebarProvider>
           {/* Header */}
           <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
             <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -123,13 +122,12 @@ export default function RootLayout({
                   </li>
                 </ul>
               </nav>
-            </div>
-          </header>
+            </div>          </header>
           
           {children}
-          
           <Footer />
-        </SidebarProvider>
+            </SidebarProvider>
+          </ToastProvider>
         </AnalyticsProvider>
       </body>
     </html>

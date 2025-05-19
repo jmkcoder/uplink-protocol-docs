@@ -5,15 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { useAnalytics, useScrollDepthTracking, useTimeOnPage } from "@/lib/analytics"
 import { useUplink } from "@uplink-protocol/react"
 import { FormController, FormConfig } from "@uplink-protocol/form-controller"
+import { useToast } from "@/components/ui/toast-provider"
 
 // Define form configuration
 
 export default function ContactUs() {
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const formStartTimeRef = useRef<number>(Date.now());
+    const { showToast } = useToast();
 
     const formConfig: FormConfig = {
         steps: [
@@ -145,7 +148,7 @@ export default function ContactUs() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        state.isSubmitting = true; // Set submitting state
+        setIsSubmitting(true);
 
         // Use the form controller's validation and submission
         const result = methods.submitForm();
@@ -181,8 +184,7 @@ export default function ContactUs() {
                     _template: "table",
                     _captcha: "false"
                 })
-            })
-            .then(data => {
+            })            .then(data => {
                 // Track successful form submission and email sending
                 trackEvent({
                     action: 'contact_form_email_sent',
@@ -191,43 +193,56 @@ export default function ContactUs() {
                 });
                 
                 console.log("Email sent successfully:", data);
+                
+                // Show success toast notification
+                showToast({
+                    message: "Your message has been sent successfully! We'll get back to you soon.",
+                    type: "success",
+                    duration: 5000
+                });
             })
             .catch(error => {
                 console.error("Error sending email:", error);
                 
                 // Track error in email sending
                 trackEvent({
-                    action: 'contact_form_email_error',
-                    category: 'Contact',
+                    action: 'contact_form_email_error',                    category: 'Contact',
                     label: error.message || 'Unknown error'
+                });
+                
+                // Show error toast notification
+                showToast({
+                    message: "There was an error sending your message. Please try again later.",
+                    type: "error",
+                    duration: 5000
                 });
             })
             .finally(() => {
-                // Simulate API call to submit form
-                setTimeout(() => {
-                    // Track successful submission
-                    trackEvent({
-                        action: 'contact_form_success',
-                        category: 'Contact'
-                    });
+                // Track successful submission
+                trackEvent({
+                    action: 'contact_form_success',
+                    category: 'Contact'
+                });
 
-                    // Reset form after 3 seconds
-                    setTimeout(() => {
-                        // Reset the form
-                        methods.resetForm("contactInfo");
-                        state.isSubmitting = false;
-                    }, 3000);
-                }, 1000);
+                methods.resetForm();
+                setIsSubmitting(false);
             });
-        } else {
-            state.isSubmitting = false;
-            // Track validation errors
+        } else {            // Track validation errors
             const errorFields = Object.keys(state.fieldErrors?.contactInfo || {});
             trackEvent({
                 action: 'contact_form_error',
                 category: 'Contact',
                 label: errorFields.join(',')
             });
+            
+            // Show validation error toast
+            showToast({
+                message: "Please correct the errors in the form before submitting.",
+                type: "error",
+                duration: 5000
+            });
+            
+            setIsSubmitting(false);
         }
     };
 
@@ -387,9 +402,9 @@ export default function ContactUs() {
                                     <Button
                                         type="submit"
                                         className="w-full md:w-auto mt-2"
-                                        disabled={state.isSubmitting}
+                                        disabled={isSubmitting}
                                     >
-                                        {state.isSubmitting ? (
+                                        {isSubmitting ? (
                                             <>
                                                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -397,7 +412,7 @@ export default function ContactUs() {
                                                 </svg>
                                                 Sending...
                                             </>
-                                        ) : state.isSubmitting ? (
+                                        ) : isSubmitting ? (
                                             <>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
                                                     <path d="M20 6L9 17l-5-5" />

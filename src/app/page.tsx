@@ -255,7 +255,7 @@ export default function HomePage() {
       </section>
 
       {/* Video Tutorials Section */}
-      <section className="py-16 px-4 bg-gradient-to-r from-primary/5 to-secondary/5">
+      {/* <section className="py-16 px-4 bg-gradient-to-r from-primary/5 to-secondary/5">
         <div className="max-w-5xl mx-auto space-y-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Video Tutorials</h2>
@@ -266,14 +266,14 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
             <VideoPlayer 
-              src="/videos/form-controller.mp4" 
+              src="blob:https://www.linkedin.com/fde1fce3-61af-43d1-a481-685478902545" 
               title="Building Forms with FormController" 
               poster="/images/form-controller-placeholder.png"
               aspectRatio="16:9"
             />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Final CTA Section */}
       <section className="py-20 px-4">
