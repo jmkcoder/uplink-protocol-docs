@@ -2,12 +2,13 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
 
-export const runtime = 'edge';
+// For static export, we can't use dynamic parameters
+export const dynamic = 'error';
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = request.nextUrl;
-  const title = searchParams.get('title') || 'Uplink Protocol';
-  const description = searchParams.get('description') || 'Logic as a Service';
+  // For static export, we'll just use default values instead of searchParams
+  const title = 'Uplink Protocol';
+  const description = 'Logic as a Service';
 
   return new ImageResponse(
     (

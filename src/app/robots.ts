@@ -1,5 +1,9 @@
 import { MetadataRoute } from 'next';
 
+// Add the required export for static site generation
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export default function robots(): MetadataRoute.Robots {
   return {    rules: {
       userAgent: '*',

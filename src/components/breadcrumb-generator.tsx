@@ -10,11 +10,11 @@ export function BreadcrumbGenerator() {
   if (pathname === '/') {
     return null;
   }
-  
-  // Split the pathname into segments
+    // Split the pathname into segments
   const segments = pathname.split('/').filter(Boolean);
   
-  // Generate breadcrumb items  const breadcrumbItems = [
+  // Generate breadcrumb items
+  const breadcrumbItems = [
     {
       position: 1,
       name: 'Home',

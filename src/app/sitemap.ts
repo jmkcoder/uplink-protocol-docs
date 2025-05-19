@@ -2,6 +2,10 @@ import { MetadataRoute } from 'next';
 import * as fs from 'fs';
 import * as path from 'path';
 
+// Add the required export for static site generation
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 // Get the base URL from environment variables
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://jmkcoder.github.io/uplink-protocol-docs/';
 
@@ -72,15 +76,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
           : 0.6,
     }));
     
-    return routes;
-  } catch (error) {
+    return routes;  } catch (error) {
     console.error('Error generating sitemap:', error);
     
     // Fallback to core pages if there's an error
     return corePages.map((route) => ({
       url: `${baseUrl}${route}`,
       lastModified: new Date(),
-      changeFrequency: route === '/' ? 'daily' : 'weekly' as const,
+      changeFrequency: (route === '/' ? 'daily' : 'weekly') as 'daily' | 'weekly',
       priority: route === '/' ? 1.0 : 0.8,
     }));
   }
