@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://jmkcoder.github.io/uplink-protocol-docs/sitemap.xml
+Sitemap: https://jmkcoder.github.io/uplink-protocol-docs//sitemap.xml
 
 # Disallow patterns
 Disallow: /api/
