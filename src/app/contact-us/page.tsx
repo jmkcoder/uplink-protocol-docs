@@ -538,7 +538,7 @@ export default function ContactUs() {
                                 <p className="text-xs md:text-sm text-muted-foreground">Powered by Uplink Protocol</p>
                             </div>
                         </div>
-                          <div className="absolute bottom-3 right-3 md:bottom-6 md:right-8">
+                          <div className="hidden sm:flex absolute bottom-3 right-3 md:bottom-6 md:right-8">
                             <Badge variant="outline" className="bg-background/80 text-[10px] md:text-xs flex items-center whitespace-nowrap">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1 flex-shrink-0">
                                     <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
