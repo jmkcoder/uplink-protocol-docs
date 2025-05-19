@@ -158,8 +158,7 @@ export default function HomePage() {
                   <path d="m12 5 7 7-7 7"></path>
                 </svg>
               </Button>
-            </Link>
-            <Link href="/logic/datepicker" onClick={() => trackButtonClick('Hero View Logic Packages')}>
+            </Link>            <Link href="/logic/form-controller/overview" onClick={() => trackButtonClick('Hero View Logic Packages')}>
               <Button variant="outline" size="lg" className="w-full sm:w-auto cursor-pointer">View Logic Packages</Button>
             </Link>
           </div>
@@ -252,8 +251,8 @@ export default function HomePage() {
             </CardContent>
           </Card>
         </div>
-      </section>
-
+      </section>      
+      
       {/* Video Tutorials Section */}
       {/* <section className="py-16 px-4 bg-gradient-to-r from-primary/5 to-secondary/5">
         <div className="max-w-5xl mx-auto space-y-8">
@@ -266,7 +265,7 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
             <VideoPlayer 
-              src="blob:https://www.linkedin.com/fde1fce3-61af-43d1-a481-685478902545" 
+              src="/videos/form-controller-tutorial.mp4" 
               title="Building Forms with FormController" 
               poster="/images/form-controller-placeholder.png"
               aspectRatio="16:9"
