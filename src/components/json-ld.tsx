@@ -95,8 +95,7 @@ export const BreadcrumbJsonLd: React.FC<BreadcrumbJsonLdProps> = ({ items }) => 
 
 // Software Application JSON-LD for Uplink Protocol software
 export const SoftwareJsonLd: React.FC = () => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://jmkcoder.github.io/uplink-protocol-docs/';
-  const jsonLd = {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://jmkcoder.github.io/uplink-protocol-docs/';  const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: 'Uplink Protocol',
@@ -107,11 +106,7 @@ export const SoftwareJsonLd: React.FC = () => {
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      ratingCount: '125',
-    },    operatingSystem: 'Cross-platform',
+    operatingSystem: 'Cross-platform',
     downloadUrl: `${baseUrl}/getting-started`,
     author: {
       '@type': 'Person',
