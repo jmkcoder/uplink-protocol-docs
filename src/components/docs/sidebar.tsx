@@ -112,12 +112,12 @@ export function DocsSidebar() {
               </ul><div className="text-sm font-semibold uppercase text-muted-foreground pt-6">Logic</div>
               <ul className="space-y-2">
                 {/* Form Controller with nested links */}
-                <li className="space-y-1">
-                  <Link href="/logic/form-controller/overview" className={pathname.startsWith("/logic/form-controller") ? "text-primary font-medium hover:underline" : "hover:underline text-muted-foreground"} onClick={closeSidebar}>Form Controller</Link>
+                <li className="space-y-1">                  <Link href="/logic/form-controller/overview" className={pathname.startsWith("/logic/form-controller") ? "text-primary font-medium hover:underline" : "hover:underline text-muted-foreground"} onClick={closeSidebar}>Form Controller</Link>
                   <ul className="space-y-1 ml-4 pl-2 border-l border-zinc-200 dark:border-zinc-800">
                     <li><Link href="/logic/form-controller/overview" className={getLinkClassName("/logic/form-controller/overview")} onClick={closeSidebar}>Overview</Link></li>
                     <li><Link href="/logic/form-controller/api" className={getLinkClassName("/logic/form-controller/api")} onClick={closeSidebar}>API</Link></li>
                     <li><Link href="/logic/form-controller/examples" className={getLinkClassName("/logic/form-controller/examples")} onClick={closeSidebar}>Examples</Link></li>
+                    <li><Link href="/logic/form-controller/extensibility" className={getLinkClassName("/logic/form-controller/extensibility")} onClick={closeSidebar}>Extensibility</Link></li>
                   </ul>
                 </li>
               </ul>

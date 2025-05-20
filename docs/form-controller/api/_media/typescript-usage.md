@@ -5,7 +5,7 @@ This guide demonstrates how to use the form-controller package with TypeScript, 
 ## Basic Setup
 
 ```typescript
-import { FormController, FormConfig } from '@uplink-protocol/form-controller';
+import { FormController, FormConfig, Field } from '@uplink-protocol/form-controller';
 
 // Define your form configuration with proper types
 const formConfig: FormConfig = {

@@ -37,12 +37,17 @@ const FormControllerApiPage: React.FC = () => {
               className="font-medium text-primary border-b-2 border-primary pb-2 text-sm sm:text-base"
             >
               API
-            </Link>
-            <Link
+            </Link>            <Link
               href="/logic/form-controller/examples"
               className="text-muted-foreground hover:text-foreground pb-2 text-sm sm:text-base"
             >
               Examples
+            </Link>
+            <Link
+              href="/logic/form-controller/extensibility"
+              className="text-muted-foreground hover:text-foreground pb-2 text-sm sm:text-base"
+            >
+              Extensibility
             </Link>
           </div>
         </div>
