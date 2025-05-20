@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 import "../syntax-highlight.css"
 import { SyntaxHighlighter } from "@/components/syntax-highlighter"
-import { DocsSidebar } from "@/components/docs/sidebar"
+import { DocsPageLayout } from "@/components/docs/docs-page-layout"
 import { useEffect } from "react"
 import { useAnalytics, useScrollDepthTracking } from "@/lib/analytics"
 
@@ -30,25 +30,20 @@ export default function GettingStarted() {
     });
   }, [trackEvent]);
   return (
-    <main className="min-h-screen flex flex-col lg:flex-row bg-background text-foreground">
-      {/* Sidebar */}
-      <DocsSidebar />
-      
-      {/* Main Content */}
-      <div className="flex-1 px-6 py-12 lg:max-w-4xl">
-        <div className="space-y-2">
-          <Badge variant="outline">Docs</Badge>
-          <h1 className="text-4xl font-bold tracking-tight">Getting Started</h1>
-          <p className="text-muted-foreground text-lg">
-            Learn how to use Uplink to build frontend-agnostic logic you can reuse across frameworks.
-          </p>
-          <div className="flex gap-3 pt-4">
-            <Badge className="bg-blue-500 text-white hover:bg-blue-600">React</Badge>
-            <Badge className="bg-green-500 text-white hover:bg-green-600">Vue</Badge>
-            <Badge className="bg-orange-500 text-white hover:bg-orange-600">Svelte</Badge>
-            <Badge className="bg-gray-700 text-white hover:bg-gray-800">Vanilla JS</Badge>
-          </div>
+    <DocsPageLayout>
+      <div className="space-y-2">
+        <Badge variant="outline">Docs</Badge>
+        <h1 className="text-4xl font-bold tracking-tight">Getting Started</h1>
+        <p className="text-muted-foreground text-lg">
+          Learn how to use Uplink to build frontend-agnostic logic you can reuse across frameworks.
+        </p>
+        <div className="flex gap-3 pt-4">
+          <Badge className="bg-blue-500 text-white hover:bg-blue-600">React</Badge>
+          <Badge className="bg-green-500 text-white hover:bg-green-600">Vue</Badge>
+          <Badge className="bg-orange-500 text-white hover:bg-orange-600">Svelte</Badge>
+          <Badge className="bg-gray-700 text-white hover:bg-gray-800">Vanilla JS</Badge>
         </div>
+      </div>
 
         {/* What is Uplink? */}
         <section className="space-y-4 pt-10">
@@ -328,9 +323,7 @@ document.querySelector('#name-input').addEventListener('change', (e) => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Button>
-            </Link>          </div>
-        </section>
-      </div>
-    </main>
+            </Link>          </div>        </section>
+      </DocsPageLayout>
   )
 }

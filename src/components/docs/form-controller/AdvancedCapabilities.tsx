@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 export function AdvancedCapabilities() {
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold tracking-tight">Advanced Capabilities</h2>
+      <h2 id="advanced-capabilities" className="text-3xl font-bold tracking-tight">Advanced Capabilities</h2>
       <p className="text-muted-foreground text-lg leading-relaxed">
         Form Controller goes beyond basic form management, offering sophisticated capabilities to handle complex real-world scenarios. These advanced features enable you to build enterprise-grade forms with dynamic behavior, complex validation logic, and seamless integration with your data pipeline.
       </p>

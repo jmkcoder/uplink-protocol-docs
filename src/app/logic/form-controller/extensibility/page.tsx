@@ -3,12 +3,12 @@
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import "../../../syntax-highlight.css"
-import { DocsSidebar } from "@/components/docs/sidebar"
 import { Extensibility } from "@/components/docs/form-controller/Extensibility"
 import { SEO } from "@/components/seo"
 import { SocialShareContainer } from "@/components/social-share-container"
 import { useEffect, useState } from "react"
 import { event as trackEvent } from "@/lib/analytics"
+import { DocsPageLayout } from "@/components/docs/docs-page-layout"
 
 export default function FormControllerExtensibility() {
   // Track page view for analytics
@@ -49,35 +49,32 @@ You can override methods like setupInitialFormData, initializeServices, and init
   }, []);
     
   return (
-    <main className="min-h-screen flex flex-col lg:flex-row bg-background text-foreground">
+    <>
       {/* Add enhanced SEO components */}
       <SEO
         type="documentation"
         title="Form Controller Extensibility - Uplink Protocol"
-        description="Learn how to extend Form Controller to create custom form controllers with specialized behavior and functionality."
+        description="Learn how to extend Form Controller to create custom form controllers with specialized behavior for your specific needs."
         keywords={[
           'form controller',
           'extensibility', 
-          'custom form controllers',
-          'extending forms',
-          'form controller subclassing',
-          'form controller hooks',
+          'custom forms',
+          'form subclassing',
+          'form inheritance',
           'uplink protocol'
-        ]}        content={docContent}
-        datePublished="2023-01-01T00:00:00+00:00"
+        ]}
+        content={docContent}
+        datePublished="2023-01-05T00:00:00+00:00"
         dateModified={new Date().toISOString()}
       />
       
-      {/* Sidebar */}
-      <DocsSidebar />
-        {/* Main Content */}
-      <div className="flex-1 px-4 sm:px-6 py-8 sm:py-12 lg:max-w-4xl">
+      <DocsPageLayout>
         {/* Header & Navigation */}
         <div className="space-y-2 mb-6 sm:mb-8">
           <Badge variant="outline">Logic</Badge>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Form Controller</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Form Controller Extensibility</h1>          
           <p className="text-muted-foreground text-base sm:text-lg">
-            A flexible, reactive form management system for both multi-step and single-step forms with advanced validation capabilities.
+            Learn how to extend and customize Form Controller for your specific needs
           </p>
           
           <div className="flex flex-wrap gap-3 sm:gap-4 pt-4 border-b border-border">
@@ -98,7 +95,7 @@ You can override methods like setupInitialFormData, initializeServices, and init
             description="Learn how to extend Form Controller to create custom form controllers with specialized behavior and functionality."
           />
         </section>
-      </div>
-    </main>
+      </DocsPageLayout>
+    </>
   )
 }

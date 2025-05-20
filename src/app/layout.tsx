@@ -62,8 +62,9 @@ export default function RootLayout({
         <AnalyticsProvider>
           <ToastProvider>
             <SidebarProvider>
-              {/* Header */}          <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
-                <div className="max-w-6xl mx-auto px-3 md:px-4 py-3 flex justify-between items-center">
+              {/* Header */}          
+              <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
+                <div className="max-w-[1600px] mx-auto px-3 md:px-4 py-3 flex justify-between items-center">
                   <div className="flex items-center gap-1 md:gap-2">
                     <SidebarToggle />
                     <Link href="/" className="flex items-center">

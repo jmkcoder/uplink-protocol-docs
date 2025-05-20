@@ -57,6 +57,7 @@ export function DocsSidebar() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [pathname])
+
   const isActive = (path: string) => {
     if (path.includes('#')) {
       const [basePath, hash] = path.split('#')
@@ -74,50 +75,97 @@ export function DocsSidebar() {
     // For paths without hash
     return pathname === path
   }
+
   const getLinkClassName = (path: string) => {
     const active = isActive(path)
     return active
       ? "text-primary font-medium hover:underline"
       : "hover:underline text-muted-foreground"
   }
+
   return (
-    <>
-      {/* Mobile overlay */}
+    <>      {/* Mobile overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={closeSidebar}
           aria-hidden="true"
         />
-      )}      {/* Sidebar */}
+      )}{/* Sidebar */}
       <div className={`
-        fixed top-15 left-0 z-40 h-[calc(100vh-4rem)] w-[280px] bg-background border-r border-border shadow-lg
+        fixed top-[3.5rem] left-0 z-50 h-[calc(100vh-3.5rem)] w-[280px] bg-background border-r border-border shadow-lg
         transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-        lg:translate-x-0 lg:w-64 lg:shadow-none lg:sticky
-      `}>        {/* Sidebar content */}        <div className="h-full overflow-hidden">
-          <div className="h-full overflow-y-auto px-4 py-6 sm:p-6">
-            <nav className="space-y-4 pr-2">              <div className="text-sm font-semibold uppercase text-muted-foreground">Getting Started</div>
-              <ul className="space-y-2">
-                <li><Link href="/getting-started" className={getLinkClassName("/getting-started")} onClick={closeSidebar}>Introduction</Link></li>
+        lg:static lg:translate-x-0 lg:w-full lg:shadow-none lg:border-r-0 lg:h-auto lg:overflow-visible
+      `}>
+        {/* Mobile close button - only visible on mobile */}
+        <div className="flex justify-between items-center p-4 border-b border-border lg:hidden mt-6">
+          <span className="font-semibold">Navigation</span>
+        </div>          
+        {/* Sidebar content */}
+        <div className="h-[calc(100%-60px)] overflow-y-auto">
+          <div className="px-4 py-4 lg:py-1">
+            <nav className="space-y-4 pr-2 pb-6">
+              <div className="text-sm font-semibold uppercase text-muted-foreground">Getting Started</div>
+              <ul className="space-y-3">
+                <li><Link href="/getting-started" className={`${getLinkClassName("/getting-started")} block py-1`} onClick={closeSidebar}>Introduction</Link></li>
                 <li className="ml-4 flex items-center">
                   <span className="text-muted-foreground mr-1 text-xs">§</span>
-                  <Link href="/getting-started#installation" className={getLinkClassName("/getting-started#installation")} onClick={closeSidebar}>Installation</Link>
+                  <Link href="/getting-started#installation" className={`${getLinkClassName("/getting-started#installation")} block py-1`} onClick={closeSidebar}>Installation</Link>
                 </li>
                 <li className="ml-4 flex items-center">
                   <span className="text-muted-foreground mr-1 text-xs">§</span>
-                  <Link href="/getting-started#usage" className={getLinkClassName("/getting-started#usage")} onClick={closeSidebar}>Framework Integrations</Link>
+                  <Link href="/getting-started#usage" className={`${getLinkClassName("/getting-started#usage")} block py-1`} onClick={closeSidebar}>Framework Integrations</Link>
                 </li>
-                <li><Link href="/getting-started/uplink-protocol" className={getLinkClassName("/getting-started/uplink-protocol")} onClick={closeSidebar}>Uplink Protocol</Link></li>
-              </ul><div className="text-sm font-semibold uppercase text-muted-foreground pt-6">Logic</div>
-              <ul className="space-y-2">
+                <li><Link href="/getting-started/uplink-protocol" className={`${getLinkClassName("/getting-started/uplink-protocol")} block py-1`} onClick={closeSidebar}>Uplink Protocol</Link></li>
+              </ul>              <div className="text-sm font-semibold uppercase text-muted-foreground pt-6">Logic</div>
+              <ul className="space-y-3">
                 {/* Form Controller with nested links */}
-                <li className="space-y-1">                  <Link href="/logic/form-controller/overview" className={pathname.startsWith("/logic/form-controller") ? "text-primary font-medium hover:underline" : "hover:underline text-muted-foreground"} onClick={closeSidebar}>Form Controller</Link>
-                  <ul className="space-y-1 ml-4 pl-2 border-l border-zinc-200 dark:border-zinc-800">
-                    <li><Link href="/logic/form-controller/overview" className={getLinkClassName("/logic/form-controller/overview")} onClick={closeSidebar}>Overview</Link></li>
-                    <li><Link href="/logic/form-controller/api" className={getLinkClassName("/logic/form-controller/api")} onClick={closeSidebar}>API</Link></li>
-                    <li><Link href="/logic/form-controller/examples" className={getLinkClassName("/logic/form-controller/examples")} onClick={closeSidebar}>Examples</Link></li>
-                    <li><Link href="/logic/form-controller/extensibility" className={getLinkClassName("/logic/form-controller/extensibility")} onClick={closeSidebar}>Extensibility</Link></li>
+                <li className="space-y-2">
+                  <Link 
+                    href="/logic/form-controller/overview" 
+                    className={`${pathname.startsWith("/logic/form-controller") ? "text-primary font-medium hover:underline" : "hover:underline text-muted-foreground"} block py-1`} 
+                    onClick={closeSidebar}
+                  >
+                    Form Controller
+                  </Link>
+                  <ul className="space-y-2 ml-4 pl-2 border-l border-zinc-200 dark:border-zinc-800">
+                    <li>
+                      <Link 
+                        href="/logic/form-controller/overview" 
+                        className={`${getLinkClassName("/logic/form-controller/overview")} block py-1`} 
+                        onClick={closeSidebar}
+                      >
+                        Overview
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/logic/form-controller/api" 
+                        className={`${getLinkClassName("/logic/form-controller/api")} block py-1`} 
+                        onClick={closeSidebar}
+                      >
+                        API
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/logic/form-controller/examples" 
+                        className={`${getLinkClassName("/logic/form-controller/examples")} block py-1`} 
+                        onClick={closeSidebar}
+                      >
+                        Examples
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/logic/form-controller/extensibility" 
+                        className={`${getLinkClassName("/logic/form-controller/extensibility")} block py-1`} 
+                        onClick={closeSidebar}
+                      >
+                        Extensibility
+                      </Link>
+                    </li>
                   </ul>
                 </li>
               </ul>

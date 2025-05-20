@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 export function Introduction() {
   return (
     <div className="space-y-6">      <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 sm:p-6 rounded-lg">
-        <h2 className="text-xl sm:text-2xl font-bold text-blue-700 dark:text-blue-300 mb-3 sm:mb-4">Form Controller: The Complete Solution for Form Management</h2>
+        <h2 id="introduction" className="text-xl sm:text-2xl font-bold text-blue-700 dark:text-blue-300 mb-3 sm:mb-4">Form Controller: The Complete Solution for Form Management</h2>
         <p className="text-base sm:text-lg mb-3 sm:mb-4">
           Form Controller is a powerful, reactive form management system designed to handle all aspects of form interaction in modern web applications. From simple contact forms to complex multi-page wizards with conditional logic, Form Controller provides a comprehensive solution with minimal boilerplate code.
         </p>

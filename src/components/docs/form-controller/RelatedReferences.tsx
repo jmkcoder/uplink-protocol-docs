@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 export function RelatedReferences() {
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold tracking-tight">Related References</h2>
+      <h2 id="related-references" className="text-3xl font-bold tracking-tight">Related References</h2>
       <p className="text-muted-foreground text-lg leading-relaxed">
         Explore detailed API documentation and practical examples to deepen your understanding of Form Controller.
       </p>

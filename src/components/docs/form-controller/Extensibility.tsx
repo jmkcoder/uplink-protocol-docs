@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 export function Extensibility() {
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold tracking-tight">Extensibility</h2>
+      <h2 id="extensibility-overview" className="text-3xl font-bold tracking-tight">Extensibility</h2>
       <p className="text-muted-foreground text-lg leading-relaxed">
         Form Controller has been designed with extensibility in mind. The class-based architecture allows you to create custom form controllers with specialized behavior by extending the base FormControllerClass.
       </p>
@@ -101,7 +101,7 @@ export class CustomFormController extends FormControllerClass {
       </div>
 
       <div className="mt-8">
-        <h3 className="text-2xl font-semibold mb-4">Extension Points</h3>
+        <h3 id="extension-points" className="text-2xl font-semibold mb-4">Extension Points</h3>
         
         <Tabs defaultValue="properties">
           <TabsList className="mb-4">

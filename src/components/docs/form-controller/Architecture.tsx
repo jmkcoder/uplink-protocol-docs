@@ -6,7 +6,7 @@ import { SyntaxHighlighter } from "@/components/syntax-highlighter"
 export function Architecture() {
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold tracking-tight">Architecture</h2>
+      <h2 id="architecture" className="text-3xl font-bold tracking-tight">Architecture</h2>
       <p className="text-muted-foreground text-lg leading-relaxed">
         Form Controller is built using a service-oriented architecture with a reactive state management system, providing a robust foundation for complex form handling.
       </p>

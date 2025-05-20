@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 export function Validation() {
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold tracking-tight">Validation System</h2>
+      <h2 id="validation" className="text-3xl font-bold tracking-tight">Validation System</h2>
       <p className="text-muted-foreground text-lg leading-relaxed">
         Form Controller offers a comprehensive validation system to ensure data integrity and provide helpful feedback to users. From simple required field checks to complex cross-field and asynchronous validation, the form controller handles all validation scenarios.
       </p>

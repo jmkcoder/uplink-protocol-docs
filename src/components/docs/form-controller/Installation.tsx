@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 export function Installation() {
   return (
     <div className="space-y-4">
-      <h2 className="text-3xl font-bold tracking-tight">Installation</h2>
+      <h2 id="installation" className="text-3xl font-bold tracking-tight">Installation</h2>
       <p className="text-muted-foreground text-lg">
         Install the form controller package:
       </p>

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ConsentManager from '@/components/ui/consent-manager';
+import { DocsPageLayout } from "@/components/docs/docs-page-layout";
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - Uplink Protocol Documentation',
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicy() {
   return (
-    <div className="container mx-auto py-10 max-w-4xl">
+    <DocsPageLayout showTableOfContents={false}>
       <div className="px-4 md:px-6">        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">Privacy Policy</h1>
         
         <p className="mb-8 text-muted-foreground">
@@ -80,10 +81,9 @@ export default function PrivacyPolicy() {
           <p>
             <Link href="/contact-us" className="text-primary hover:underline">
               Contact Page
-            </Link>
-          </p>
+            </Link>          </p>
         </section>
       </div>
-    </div>
+    </DocsPageLayout>
   );
 }

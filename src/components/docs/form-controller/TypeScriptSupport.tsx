@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 export function TypeScriptSupport() {
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold tracking-tight">TypeScript Support</h2>
+      <h2 id="typescript-support" className="text-3xl font-bold tracking-tight">TypeScript Support</h2>
       <p className="text-muted-foreground text-lg leading-relaxed">
         Form Controller is built from the ground up with full TypeScript support, providing type safety, code completion, and improved developer experience throughout your application.
       </p>

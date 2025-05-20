@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 export function Basics() {
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold tracking-tight">Form Controller Basics</h2>
+      <h2 id="basics" className="text-3xl font-bold tracking-tight">Form Controller Basics</h2>
       <p className="text-muted-foreground text-lg leading-relaxed">
         At its core, Form Controller is built on a reactive architecture that provides real-time state management, field validation, step navigation, and comprehensive event handling. It follows the principle of &quot;configuration over code&quot; while offering powerful extension capabilities.
       </p>

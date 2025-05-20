@@ -14,13 +14,12 @@ export function SidebarToggle() {
                      pathname.startsWith('/docs')
   
   if (!isDocsPath) return null
-  
-  return (
+    return (
     <Button 
       variant="ghost" 
       size="icon" 
       onClick={toggleSidebar}
-      className="mr-2 lg:hidden"
+      className="mr-2 flex items-center justify-center lg:hidden"
       aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
     >
       {isOpen ? (

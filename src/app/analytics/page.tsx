@@ -4,6 +4,8 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useAnalytics, useScrollDepthTracking, useTimeOnPage } from '@/lib/analytics';
 import { Button } from '@/components/ui/button';
+import { DocsPageLayout } from '@/components/docs/docs-page-layout';
+import { Badge } from '@/components/ui/badge';
 
 export default function AnalyticsPage() {
   const { trackEvent } = useAnalytics();
@@ -85,173 +87,46 @@ export default function AnalyticsPage() {
   useEffect(() => {
     logEvent('page_view', 'Documentation', 'Analytics Guide');
   }, [logEvent]);
-
+  
   return (
-    <div className="flex flex-col lg:flex-row gap-8">
-      {/* Side Navigation */}
-      <div className="lg:w-64 flex-shrink-0">
-        <div className="sticky top-24 bg-card border rounded-lg overflow-hidden shadow-sm">
-          <div className="px-4 py-3 bg-primary/10 border-b">
-            <h3 className="font-semibold">On This Page</h3>
-          </div>
-          <nav className="p-2">
-            <ul className="space-y-1 text-sm">
-              <li>
-                <a href="#overview" className="block px-3 py-2 rounded-md hover:bg-primary/5">Overview</a>
-              </li>
-              <li>
-                <a href="#implementation" className="block px-3 py-2 rounded-md hover:bg-primary/5">Implementation Principles</a>
-              </li>
-              <li>
-                <a href="#capabilities" className="block px-3 py-2 rounded-md hover:bg-primary/5">Tracking Capabilities</a>
-              </li>
-              <li>
-                <a href="#verification" className="block px-3 py-2 rounded-md hover:bg-primary/5">Verification</a>
-              </li>
-              <li>
-                <a href="#patterns" className="block px-3 py-2 rounded-md hover:bg-primary/5">Implementation Patterns</a>
-              </li>
-              <li>
-                <a href="#demo" className="block px-3 py-2 rounded-md hover:bg-primary/5">Live Demo</a>
-              </li>
-              <li>
-                <a href="#troubleshooting" className="block px-3 py-2 rounded-md hover:bg-primary/5">Troubleshooting</a>
-              </li>
-              <li>
-                <a href="#resources" className="block px-3 py-2 rounded-md hover:bg-primary/5">Resources</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+    <DocsPageLayout>
+      <div className="space-y-2">
+        <Badge variant="outline">Docs</Badge>
+        <h1 className="text-4xl font-bold tracking-tight">Analytics Integration</h1>
+        <p className="text-muted-foreground text-lg">
+          Learn how to use Uplink&apos;s built-in analytics hooks to track user interactions.
+        </p>
       </div>
       
-      {/* Main Content */}
-      <div className="flex-grow">
-        <h1 id="overview" className="text-4xl font-bold mb-6">Google Analytics Integration Best Practices</h1>
-
-        <p className="mb-6">
-          This guide outlines best practices for making the most of your Google Analytics integration with the Uplink Documentation site.
-        </p>
-
-        <h2 id="implementation" className="text-2xl font-bold mt-10 mb-4">Tracking Implementation</h2>
-
-        <p className="mb-4">
-          The analytics implementation for this site follows these key principles:
-        </p>
-
-        <ol className="list-decimal pl-6 mb-6 space-y-2">
-          <li><strong>Separation of concerns</strong>: Analytics logic is isolated from application logic</li>
-          <li><strong>Comprehensive tracking</strong>: Multiple user engagement metrics are tracked</li>          <li><strong>Privacy-first</strong>: Analytics only runs in development mode and requires explicit user consent</li>
-          <li><strong>Performance optimized</strong>: Minimal impact on page load and runtime performance</li>
-          <li><strong>Consent-aware</strong>: Users must explicitly opt-in to analytics tracking</li>
-        </ol>
-
-        <h2 id="capabilities" className="text-2xl font-bold mt-10 mb-4">Available Tracking Capabilities</h2>
-
-        <p className="mb-4">
-          This implementation provides tracking for:
-        </p>
-
-        <ol className="list-decimal pl-6 mb-6 space-y-2">
-          <li><strong>Page Views</strong>: Automatically tracked with path and query parameters</li>
-          <li><strong>Time on Page</strong>: Measures how long users spend on each page</li>
-          <li><strong>Scroll Depth</strong>: Tracks how far users scroll down pages</li>
-          <li><strong>Button/Link Clicks</strong>: Records interactions with navigation elements</li>
-          <li><strong>Form Interactions</strong>: Monitors form field usage and submissions</li>
-          <li><strong>Search Behavior</strong>: Captures search queries and result engagement</li>
-          <li><strong>Download Tracking</strong>: Monitors resource downloads</li>
-          <li><strong>Outbound Links</strong>: Tracks clicks to external sites</li>
-          <li><strong>Video Engagement</strong>: Measures video play, pause, and completion rates</li>
-          <li><strong>Error Tracking</strong>: Captures JavaScript errors</li>
-        </ol>
-
-        <h2 id="verification" className="text-2xl font-bold mt-10 mb-4">Verifying Your Implementation</h2>
-
-        <p className="mb-4">
-          To ensure your analytics is working correctly:
-        </p>
-
-        <ol className="list-decimal pl-6 mb-6 space-y-2">
-          <li>Use Google Analytics Real-Time reports to verify tracking</li>
-          <li>Check the browser console for any tracking-related errors</li>
-          <li>Use the GA Debug Chrome extension for detailed event inspection</li>
-          <li>Validate that all custom events are being received</li>
-        </ol>
-
-        <p className="mb-6">
-          For more detailed verification steps, see the verification guide in our GitHub repository.
-        </p>
-
-        <h2 id="patterns" className="text-2xl font-bold mt-10 mb-4">Common Implementation Patterns</h2>
-
-        <h3 className="text-xl font-bold mt-6 mb-3">Adding Event Tracking to a Component</h3>
-
-        <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md overflow-auto my-4">
-          <code>{`import { useAnalytics } from '@/lib/analytics';
-
-export function MyComponent() {
-  const { trackEvent } = useAnalytics();
-  
-  const handleAction = () => {
-    // Your component logic
-    
-    // Track the action
-    trackEvent({
-      action: 'button_click',
-      category: 'Navigation',
-      label: 'Get Started'
-    });
-  };
-  
-  return <button onClick={handleAction}>Get Started</button>;
-}`}</code>
-        </pre>
-
-        <h3 className="text-xl font-bold mt-6 mb-3">Adding Time on Page Tracking</h3>
-
-        <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md overflow-auto my-4">
-          <code>{`import { useTimeOnPage } from '@/lib/analytics';
-
-export function DocumentationPage() {
-  // Track time spent on this page
-  useTimeOnPage({
-    minTimeMs: 5000, // Only track if user spends at least 5 seconds
-    sendInterval: 30000 // Send updates every 30 seconds
-  });
-  
-  return <div>Page content...</div>;
-}`}</code>
-        </pre>
-
-        <h3 className="text-xl font-bold mt-6 mb-3">Video Engagement Tracking</h3>
-
-        <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md overflow-auto my-4">
-          <code>{`import { useRef } from 'react';
-import { useVideoTracking } from '@/lib/analytics';
-
-export function TutorialVideo() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  
-  useVideoTracking(videoRef, {
-    videoTitle: 'Getting Started Tutorial',
-    progressMilestones: [10, 25, 50, 75, 90, 100]
-  });
-  
-  return <video ref={videoRef} src="/videos/tutorial.mp4" controls />;
-}`}</code>
-        </pre>
-
-        {/* Live Demo Section */}
-        <h2 id="demo" className="text-2xl font-bold mt-10 mb-4">Live Analytics Demo</h2>
-        
-        <p className="mb-6">
-          This interactive demo shows how analytics events are captured in real-time. Try interacting with the elements below to see events appear in the console.
-        </p>
-        
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+      <div className="space-y-6 mt-8">
+        <div className="grid lg:grid-cols-2 gap-x-12 gap-y-8 pb-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">Interaction Demo</h3>
-            <div className="space-y-4">
+            <h2 id="overview" className="text-2xl font-bold mb-4">Overview</h2>
+            <p className="mb-4">
+              Uplink provides a simple yet powerful analytics system to help you track user interactions with your applications. The analytics module works seamlessly with Google Analytics 4 (GA4) and can be extended to work with other analytics providers.
+            </p>
+            
+            <h3 className="text-xl font-semibold mt-6 mb-2">Key Features</h3>
+            <ul className="list-disc pl-6 mb-6 space-y-2">
+              <li>Simple event tracking with category, action, and label</li>
+              <li>Automatic scroll depth tracking</li>
+              <li>Time on page measurements</li>
+              <li>User consent management</li>
+              <li>Video playback tracking</li>
+              <li>Extensible to any analytics provider</li>
+            </ul>
+            
+            <h3 className="text-xl font-semibold mt-6 mb-2">How it Works</h3>
+            <p>
+              The analytics system uses React hooks to track user behavior. When an event occurs, it is sent to the configured analytics provider only if the user has given consent. All events are format-agnostic and can be adapted to work with any analytics service.
+            </p>
+          </div>
+          
+          <div className="bg-muted rounded-lg p-6 border">
+            <h3 className="text-xl font-semibold mb-4">Live Demo Console</h3>
+            <p className="text-sm text-muted-foreground mb-4">Try interacting with the elements below to see analytics events in real-time:</p>
+            
+            <div className="flex flex-col gap-4 mb-6">
               <Button 
                 onClick={() => logEvent('button_click', 'Demo', 'Primary Button')}
                 className="w-full"
@@ -261,96 +136,178 @@ export function TutorialVideo() {
               
               <Button 
                 variant="outline"
-                onClick={() => logEvent('button_click', 'Demo', 'Secondary Button')}
+                onClick={() => logEvent('button_click', 'Demo', 'Secondary Button', { custom_prop: 'test_value' })}
                 className="w-full"
               >
-                Track Secondary Button
+                Track with Custom Props
               </Button>
               
-              <a 
-                href="https://github.com/jmkcoder/odyssey-uplink-protocol" 
-                target="_blank"
-                rel="noopener"
-                className="block text-center text-primary underline"
-                onClick={(e) => {
-                  e.preventDefault();
-                  logEvent('outbound_link', 'Demo', 'GitHub Link');
-                }}
-              >
-                Track Outbound Link
-              </a>
-              
-              <div className="border rounded p-4 mt-4">
-                <label htmlFor="demo-search" className="block text-sm font-medium mb-1">Search (type at least 3 chars)</label>
-                <div className="flex gap-2">
-                  <input 
-                    id="demo-search" 
-                    type="text" 
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
-                    onChange={(e) => {
-                      if (e.target.value.length === 3) {
-                        logEvent('search', 'Demo', e.target.value);
-                      }
-                    }}
-                  />
-                  <Button onClick={() => logEvent('search_submit', 'Demo', 'Demo Search')}>
-                    Search
-                  </Button>
-                </div>
-              </div>
-              
-              {/* Add video player demo */}
-              <div className="border rounded p-4 mt-4">
-                <h4 className="text-md font-medium mb-2">Video Tracking Demo</h4>
-                <p className="text-sm text-muted-foreground mb-3">
-                  Play, pause, or complete this video to see tracking events
-                </p>
-                <video 
+              <div className="mt-2">
+                <video
                   ref={demoVideoRef}
-                  src="/videos/form-controller.mp4"
-                  className="w-full rounded"
-                  poster="/images/form-controller-placeholder.png"
                   controls
-                  preload="metadata"
-                />
+                  className="w-full h-40 object-cover rounded-md"
+                  poster="/video-poster.jpg"
+                >
+                  <source src="/demo-video.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <p className="text-xs text-center text-muted-foreground mt-2">
+                  Play, pause or seek the video to generate events
+                </p>
               </div>
             </div>
-          </div>
-          
-          <div>
-            <h3 className="text-xl font-bold mb-4">Events Console</h3>
-            <div className="bg-black text-green-400 font-mono text-sm p-4 rounded-md h-[420px] overflow-y-auto">
-              {events.length === 0 ? (
-                <div className="text-gray-500">No events tracked yet. Interact with the demo elements to see events appear here.</div>
-              ) : (
-                events.map((event, i) => (
-                  <div key={i} className="mb-2">
-                    <span className="text-gray-500">[{event.timestamp}]</span>{' '}
-                    {event.action} | {event.category}{event.label ? ` | ${event.label}` : ''}
-                    {event.extra && Object.keys(event.extra).length > 0 && (
-                      <div className="text-xs text-gray-400 ml-6 mt-1">
-                        {Object.entries(event.extra).map(([key, value]) => (
-                          <div key={key}>{key}: {JSON.stringify(value)}</div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))
-              )}
-            </div>            <div className="mt-2 text-xs text-gray-500">
-              Note: In development mode, events are logged only if the user has accepted cookie consent.
+            
+            <div className="border rounded-md overflow-hidden bg-background">
+              <div className="bg-primary/10 px-4 py-2 border-b">
+                <p className="text-sm font-medium">Event Log</p>
+              </div>
+              <div className="p-4 h-48 overflow-y-auto font-mono text-xs">
+                {events.length === 0 ? (
+                  <p className="text-muted-foreground">Interact with the demo elements to see events here...</p>
+                ) : (
+                  events.map((event, index) => (
+                    <div key={index} className="mb-2 pb-2 border-b last:border-0">
+                      <span className="text-muted-foreground">{event.timestamp}</span>{' '}
+                      <span className="font-semibold text-primary">{event.category}</span> /{' '}
+                      <span className="font-semibold">{event.action}</span>
+                      {event.label && <span> / {event.label}</span>}
+                      {event.extra && (
+                        <pre className="mt-1 p-1 rounded bg-muted text-muted-foreground overflow-x-auto">
+                          {JSON.stringify(event.extra, null, 2)}
+                        </pre>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </div>
-
-        <h2 id="troubleshooting" className="text-2xl font-bold mt-10 mb-4">Troubleshooting</h2>
-
+        
+        <h2 id="installation" className="text-2xl font-bold mt-10 mb-4">Installation</h2>
         <p className="mb-4">
-          If you encounter issues with analytics tracking:
+          The analytics module is included in the Uplink core package, so there&apos;s no need for additional installation.
+          Simply import the hooks you need from <code>@uplink-protocol/analytics</code>.
         </p>
+        
+        <h2 id="basic-usage" className="text-2xl font-bold mt-10 mb-4">Basic Usage</h2>
+        <div className="bg-muted p-4 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
+          <pre>{`
+import { useAnalytics } from '@uplink-protocol/analytics';
 
-        <ol className="list-decimal pl-6 mb-6 space-y-2">          <li>Ensure the Google Analytics Measurement ID is correctly set in your .env.local file</li>
-          <li>Verify that the analytics scripts are loading in the browser</li>
+function MyComponent() {
+  const { trackEvent } = useAnalytics();
+  
+  const handleButtonClick = () => {
+    trackEvent({
+      category: 'User Interaction',
+      action: 'button_click',
+      label: 'Submit Form',
+      value: 1,
+      // Optional: any additional properties for your analytics provider
+      nonInteraction: false,
+    });
+  };
+  
+  return (
+    <button onClick={handleButtonClick}>
+      Submit Form
+    </button>
+  );
+}
+          `}</pre>
+        </div>
+        
+        <h2 id="available-hooks" className="text-2xl font-bold mt-10 mb-4">Available Hooks</h2>
+        
+        <h3 id="use-analytics" className="text-xl font-semibold mt-6 mb-2">useAnalytics()</h3>
+        <p className="mb-2">The core hook for tracking events.</p>
+        <p className="mb-4">Returns: <code>{ trackEvent, isEnabled }</code> - Functions to track events and check if analytics is enabled</p>
+        
+        <h3 id="use-scroll-depth" className="text-xl font-semibold mt-6 mb-2">useScrollDepthTracking()</h3>
+        <p className="mb-2">Automatically tracks how far users scroll down a page.</p>
+        <p className="mb-4">Options:</p>
+        <ul className="list-disc pl-6 mb-6 space-y-2">
+          <li><code>thresholds</code>: Array of percentages at which to trigger events (default: <code>[25, 50, 75, 100]</code>)</li>
+          <li><code>throttleMs</code>: Throttle time in milliseconds (default: <code>500</code>)</li>
+          <li><code>trackPagePath</code>: Whether to include the page path in events (default: <code>true</code>)</li>
+        </ul>
+        
+        <h3 id="use-time-on-page" className="text-xl font-semibold mt-6 mb-2">useTimeOnPage()</h3>
+        <p className="mb-2">Tracks how much time users spend on a page.</p>
+        <p className="mb-4">Options:</p>
+        <ul className="list-disc pl-6 mb-6 space-y-2">
+          <li><code>intervalMs</code>: How often to send time update events (default: <code>60000</code> - every minute)</li>
+          <li><code>startImmediately</code>: Whether to start tracking immediately (default: <code>true</code>)</li>
+        </ul>
+        
+        <h2 id="configuration" className="text-2xl font-bold mt-10 mb-4">Configuration</h2>
+        <p className="mb-4">
+          To configure analytics for your application, you&apos;ll need to set up a provider.
+          Uplink ships with a Google Analytics 4 provider, but you can easily create your own.
+        </p>
+        
+        <div className="bg-muted p-4 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
+          <pre>{`
+// In your app initialization code
+import { configureAnalytics, GA4Provider } from '@uplink-protocol/analytics';
+
+configureAnalytics({
+  provider: new GA4Provider({
+    measurementId: 'G-XXXXXXXXXX',
+  }),
+  
+  // Optional: function to determine if analytics should be enabled
+  shouldEnableAnalytics: () => {
+    // Check user consent, development environment, etc.
+    return localStorage.getItem('analytics-consent') === 'true';
+  }
+});
+          `}</pre>
+        </div>
+        
+        <h2 id="creating-custom-providers" className="text-2xl font-bold mt-10 mb-4">Creating Custom Providers</h2>
+        <p className="mb-4">
+          You can create your own analytics provider by implementing the <code>AnalyticsProvider</code> interface:
+        </p>
+        
+        <div className="bg-muted p-4 rounded-lg mb-6 font-mono text-sm overflow-x-auto">
+          <pre>{`
+import { AnalyticsProvider, AnalyticsEventData } from '@uplink-protocol/analytics';
+
+class MyCustomProvider implements AnalyticsProvider {
+  initialize(): Promise<void> {
+    // Set up your analytics service
+    return Promise.resolve();
+  }
+  
+  trackEvent(eventData: AnalyticsEventData): void {
+    // Send event to your analytics service
+    console.log('Tracking event:', eventData);
+    
+    // Example: Send to a custom endpoint
+    fetch('https://api.example.com/analytics', {
+      method: 'POST',
+      body: JSON.stringify(eventData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+}
+
+// Then use it in your configuration
+configureAnalytics({
+  provider: new MyCustomProvider(),
+  // other options
+});
+          `}</pre>
+        </div>
+        
+        <h2 id="troubleshooting" className="text-2xl font-bold mt-10 mb-4">Troubleshooting</h2>
+        <p className="mb-4">If analytics events are not being tracked, check the following:</p>
+        <ol className="list-decimal pl-6 mb-6 space-y-2">
           <li>Check that the <code>shouldEnableAnalytics()</code> function is working correctly</li>
           <li>Make sure users have accepted cookie consent</li>
           <li>Ensure events are properly formatted according to GA4 requirements</li>
@@ -368,6 +325,6 @@ export function TutorialVideo() {
           </p>
         </div>
       </div>
-    </div>
+    </DocsPageLayout>
   );
 }

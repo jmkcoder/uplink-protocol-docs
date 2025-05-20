@@ -3,7 +3,6 @@
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import "../../../syntax-highlight.css"
-import { DocsSidebar } from "@/components/docs/sidebar"
 import { Introduction } from "@/components/docs/form-controller/Introduction"
 import { Installation } from "@/components/docs/form-controller/Installation"
 import { Basics } from "@/components/docs/form-controller/Basics"
@@ -16,6 +15,7 @@ import { SEO } from "@/components/seo"
 import { SocialShareContainer } from "@/components/social-share-container"
 import { useEffect, useState } from "react"
 import { event as trackEvent } from "@/lib/analytics"
+import { DocsPageLayout } from "@/components/docs/docs-page-layout"
 
 export default function FormControllerOverview() {
   // Track page view for analytics
@@ -49,28 +49,12 @@ Use Form Controller when you need advanced form validation, multi-step forms, or
 
 ## How do I install Form Controller?
 You can install Form Controller using npm, yarn, or pnpm with the package name @uplink-protocol/form-controller.
-
-## Does Form Controller support TypeScript?
-Yes, Form Controller has full TypeScript support with type inference for form values and validation.
-
-## Can Form Controller handle nested form data?
-Yes, Form Controller fully supports nested form data structures with dot notation for field paths.
-
-## How does validation work in Form Controller?
-Form Controller uses a validation schema approach where you define rules and constraints for each field.
-
-## Does Form Controller work with React?
-Yes, Form Controller works with React, Vue, Angular, Web Components or any other UI library.
-
-## Can I use Form Controller with vanilla JavaScript?
-Yes, Form Controller works perfectly with vanilla JavaScript without any framework dependencies.
     `;
-    
     setDocContent(content);
   }, []);
-    
+  
   return (
-    <main className="min-h-screen flex flex-col lg:flex-row bg-background text-foreground">
+    <>
       {/* Add enhanced SEO components */}
       <SEO
         type="documentation"
@@ -84,19 +68,18 @@ Yes, Form Controller works perfectly with vanilla JavaScript without any framewo
           'TypeScript forms',
           'JavaScript forms',
           'uplink protocol'
-        ]}        content={docContent}
+        ]}
+        content={docContent}
         datePublished="2023-01-01T00:00:00+00:00"
         dateModified={new Date().toISOString()}
       />
-      
-      {/* Sidebar */}
-      <DocsSidebar />
-        {/* Main Content */}
-      <div className="flex-1 px-4 sm:px-6 py-8 sm:py-12 lg:max-w-4xl">
+
+      <DocsPageLayout>
         {/* Header & Navigation */}
         <div className="space-y-2 mb-6 sm:mb-8">
           <Badge variant="outline">Logic</Badge>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Form Controller</h1>          <p className="text-muted-foreground text-base sm:text-lg">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Form Controller</h1>          
+          <p className="text-muted-foreground text-base sm:text-lg">
             A flexible, reactive form management system for both multi-step and single-step forms with advanced validation capabilities.
           </p>
           
@@ -106,29 +89,49 @@ Yes, Form Controller works perfectly with vanilla JavaScript without any framewo
             <Link href="/logic/form-controller/examples" className="text-muted-foreground hover:text-foreground pb-2 text-sm sm:text-base">Examples</Link>
             <Link href="/logic/form-controller/extensibility" className="text-muted-foreground hover:text-foreground pb-2 text-sm sm:text-base">Extensibility</Link>
           </div>
-        </div>        {/* Overview Content */}
+        </div>
+        
+        {/* Overview Content */}
         <section className="space-y-8 sm:space-y-12">
           {/* Introduction Component */}
-          <Introduction />
+          <div id="introduction">
+            <Introduction />
+          </div>
           
           {/* Installation Component */}
-          <Installation />
+          <div id="installation">
+            <Installation />
+          </div>
           
           {/* Form Controller Basics Component */}
-          <Basics />
+          <div id="basics">
+            <Basics />
+          </div>
 
           {/* Advanced Capabilities Component */}
-          <AdvancedCapabilities />
-            {/* Validation System Component */}
-          <Validation />
+          <div id="advanced-capabilities">
+            <AdvancedCapabilities />
+          </div>
+          
+          {/* Validation System Component */}
+          <div id="validation">
+            <Validation />
+          </div>
           
           {/* TypeScript Support Component */}
-          <TypeScriptSupport />
+          <div id="typescript-support">
+            <TypeScriptSupport />
+          </div>
           
           {/* Architecture Component */}
-          <Architecture />
-            {/* Related References Component */}
-          <RelatedReferences />
+          <div id="architecture">
+            <Architecture />
+          </div>
+          
+          {/* Related References Component */}
+          <div id="related-references">
+            <RelatedReferences />
+          </div>
           
           {/* Social Share */}
           <SocialShareContainer 
@@ -136,7 +139,7 @@ Yes, Form Controller works perfectly with vanilla JavaScript without any framewo
             description="A flexible, reactive form management system for both multi-step and single-step forms with advanced validation capabilities."
           />
         </section>
-      </div>
-    </main>
+      </DocsPageLayout>
+    </>
   )
 }
