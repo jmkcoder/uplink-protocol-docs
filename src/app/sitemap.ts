@@ -70,13 +70,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   try {
     // Get all routes from the app directory
     const dynamicRoutes = getRoutes();
+      // Create a set of unique routes (avoid duplicates)
+    const uniqueRoutes = new Set([...corePages, ...dynamicRoutes]);
     
-    // Create a set of unique routes (avoid duplicates)
-    const uniqueRoutes = new Set([...corePages, ...dynamicRoutes]);    // Map routes to sitemap entries
+    // Format the date as YYYY-MM-DD for Google compatibility
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // Gets YYYY-MM-DD format
+    
+    // Map routes to sitemap entries
     const routes = Array.from(uniqueRoutes).map((route) => ({
       // Always ensure there's a trailing slash for the base URL
       url: ensureUplinkProtocolInUrl(`${normalizedBaseUrl}${route === '/' ? '' : route}/`),
-      lastModified: new Date(),
+      lastModified: formattedDate,
       changeFrequency: (route === '/' ? 'daily' : 'weekly') as 'daily' | 'weekly',
       priority: route === '/' 
         ? 1.0 

@@ -22,18 +22,21 @@ const ensureCorrectDomain = (url) => {
 async function generateSitemaps() {
   try {
     console.log('Starting sitemap generation...');
-    
-    // Primary sitemap generation
+      // Primary sitemap generation
     const links = [];
+    
+    // Get today's date in YYYY-MM-DD format for Google compatibility
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // Gets YYYY-MM-DD format
     
     // Add static pages
     const staticPages = [
-      { url: '/', changefreq: 'daily', priority: 1.0 },
-      { url: '/getting-started', changefreq: 'weekly', priority: 0.9 },
-      { url: '/analytics', changefreq: 'weekly', priority: 0.8 },
-      { url: '/contact-us', changefreq: 'monthly', priority: 0.7 },
-      { url: '/privacy-policy', changefreq: 'monthly', priority: 0.5 },
-      { url: '/logic/form-controller', changefreq: 'weekly', priority: 0.9 },
+      { url: '/', changefreq: 'daily', priority: 1.0, lastmod: formattedDate },
+      { url: '/getting-started', changefreq: 'weekly', priority: 0.9, lastmod: formattedDate },
+      { url: '/analytics', changefreq: 'weekly', priority: 0.8, lastmod: formattedDate },
+      { url: '/contact-us', changefreq: 'monthly', priority: 0.7, lastmod: formattedDate },
+      { url: '/privacy-policy', changefreq: 'monthly', priority: 0.5, lastmod: formattedDate },
+      { url: '/logic/form-controller', changefreq: 'weekly', priority: 0.9, lastmod: formattedDate },
     ];
     
     links.push(...staticPages);
@@ -60,11 +63,11 @@ async function generateSitemaps() {
       ) {
         continue;
       }
-      
-      links.push({
+        links.push({
         url: route || '/',
         changefreq: 'weekly',
         priority: 0.7,
+        lastmod: formattedDate
       });
     }    // Create a sitemap stream
     const stream = new SitemapStream({ hostname: ensureCorrectDomain(normalizedBaseUrl) });

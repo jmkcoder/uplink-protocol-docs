@@ -67,7 +67,7 @@ async function fixSitemap() {
   
   // Store original content for comparison
   const originalContent = sitemapContent;
-    // Apply fixes
+  // Apply fixes
   
   // 0. Add XML Schema and proper formatting
   if (!sitemapContent.includes('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')) {
@@ -87,6 +87,9 @@ async function fixSitemap() {
     sitemapContent = sitemapContent.replace(/<priority>/g, '\n  <priority>');
     sitemapContent = sitemapContent.replace(/<\/urlset>/g, '\n</urlset>');
   }
+  
+  // Fix lastmod date format for Google: Change ISO format to YYYY-MM-DD
+  sitemapContent = sitemapContent.replace(/<lastmod>(\d{4}-\d{2}-\d{2})T.*?<\/lastmod>/g, '<lastmod>$1</lastmod>');
   
   // 1. Remove any source file paths
   sitemapContent = sitemapContent.replace(/<url>\s*<loc>https:\/\/[^<]*?\/src\/.*?<\/loc>.*?<\/url>/g, '');

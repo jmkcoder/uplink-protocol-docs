@@ -35,6 +35,9 @@ content = content.replace(/<changefreq>/g, '\n  <changefreq>');
 content = content.replace(/<priority>/g, '\n  <priority>');
 content = content.replace(/<\/urlset>/g, '\n</urlset>');
 
+// Fix lastmod date format for Google: Change ISO format to YYYY-MM-DD
+content = content.replace(/<lastmod>(\d{4}-\d{2}-\d{2})T.*?<\/lastmod>/g, '<lastmod>$1</lastmod>');
+
 // Ensure valid XML syntax
 content = content.replace(/>\s*</g, '>\n<');
 
