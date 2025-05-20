@@ -4,7 +4,6 @@ import { BreadcrumbGenerator } from './breadcrumb-generator';
 import { SoftwareJsonLd } from './json-ld';
 import { usePathname } from 'next/navigation';
 import { SEOMetatags } from './seo-metatags';
-import { SocialShare } from './social-share';
 import { DocMetadata } from './doc-metadata';
 
 interface SEOProps {
@@ -12,9 +11,7 @@ interface SEOProps {
   title?: string;
   description?: string;
   keywords?: string[];
-  image?: string;
-  content?: string;
-  showSocialShare?: boolean;
+  image?: string;  content?: string;
   noindex?: boolean;
   datePublished?: string;
   dateModified?: string;
@@ -26,9 +23,7 @@ export function SEO({
   title,
   description,
   keywords = [],
-  image,
-  content,
-  showSocialShare = false,
+  image,  content,
   noindex = false,
   datePublished,
   dateModified,
@@ -70,14 +65,7 @@ export function SEO({
       {type === 'documentation' && content && (
         <DocMetadata content={content} title={title} />
       )}
-      
-      {/* Optionally show social share buttons */}
-      {showSocialShare && (
-        <SocialShare
-          title={title}
-          summary={description}
-        />
-      )}
+        {/* Social share buttons are rendered separately */}
     </>
   );
 }

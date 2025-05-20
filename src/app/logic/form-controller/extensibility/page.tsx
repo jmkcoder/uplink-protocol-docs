@@ -6,6 +6,7 @@ import "../../../syntax-highlight.css"
 import { DocsSidebar } from "@/components/docs/sidebar"
 import { Extensibility } from "@/components/docs/form-controller/Extensibility"
 import { SEO } from "@/components/seo"
+import { SocialShareContainer } from "@/components/social-share-container"
 import { useEffect, useState } from "react"
 import { event as trackEvent } from "@/lib/analytics"
 
@@ -62,9 +63,7 @@ You can override methods like setupInitialFormData, initializeServices, and init
           'form controller subclassing',
           'form controller hooks',
           'uplink protocol'
-        ]}
-        content={docContent}
-        showSocialShare={true}
+        ]}        content={docContent}
         datePublished="2023-01-01T00:00:00+00:00"
         dateModified={new Date().toISOString()}
       />
@@ -88,11 +87,16 @@ You can override methods like setupInitialFormData, initializeServices, and init
             <Link href="/logic/form-controller/extensibility" className="font-medium text-primary border-b-2 border-primary pb-2 text-sm sm:text-base">Extensibility</Link>
           </div>
         </div>
-        
-        {/* Extensibility Content */}
+          {/* Extensibility Content */}
         <section className="space-y-8 sm:space-y-12">
           {/* Extensibility Component */}
           <Extensibility />
+          
+          {/* Social Share */}
+          <SocialShareContainer 
+            title="Form Controller Extensibility - Uplink Protocol"
+            description="Learn how to extend Form Controller to create custom form controllers with specialized behavior and functionality."
+          />
         </section>
       </div>
     </main>

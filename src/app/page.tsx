@@ -38,8 +38,7 @@ export default function HomePage() {
       <SEO 
         type="software"
         title="Uplink Protocol | Logic as a Service"
-        description="Decouple logic from UI. Write once, use anywhere across React, Vue, Web Components, and beyond."
-        keywords={[
+        description="Decouple logic from UI. Write once, use anywhere across React, Vue, Web Components, and beyond."        keywords={[
           'uplink protocol',
           'logic as a service',
           'decoupled logic',
@@ -49,7 +48,6 @@ export default function HomePage() {
           'vue',
           'web components'
         ]}
-        showSocialShare={false}
       />
       
       {/* Development Analytics Banner - only shown in dev */}

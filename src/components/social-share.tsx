@@ -58,9 +58,8 @@ export function SocialShare({ title, summary }: SocialShareProps) {
       '_blank'
     );
   };
-  
   return (
-    <div className="mt-8 pt-4 border-t">
+    <div className="mt-4">
       <h3 className="text-lg font-semibold mb-2">Share this page</h3>
       <div className="flex gap-2">
         <Button

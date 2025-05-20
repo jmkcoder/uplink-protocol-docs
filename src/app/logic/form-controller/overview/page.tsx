@@ -13,6 +13,7 @@ import { TypeScriptSupport } from "@/components/docs/form-controller/TypeScriptS
 import { Architecture } from "@/components/docs/form-controller/Architecture"
 import { RelatedReferences } from "@/components/docs/form-controller/RelatedReferences"
 import { SEO } from "@/components/seo"
+import { SocialShareContainer } from "@/components/social-share-container"
 import { useEffect, useState } from "react"
 import { event as trackEvent } from "@/lib/analytics"
 
@@ -83,9 +84,7 @@ Yes, Form Controller works perfectly with vanilla JavaScript without any framewo
           'TypeScript forms',
           'JavaScript forms',
           'uplink protocol'
-        ]}
-        content={docContent}
-        showSocialShare={true}
+        ]}        content={docContent}
         datePublished="2023-01-01T00:00:00+00:00"
         dateModified={new Date().toISOString()}
       />
@@ -128,9 +127,14 @@ Yes, Form Controller works perfectly with vanilla JavaScript without any framewo
           
           {/* Architecture Component */}
           <Architecture />
-          
-          {/* Related References Component */}
+            {/* Related References Component */}
           <RelatedReferences />
+          
+          {/* Social Share */}
+          <SocialShareContainer 
+            title="Form Controller Overview - Uplink Protocol"
+            description="A flexible, reactive form management system for both multi-step and single-step forms with advanced validation capabilities."
+          />
         </section>
       </div>
     </main>
