@@ -29,11 +29,9 @@ async function generateSitemaps() {
     ];
     
     links.push(...staticPages);
-      // Find all page.tsx files in the src/app directory, exclude 404 page
-    const pageFiles = glob.sync('src/app/**/page.tsx').filter(file => {
-      // Explicitly exclude 404 pages
-      return !file.includes('/404/') && !file.includes('\\404\\');
-    });
+    
+    // Find all page.tsx files in the src/app directory, exclude 404 page
+    const pageFiles = glob.sync('src/app/**/page.tsx').filter(file => !file.includes('src/app/404/'));
     
     // Extract routes from page files
     for (const file of pageFiles) {

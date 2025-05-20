@@ -26,7 +26,7 @@ function getRoutes(directory = path.join(process.cwd(), 'src/app'), basePath = '
   const routes: string[] = [];
   
   // Skip API routes and other special directories
-  const skipDirs = ['api', '_media', '__docs__', '__tests__'];
+  const skipDirs = ['api', '_media', '__docs__', '__tests__', '404'];
   
   try {
     const files = fs.readdirSync(directory);
