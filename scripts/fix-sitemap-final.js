@@ -27,7 +27,7 @@ const config = {
   // The base URL that all URLs should use
   baseUrl: 'https://jmkcoder.github.io/uplink-protocol-docs/',
   // File paths relative to project root
-  sitemapPath: './public/sitemap.xml',
+  sitemapPath: process.argv[2] || './public/sitemap.xml',
   robotsPath: './public/robots.txt',
   // Create backups before modifications
   createBackups: true
@@ -67,8 +67,26 @@ async function fixSitemap() {
   
   // Store original content for comparison
   const originalContent = sitemapContent;
+    // Apply fixes
   
-  // Apply fixes
+  // 0. Add XML Schema and proper formatting
+  if (!sitemapContent.includes('xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')) {
+    sitemapContent = sitemapContent.replace(
+      '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+      '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9\n  http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"'
+    );
+  }
+  
+  // Ensure proper formatting for better readability
+  if (!sitemapContent.includes('\n<url>')) {
+    sitemapContent = sitemapContent.replace(/<url>/g, '\n<url>');
+    sitemapContent = sitemapContent.replace(/<\/url>/g, '</url>');
+    sitemapContent = sitemapContent.replace(/<loc>/g, '\n  <loc>');
+    sitemapContent = sitemapContent.replace(/<lastmod>/g, '\n  <lastmod>');
+    sitemapContent = sitemapContent.replace(/<changefreq>/g, '\n  <changefreq>');
+    sitemapContent = sitemapContent.replace(/<priority>/g, '\n  <priority>');
+    sitemapContent = sitemapContent.replace(/<\/urlset>/g, '\n</urlset>');
+  }
   
   // 1. Remove any source file paths
   sitemapContent = sitemapContent.replace(/<url>\s*<loc>https:\/\/[^<]*?\/src\/.*?<\/loc>.*?<\/url>/g, '');
@@ -115,9 +133,13 @@ async function fixSitemap() {
   
   // 6. Clean up the XML (remove empty lines)
   sitemapContent = sitemapContent.replace(/(\r?\n)\s*\r?\n/g, '$1');
-  
-  // Write the fixed content back to the file
+    // Write the fixed content back to the file
   if (sitemapContent !== originalContent) {
+    // Add a header comment to indicate this file is auto-generated
+    if (!sitemapContent.startsWith('<!--')) {
+      sitemapContent = `<!-- Auto-generated sitemap.xml for Google Search Console - DO NOT EDIT MANUALLY -->\n${sitemapContent}`;
+    }
+    
     fs.writeFileSync(sitemapPath, sitemapContent);
     log.success('Fixed sitemap.xml to ensure all URLs use the correct base and have trailing slashes.');
   } else {

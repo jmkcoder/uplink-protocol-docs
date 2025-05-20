@@ -76,6 +76,22 @@ async function generateSitemaps() {
     
     // Fix: Ensure all URLs in the sitemap have trailing slashes
     let sitemapContent = sitemapOutput.toString();
+    
+    // Add XML Schema declaration to help Google parse the sitemap
+    sitemapContent = sitemapContent.replace(
+      '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+      '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9\n  http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">'
+    );
+    
+    // Format the XML with line breaks for better readability
+    sitemapContent = sitemapContent.replace(/<url>/g, '\n<url>');
+    sitemapContent = sitemapContent.replace(/<\/url>/g, '</url>');
+    sitemapContent = sitemapContent.replace(/<loc>/g, '\n<loc>');
+    sitemapContent = sitemapContent.replace(/<lastmod>/g, '\n<lastmod>');
+    sitemapContent = sitemapContent.replace(/<changefreq>/g, '\n<changefreq>');
+    sitemapContent = sitemapContent.replace(/<priority>/g, '\n<priority>');
+    sitemapContent = sitemapContent.replace(/<\/urlset>/g, '\n</urlset>');
+    
     // Regular expression to add trailing slash to all <loc> URLs that don't have one and don't end with a file extension
     sitemapContent = sitemapContent.replace(/<loc>(https:\/\/[^<]+?)(?!\/|\.xml|\.html|\.jpg|\.png|\.pdf)(<\/loc>)/g, '<loc>$1/$2');
     

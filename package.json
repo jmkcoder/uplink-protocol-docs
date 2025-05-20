@@ -8,7 +8,9 @@
     "lint": "next lint",
     "generate-sitemaps": "node scripts/generate-sitemaps.js && node scripts/clean-sitemap.js",
     "fix-sitemap": "node scripts/fix-sitemap-final.js",
-    "prebuild": "npm run generate-sitemaps && npm run fix-sitemap"
+    "format-xml": "node scripts/format-xml.js",
+    "prebuild": "npm run generate-sitemaps && npm run fix-sitemap",
+    "postbuild": "npm run format-xml \"./out/sitemap.xml\" && node scripts/fix-sitemap-final.js \"./out/sitemap.xml\""
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.2",
