@@ -27,11 +27,11 @@ export function CodeBlock({ code, language }: CodeBlockProps) {
     } catch (error) {
       console.error("Failed to copy code:", error);
     }
-  };
-
-  return (
-    <div className="relative">
-      <SyntaxHighlighter code={code} language={language} />
+  };  return (
+    <div className="relative max-w-full">
+      <div className="overflow-x-auto rounded border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+        <SyntaxHighlighter code={code} language={language} />
+      </div>
       <button
         onClick={handleCopy}
         className="absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white py-1 px-2 rounded text-xs transition-colors"

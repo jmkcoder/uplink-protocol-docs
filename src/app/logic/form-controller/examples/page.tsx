@@ -38,10 +38,10 @@ export default function FormControllerExamples() {
           Explore interactive examples of Form Controller in action.
         </p>
 
-        {/* Examples Tabs */}          <div className="mb-6 sm:mb-8">
-          <Tabs defaultValue="single-step" className="w-full">
-            <TabsList className="mb-6 sm:mb-4 w-full grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-start gap-2 sm:gap-3">
-              <TabsTrigger value="single-step" className="py-1.5 sm:py-2 px-2 sm:px-4 flex items-center gap-1 text-xs sm:text-sm" onClick={() => {
+        {/* Examples Tabs */}         
+        <div className="mb-6 sm:mb-8">
+          <Tabs defaultValue="single-step" className="w-full">            <TabsList className="mb-6 sm:mb-4 w-full grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-start gap-2 sm:gap-3">
+              <TabsTrigger value="single-step" onClick={() => {
                 document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                   panel.classList.add('hidden');
                   panel.setAttribute('data-state', 'inactive');
@@ -55,12 +55,11 @@ export default function FormControllerExamples() {
                   <path d="M12 16V8" />
                 </svg>
                 <span>Single-Step</span>
-              </TabsTrigger>                <TabsTrigger value="multi-step" className="py-1.5 sm:py-2 px-2 sm:px-4 flex items-center gap-1 text-xs sm:text-sm" onClick={() => {
+              </TabsTrigger>                <TabsTrigger value="multi-step" onClick={() => {
                 document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                   panel.classList.add('hidden');
                   panel.setAttribute('data-state', 'inactive');
-                });
-                document.getElementById('multi-step')?.classList.remove('hidden');
+                });                document.getElementById('multi-step')?.classList.remove('hidden');
                 document.getElementById('multi-step')?.setAttribute('data-state', 'active');
               }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block mr-1">
@@ -73,12 +72,11 @@ export default function FormControllerExamples() {
                 </svg>
                 <span>Multi-Step</span>
               </TabsTrigger>
-              <TabsTrigger value="advanced-validation" className="py-1.5 sm:py-2 px-2 sm:px-4 flex items-center gap-1 text-xs sm:text-sm" onClick={() => {
+              <TabsTrigger value="advanced-validation" onClick={() => {
                 document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                   panel.classList.add('hidden');
                   panel.setAttribute('data-state', 'inactive');
-                });
-                document.getElementById('advanced-validation')?.classList.remove('hidden');
+                });                document.getElementById('advanced-validation')?.classList.remove('hidden');
                 document.getElementById('advanced-validation')?.setAttribute('data-state', 'active');
               }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block mr-1">
@@ -86,12 +84,11 @@ export default function FormControllerExamples() {
                   <path d="m9 12 2 2 4-4" />
                 </svg>
                 <span>Advanced</span>
-              </TabsTrigger>                <TabsTrigger value="async-validation" className="py-1.5 sm:py-2 px-2 sm:px-4 flex items-center gap-1 text-xs sm:text-sm" onClick={() => {
+              </TabsTrigger>                <TabsTrigger value="async-validation" onClick={() => {
                 document.querySelectorAll('[role="tabpanel"][data-example-tab="true"]').forEach(panel => {
                   panel.classList.add('hidden');
                   panel.setAttribute('data-state', 'inactive');
-                });
-                document.getElementById('async-validation')?.classList.remove('hidden');
+                });                document.getElementById('async-validation')?.classList.remove('hidden');
                 document.getElementById('async-validation')?.setAttribute('data-state', 'active');
               }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block mr-1">

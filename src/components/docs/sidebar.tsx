@@ -57,7 +57,6 @@ export function DocsSidebar() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [pathname])
-
   const isActive = (path: string) => {
     if (path.includes('#')) {
       const [basePath, hash] = path.split('#')
@@ -72,15 +71,23 @@ export function DocsSidebar() {
       return currentHash === `#${hash}`
     }
 
-    // For paths without hash
-    return pathname === path
+    // For paths without hash:
+    // 1. Exact match - highest priority
+    if (pathname === path) return true
+    
+    // 2. Check if current path starts with the link path and the next character is a slash
+    // This ensures that "/getting-started" matches "/getting-started/something" but not "/getting-started-xyz"
+    if (path !== '/' && pathname.startsWith(path) && (pathname.charAt(path.length) === '/' || pathname.length === path.length)) {
+      return true
+    }
+    
+    return false
   }
-
   const getLinkClassName = (path: string) => {
     const active = isActive(path)
     return active
-      ? "text-primary font-medium hover:underline"
-      : "hover:underline text-muted-foreground"
+      ? "text-primary font-medium hover:underline block py-1"
+      : "hover:underline text-muted-foreground block py-1"
   }
 
   return (
@@ -107,24 +114,21 @@ export function DocsSidebar() {
           <div className="px-4 py-4 lg:py-1">
             <nav className="space-y-4 pr-2 pb-6">
               <div className="text-sm font-semibold uppercase text-muted-foreground">Getting Started</div>
-              <ul className="space-y-3">
-                <li><Link href="/getting-started" className={`${getLinkClassName("/getting-started")} block py-1`} onClick={closeSidebar}>Introduction</Link></li>
+              <ul className="space-y-3">                <li><Link href="/getting-started" className={getLinkClassName("/getting-started")} onClick={closeSidebar}>Introduction</Link></li>
                 <li className="ml-4 flex items-center">
                   <span className="text-muted-foreground mr-1 text-xs">§</span>
-                  <Link href="/getting-started#installation" className={`${getLinkClassName("/getting-started#installation")} block py-1`} onClick={closeSidebar}>Installation</Link>
+                  <Link href="/getting-started#installation" className={getLinkClassName("/getting-started#installation")} onClick={closeSidebar}>Installation</Link>
                 </li>
                 <li className="ml-4 flex items-center">
                   <span className="text-muted-foreground mr-1 text-xs">§</span>
-                  <Link href="/getting-started#usage" className={`${getLinkClassName("/getting-started#usage")} block py-1`} onClick={closeSidebar}>Framework Integrations</Link>
+                  <Link href="/getting-started#usage" className={getLinkClassName("/getting-started#usage")} onClick={closeSidebar}>Framework Integrations</Link>
                 </li>
-                <li><Link href="/getting-started/uplink-protocol" className={`${getLinkClassName("/getting-started/uplink-protocol")} block py-1`} onClick={closeSidebar}>Uplink Protocol</Link></li>
+                <li><Link href="/getting-started/uplink-protocol" className={getLinkClassName("/getting-started/uplink-protocol")} onClick={closeSidebar}>Uplink Protocol</Link></li>
               </ul>              <div className="text-sm font-semibold uppercase text-muted-foreground pt-6">Logic</div>
-              <ul className="space-y-3">
-                {/* Form Controller with nested links */}
-                <li className="space-y-2">
-                  <Link 
+              <ul className="space-y-3">                {/* Form Controller with nested links */}
+                <li className="space-y-2">                  <Link 
                     href="/logic/form-controller/overview" 
-                    className={`${pathname.startsWith("/logic/form-controller") ? "text-primary font-medium hover:underline" : "hover:underline text-muted-foreground"} block py-1`} 
+                    className={getLinkClassName("/logic/form-controller")} 
                     onClick={closeSidebar}
                   >
                     Form Controller
@@ -133,7 +137,7 @@ export function DocsSidebar() {
                     <li>
                       <Link 
                         href="/logic/form-controller/overview" 
-                        className={`${getLinkClassName("/logic/form-controller/overview")} block py-1`} 
+                        className={getLinkClassName("/logic/form-controller/overview")} 
                         onClick={closeSidebar}
                       >
                         Overview
@@ -142,7 +146,7 @@ export function DocsSidebar() {
                     <li>
                       <Link 
                         href="/logic/form-controller/api" 
-                        className={`${getLinkClassName("/logic/form-controller/api")} block py-1`} 
+                        className={getLinkClassName("/logic/form-controller/api")} 
                         onClick={closeSidebar}
                       >
                         API
@@ -151,7 +155,7 @@ export function DocsSidebar() {
                     <li>
                       <Link 
                         href="/logic/form-controller/examples" 
-                        className={`${getLinkClassName("/logic/form-controller/examples")} block py-1`} 
+                        className={getLinkClassName("/logic/form-controller/examples")} 
                         onClick={closeSidebar}
                       >
                         Examples
@@ -160,7 +164,7 @@ export function DocsSidebar() {
                     <li>
                       <Link 
                         href="/logic/form-controller/extensibility" 
-                        className={`${getLinkClassName("/logic/form-controller/extensibility")} block py-1`} 
+                        className={getLinkClassName("/logic/form-controller/extensibility")} 
                         onClick={closeSidebar}
                       >
                         Extensibility

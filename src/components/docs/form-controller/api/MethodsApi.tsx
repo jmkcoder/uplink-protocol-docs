@@ -4,10 +4,12 @@ import { CodeBlock } from '@/components/code-block';
 import { Card, CardContent } from "@/components/ui/card";
 
 const MethodDetail: React.FC<{ title: string; signature: string; description: string; params?: { name: string; type: string; description: string }[]; returns?: string }> = ({ title, signature, description, params, returns }) => (
-  <section className="py-6 mb-8 border-b border-border last:border-b-0 last:mb-0">
-    <h3 className="text-2xl font-semibold mb-3 text-foreground"><code>{title}</code></h3>
-    <CodeBlock language="ts" code={signature} />
-    <p className="mt-4 text-muted-foreground text-base leading-relaxed">{description}</p>
+  <section className="py-4 sm:py-6 mb-6 sm:mb-8 border-b border-border last:border-b-0 last:mb-0">
+    <h3 className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-3 text-foreground break-words"><code className="break-words">{title}</code></h3>
+    <div className="overflow-x-auto">
+      <CodeBlock language="ts" code={signature} />
+    </div>
+    <p className="mt-3 sm:mt-4 text-muted-foreground text-sm sm:text-base leading-relaxed">{description}</p>
     {params && params.length > 0 && (
       <div className="mt-5">
         <h4 className="text-lg font-medium mb-2 text-foreground">Parameters:</h4>
@@ -40,10 +42,8 @@ const MethodsApi: React.FC = () => {
           The <code>FormController</code> instance provides a set of methods to interact with and manage the form. 
           These methods are available under the <code>methods</code> property of the controller object, or directly if using a framework-specific binding.
         </p>
-      </div>
-
-      {/* API Overview Card */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-6 rounded-lg mb-8">
+      </div>      {/* API Overview Card */}
+      <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 sm:p-6 rounded-lg mb-8 overflow-hidden">
         <h3 className="text-xl font-bold text-blue-700 dark:text-blue-300 mb-3">FormController Methods API</h3>
         <p className="text-muted-foreground mb-2">
           The methods below provide programmatic control over form state, validation, navigation, and configuration.
@@ -69,20 +69,19 @@ if (result.success) {
   console.log("Validation errors:", result.errors);
 }`} />
       </div>
-      
-      {/* Method Categories Cards */}
-      <div className="grid md:grid-cols-3 gap-6 mb-10">
+        {/* Method Categories Cards */}
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-10">
         <Card className="overflow-hidden border-primary/10 transition-all hover:shadow-md">
-          <CardContent className="p-6 space-y-2">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <CardContent className="p-4 sm:p-6 space-y-2">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium">Navigation</h3>
+              <h3 className="text-lg sm:text-xl font-medium">Navigation</h3>
             </div>
-            <p className="text-muted-foreground">Methods to move between form steps, supporting multi-step form workflows.</p>
+            <p className="text-muted-foreground text-sm sm:text-base">Methods to move between form steps, supporting multi-step form workflows.</p>
           </CardContent>
         </Card>
 

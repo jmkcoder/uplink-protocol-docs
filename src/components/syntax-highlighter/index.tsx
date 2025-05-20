@@ -10,9 +10,8 @@ interface SyntaxHighlighterProps {
 
 export function SyntaxHighlighter({ code, language = "jsx" }: SyntaxHighlighterProps) {
   const [copied, setCopied] = useState(false);
-  
-  // Process and tokenize the code
-  const tokens = useMemo(() => tokenize(code, language), [code, language]);  // Split code into lines for better rendering and line numbers
+    // Process and tokenize the code
+  const tokens = useMemo(() => tokenize(code, language), [code, language]);
   const lines = useMemo(() => {
     // First, split the raw code by newlines to get the actual number of lines
     const rawLines = code.split('\n');
@@ -73,12 +72,13 @@ export function SyntaxHighlighter({ code, language = "jsx" }: SyntaxHighlighterP
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
+      setTimeout(() => setCopied(false), 2000);    } catch (error) {
       console.error("Failed to copy:", error);
     }
-  };  return (
-    <pre className="leading-relaxed syntax-highlight relative overflow-x-auto whitespace-pre-wrap">
+  };
+  
+  return (
+    <pre className="leading-relaxed syntax-highlight relative overflow-x-auto whitespace-pre-wrap w-full max-w-full">
       <button
         onClick={handleCopy}
         className="absolute top-2 right-2 bg-zinc-700/80 hover:bg-zinc-600 text-zinc-200 rounded px-2 py-1 text-xs font-medium transition-colors flex items-center gap-1.5 z-10"
@@ -99,21 +99,25 @@ export function SyntaxHighlighter({ code, language = "jsx" }: SyntaxHighlighterP
             </svg>
             <span>Copy</span>
           </>
-        )}
-      </button>      <code className="block w-full">        {lines.map((lineTokens, lineIndex) => (          <div key={lineIndex} className="table-row whitespace-pre-wrap">
-            <span className="table-cell pr-4 text-right text-zinc-500 select-none w-8 min-w-[2.5rem] pl-2">
-              {lineIndex + 1}
-            </span>
-            <span className="table-cell overflow-visible break-words w-full max-w-full">
-              {lineTokens.map((token: Token, tokenIndex: number) => (
-                token.type ? 
-                  <span key={tokenIndex} className={token.type} dangerouslySetInnerHTML={{ __html: token.content }}></span> : 
-                  <span key={tokenIndex} dangerouslySetInnerHTML={{ __html: token.content }}></span>
-              ))}
-            </span>
-          </div>
-        ))}
-      </code>
+        )}      </button>
+      <div className="overflow-x-auto min-w-0">
+        <code className="block w-full">
+          {lines.map((lineTokens, lineIndex) => (
+            <div key={lineIndex} className="table-row whitespace-pre-wrap">
+              <span className="table-cell pr-4 text-right text-zinc-500 select-none w-8 min-w-[2.5rem] pl-2">
+                {lineIndex + 1}
+              </span>
+              <span className="table-cell overflow-visible break-words w-full max-w-full">
+                {lineTokens.map((token: Token, tokenIndex: number) => (
+                  token.type ? 
+                    <span key={tokenIndex} className={token.type} dangerouslySetInnerHTML={{ __html: token.content }}></span> : 
+                    <span key={tokenIndex} dangerouslySetInnerHTML={{ __html: token.content }}></span>
+                ))}
+              </span>
+            </div>
+          ))}
+        </code>
+      </div>
     </pre>
   );
 }

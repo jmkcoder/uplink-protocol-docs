@@ -223,7 +223,7 @@ function MyComponent() {
         
         <h3 id="use-analytics" className="text-xl font-semibold mt-6 mb-2">useAnalytics()</h3>
         <p className="mb-2">The core hook for tracking events.</p>
-        <p className="mb-4">Returns: <code>{ trackEvent, isEnabled }</code> - Functions to track events and check if analytics is enabled</p>
+        <p className="mb-4">Returns: <code>{`{ trackEvent, isEnabled }`}</code> - Functions to track events and check if analytics is enabled</p>
         
         <h3 id="use-scroll-depth" className="text-xl font-semibold mt-6 mb-2">useScrollDepthTracking()</h3>
         <p className="mb-2">Automatically tracks how far users scroll down a page.</p>
