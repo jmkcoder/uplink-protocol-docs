@@ -11,6 +11,14 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://jmkcoder.github.io/
 // Remove trailing slash if present to avoid double slash
 const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 
+// For URL generation, make sure we're always using uplink-protocol-docs in the URL
+const ensureUplinkProtocolInUrl = (url: string) => {
+  if (url.includes('//jmkcoder.github.io/') && !url.includes('/uplink-protocol-docs/')) {
+    return url.replace('//jmkcoder.github.io/', '//jmkcoder.github.io/uplink-protocol-docs/');
+  }
+  return url;
+};
+
 // Core pages to be included in the sitemap
 const corePages = [
   '/',
@@ -64,10 +72,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const dynamicRoutes = getRoutes();
     
     // Create a set of unique routes (avoid duplicates)
-    const uniqueRoutes = new Set([...corePages, ...dynamicRoutes]);
-      // Map routes to sitemap entries
+    const uniqueRoutes = new Set([...corePages, ...dynamicRoutes]);    // Map routes to sitemap entries
     const routes = Array.from(uniqueRoutes).map((route) => ({
-      url: `${normalizedBaseUrl}${route === '/' ? '' : route}`,
+      // Always ensure there's a trailing slash for the base URL
+      url: ensureUplinkProtocolInUrl(`${normalizedBaseUrl}${route === '/' ? '' : route}/`),
       lastModified: new Date(),
       changeFrequency: (route === '/' ? 'daily' : 'weekly') as 'daily' | 'weekly',
       priority: route === '/' 
@@ -78,10 +86,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
     
     return routes;  } catch (error) {
-    console.error('Error generating sitemap:', error);
-      // Fallback to core pages if there's an error
+    console.error('Error generating sitemap:', error);    // Fallback to core pages if there's an error
     return corePages.map((route) => ({
-      url: `${normalizedBaseUrl}${route === '/' ? '' : route}`,
+      url: ensureUplinkProtocolInUrl(`${normalizedBaseUrl}${route === '/' ? '' : route}/`),
       lastModified: new Date(),
       changeFrequency: (route === '/' ? 'daily' : 'weekly') as 'daily' | 'weekly',
       priority: route === '/' ? 1.0 : 0.8,

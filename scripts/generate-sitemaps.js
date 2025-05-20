@@ -8,8 +8,16 @@ const fs = require('fs');
 
 // Base URL for your site
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://jmkcoder.github.io/uplink-protocol-docs/';
-// Remove trailing slash if present to avoid double slash
+// For normalize operations only - when generating URLs we'll ensure the trailing slash
 const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+
+// Ensure all URLs are under uplink-protocol-docs
+const ensureCorrectDomain = (url) => {
+  if (url.includes('jmkcoder.github.io') && !url.includes('uplink-protocol-docs')) {
+    return url.replace('jmkcoder.github.io', 'jmkcoder.github.io/uplink-protocol-docs');
+  }
+  return url;
+};
 
 async function generateSitemaps() {
   try {
@@ -58,32 +66,37 @@ async function generateSitemaps() {
         changefreq: 'weekly',
         priority: 0.7,
       });
-    }
-    
-    // Create a sitemap stream
-    const stream = new SitemapStream({ hostname: normalizedBaseUrl });
+    }    // Create a sitemap stream
+    const stream = new SitemapStream({ hostname: ensureCorrectDomain(normalizedBaseUrl) });
     
     // Create a readable stream from our links
     const sitemapOutput = await streamToPromise(
       Readable.from(links).pipe(stream)
     );
     
+    // Fix: Ensure all URLs in the sitemap have trailing slashes
+    let sitemapContent = sitemapOutput.toString();
+    // Regular expression to add trailing slash to all <loc> URLs that don't have one and don't end with a file extension
+    sitemapContent = sitemapContent.replace(/<loc>(https:\/\/[^<]+?)(?!\/|\.xml|\.html|\.jpg|\.png|\.pdf)(<\/loc>)/g, '<loc>$1/$2');
+    
+    // Ensure all URLs use uplink-protocol-docs
+    sitemapContent = sitemapContent.replace(/<loc>https:\/\/jmkcoder\.github\.io\/(?!uplink-protocol-docs)(.*?)<\/loc>/g, '<loc>https://jmkcoder.github.io/uplink-protocol-docs/$1</loc>');
+    
     // Write the sitemap to the public directory
     fs.writeFileSync(
       resolve(__dirname, '../public/sitemap.xml'),
-      sitemapOutput.toString()
+      sitemapContent
     );
     
     console.log('Sitemap generated successfully!');
-    
-    // Create a robots.txt file
+      // Create a robots.txt file
     const robotsTxt = `
-# robots.txt for ${baseUrl}
+# robots.txt for ${ensureCorrectDomain(baseUrl)}
 User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: ${normalizedBaseUrl}/sitemap.xml
+Sitemap: ${ensureCorrectDomain(normalizedBaseUrl)}/sitemap.xml
 
 # Disallow patterns
 Disallow: /api/
