@@ -125,8 +125,10 @@ export function DocsSidebar() {
                 </li>
                 <li><Link href="/getting-started/uplink-protocol" className={getLinkClassName("/getting-started/uplink-protocol")} onClick={closeSidebar}>Uplink Protocol</Link></li>
               </ul>              <div className="text-sm font-semibold uppercase text-muted-foreground pt-6">Logic</div>
-              <ul className="space-y-3">                {/* Form Controller with nested links */}
-                <li className="space-y-2">                  <Link 
+              <ul className="space-y-3">
+                {/* Form Controller with nested links */}
+                <li className="space-y-2">
+                  <Link 
                     href="/logic/form-controller/overview" 
                     className={getLinkClassName("/logic/form-controller")} 
                     onClick={closeSidebar}
@@ -168,6 +170,46 @@ export function DocsSidebar() {
                         onClick={closeSidebar}
                       >
                         Extensibility
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                
+                {/* Calendar Controller with nested links */}
+                <li className="space-y-2">
+                  <Link 
+                    href="/logic/calendar-controller/overview" 
+                    className={getLinkClassName("/logic/calendar-controller")} 
+                    onClick={closeSidebar}
+                  >
+                    Calendar Controller
+                  </Link>
+                  <ul className="space-y-2 ml-4 pl-2 border-l border-zinc-200 dark:border-zinc-800">
+                    <li>
+                      <Link 
+                        href="/logic/calendar-controller/overview" 
+                        className={getLinkClassName("/logic/calendar-controller/overview")} 
+                        onClick={closeSidebar}
+                      >
+                        Overview
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/logic/calendar-controller/api" 
+                        className={getLinkClassName("/logic/calendar-controller/api")} 
+                        onClick={closeSidebar}
+                      >
+                        API
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/logic/calendar-controller/examples" 
+                        className={getLinkClassName("/logic/calendar-controller/examples")} 
+                        onClick={closeSidebar}
+                      >
+                        Examples
                       </Link>
                     </li>
                   </ul>

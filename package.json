@@ -1,7 +1,8 @@
 {
   "name": "uplink-docs",
   "version": "0.1.1",
-  "private": true,  "scripts": {
+  "private": true,
+  "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -17,6 +18,7 @@
     "@radix-ui/react-tabs": "^1.1.11",
     "@radix-ui/react-toggle": "^1.1.8",
     "@radix-ui/react-tooltip": "^1.2.6",
+    "@uplink-protocol/calendar-controller": "^0.1.1",
     "@uplink-protocol/core": "^0.0.11",
     "@uplink-protocol/form-controller": "^0.2.6",
     "@uplink-protocol/react": "^0.0.9",

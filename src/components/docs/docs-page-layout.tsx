@@ -24,7 +24,8 @@ export function DocsPageLayout({
         {/* Mobile Sidebar is rendered separately in DocsSidebar component */}
         {/* Main Content with Max Width Constraint */}
         <main className="flex flex-1 flex-col">
-          <div className="flex flex-1 flex-col xl:flex-row">            {/* Main Content Area */}            <div 
+          <div className="flex flex-1 flex-col xl:flex-row">            
+            {/* Main Content Area */}            <div 
               id="main-content" 
               className={`flex-1 px-4 sm:px-6 py-8 sm:py-12 min-w-0 overflow-hidden ${showTableOfContents ? 'xl:min-w-0' : ''}`}
             >

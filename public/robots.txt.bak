@@ -1,0 +1,10 @@
+# robots.txt for https://jmkcoder.github.io/uplink-protocol-docs/
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://jmkcoder.github.io/uplink-protocol-docs/sitemap.xml
+
+# Disallow patterns
+Disallow: /api/
+Disallow: /_next/

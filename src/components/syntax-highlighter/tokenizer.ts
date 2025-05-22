@@ -6,7 +6,8 @@ export interface Token {
 export function tokenize(code: string, language: string): Token[] {
   const tokens: Token[] = [];
   let currentIndex = 0;
-  const codeLength = code.length;
+  // Make sure code is a string before accessing length
+  const codeLength = code ? code.length : 0;
 
   // Helper to add a token with HTML entities escaped
   const addToken = (type: string | undefined, content: string) => {

@@ -47,10 +47,14 @@ export function Footer() {
                                 <Link href="/getting-started/uplink-protocol" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
                                     Uplink Protocol
                                 </Link>
-                            </li>
-                            <li>
+                            </li>                            <li>
                                 <Link href="/logic/form-controller" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
                                     Form Controller
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/logic/calendar-controller" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
+                                    Calendar Controller
                                 </Link>
                             </li>
                         </ul>

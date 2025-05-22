@@ -8,13 +8,14 @@ interface SyntaxHighlighterProps {
   language?: "js" | "jsx" | "ts" | "tsx" | "html" | "css" | "shell" | "vue" | "svelte";
 }
 
-export function SyntaxHighlighter({ code, language = "jsx" }: SyntaxHighlighterProps) {
-  const [copied, setCopied] = useState(false);
-    // Process and tokenize the code
-  const tokens = useMemo(() => tokenize(code, language), [code, language]);
+export function SyntaxHighlighter({ code, language = "jsx" }: SyntaxHighlighterProps) {  const [copied, setCopied] = useState(false);
+  
+  // Process and tokenize the code
+  const tokens = useMemo(() => code ? tokenize(code, language) : [], [code, language]);
+  
   const lines = useMemo(() => {
     // First, split the raw code by newlines to get the actual number of lines
-    const rawLines = code.split('\n');
+    const rawLines = code ? code.split('\n') : [''];
     
     // Initialize empty line arrays
     const codeLines: Array<Token[]> = [];
