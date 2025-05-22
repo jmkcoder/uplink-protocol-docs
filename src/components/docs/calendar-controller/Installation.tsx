@@ -7,7 +7,7 @@ export function Installation() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight mb-4">Installation</h2>
+        <h2 id="installation" className="text-2xl font-bold tracking-tight mb-4">Installation</h2>
         <p className="text-muted-foreground">
           Calendar Controller can be installed using npm, yarn, or pnpm. It has minimal dependencies and is designed to be lightweight and framework-agnostic.
         </p>

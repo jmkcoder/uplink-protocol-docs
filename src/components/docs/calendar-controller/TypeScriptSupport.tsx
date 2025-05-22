@@ -6,7 +6,7 @@ export function TypeScriptSupport() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight mb-4">TypeScript Support</h2>
+        <h2 id="typescript-support" className="text-2xl font-bold tracking-tight mb-4">TypeScript Support</h2>
         <p className="text-muted-foreground">
           Calendar Controller is built with TypeScript and provides comprehensive type definitions to ensure type safety and improve developer experience.
         </p>

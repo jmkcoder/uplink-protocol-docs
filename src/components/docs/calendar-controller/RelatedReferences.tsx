@@ -9,7 +9,7 @@ export function RelatedReferences() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight mb-4">Related References</h2>
+        <h2 id="related-references" className="text-2xl font-bold tracking-tight mb-4">Related References</h2>
         <p className="text-muted-foreground">
           Calendar Controller integrates seamlessly with other components in the Uplink Protocol ecosystem.
         </p>

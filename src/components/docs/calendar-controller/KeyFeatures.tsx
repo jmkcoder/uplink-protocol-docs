@@ -8,7 +8,7 @@ export function KeyFeatures() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight mb-4">Key Features</h2>
+        <h2 id="key-features" className="text-2xl font-bold tracking-tight mb-4">Key Features</h2>
         <p className="text-muted-foreground">
           Calendar Controller provides powerful features to handle all aspects of calendar management in modern web applications.
         </p>

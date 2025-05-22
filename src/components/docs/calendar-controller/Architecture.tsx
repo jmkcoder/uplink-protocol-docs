@@ -6,7 +6,7 @@ export function Architecture() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight mb-4">Architecture</h2>
+        <h2 id="architecture" className="text-2xl font-bold tracking-tight mb-4">Architecture</h2>
         <p className="text-muted-foreground">
           Calendar Controller follows a clear architectural pattern that separates concerns and provides a maintainable, extensible foundation.
         </p>

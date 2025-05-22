@@ -6,7 +6,7 @@ export function Basics() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight mb-4">Basic Usage</h2>
+        <h2 id="basics" className="text-2xl font-bold tracking-tight mb-4">Basic Usage</h2>
         <p className="text-muted-foreground mb-4">
           Getting started with Calendar Controller is straightforward. Learn how to initialize, configure, and perform common operations.
         </p>
