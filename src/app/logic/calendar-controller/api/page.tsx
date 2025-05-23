@@ -152,13 +152,16 @@ export default function CalendarControllerApiPage() {
                     <div className="overflow-x-auto scrollbar-thin">
                       <SyntaxHighlighter
                         code={`// Create with default configuration
-const calendar = CalendarController();
+const calendar = new CalendarControllerClass();
 
 // Create with custom configuration
-const calendar = new CalendarController({
+const calendar = new CalendarControllerClass({
   firstDayOfWeek: 1, // Monday
   locale: 'fr-FR',
-  minDate: new Date(2025, 0, 1)
+  minDate: new Date(2025, 0, 1),
+  maxDate: new Date(2025, 11, 31),
+  hideOtherMonthDays: true,
+  isRangeSelection: true
 });`}
                         language="ts"
                       />
@@ -223,6 +226,12 @@ const calendar = new CalendarController({
                     <td className="p-3 text-sm">12</td>
                     <td className="p-3 text-sm">Number of years to display in year view</td>
                   </tr>
+                  <tr>
+                    <td className="p-3"><code className="text-sm">isRangeSelection</code></td>
+                    <td className="p-3"><code className="text-sm">boolean</code></td>
+                    <td className="p-3 text-sm">false</td>
+                    <td className="p-3 text-sm">Whether range selection mode is active</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -273,6 +282,12 @@ const calendar = new CalendarController({
                     <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">number</code></td>
                     <td className="p-2 sm:p-3 text-xs sm:text-sm">12</td>
                     <td className="p-2 sm:p-3 text-xs sm:text-sm">Number of years to display in year view</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">isRangeSelection</code></td>
+                    <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">boolean</code></td>
+                    <td className="p-2 sm:p-3 text-xs sm:text-sm">false</td>
+                    <td className="p-2 sm:p-3 text-xs sm:text-sm">Whether range selection mode is active</td>
                   </tr>
                 </tbody>
               </table>
@@ -637,44 +652,23 @@ const today = days.find(day => day.isToday);`}
                         <Card className="overflow-hidden">
                           <div className="overflow-x-auto">
                             <SyntaxHighlighter
-                              code="generateCalendarDays(): CalendarDay[]"
-                              language="ts"
-                            />
-                          </div>
-                        </Card>
-                        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Generates the calendar days for the current month</p>
-                      </div>
-                      <div className="bg-muted p-2 sm:p-3 md:p-4 rounded-md">
-                        <Card className="overflow-hidden">
-                          <div className="overflow-x-auto">
-                            <SyntaxHighlighter
-                              code="isDateDisabled(date: Date): boolean"
-                              language="ts"
-                            />
-                          </div>
-                        </Card>
-                        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Checks if a date is disabled based on min/max dates and validators</p>
-                      </div>
-                      <div className="bg-muted p-2 sm:p-3 md:p-4 rounded-md">
-                        <Card className="overflow-hidden">
-                          <div className="overflow-x-auto">
-                            <SyntaxHighlighter
                               code="addDisabledDate(date: Date): void"
                               language="ts"
                             />
                           </div>
                         </Card>
                         <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Adds a specific date to the disabled dates list</p>
-                      </div>                        <div className="bg-muted p-2 sm:p-3 md:p-4 rounded-md">
+                      </div>
+                      <div className="bg-muted p-2 sm:p-3 md:p-4 rounded-md">
                         <Card className="overflow-hidden">
                           <div className="overflow-x-auto">
                             <SyntaxHighlighter
-                              code="addDateValidator(validator: (date: Date) => boolean): void"
+                              code="clearSelection(): void"
                               language="ts"
                             />
                           </div>
                         </Card>
-                        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Adds a custom date validator function</p>
+                        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Clears the current date selection</p>
                       </div>
                     </div>
                   </div>
