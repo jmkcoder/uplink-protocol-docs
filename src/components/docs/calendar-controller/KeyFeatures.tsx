@@ -40,15 +40,16 @@ export function KeyFeatures() {
                 <span>Multiple non-contiguous date selection</span>
               </li>
             </ul>
-            
-            <CodeBlock language="js" code={`// Select a single date
-calendar.selectDate(new Date(2025, 4, 21));
+              <CodeBlock language="js" code={`// Select a single date (year, month, day)
+// Note: month is 0-indexed
+calendar.methods.selectDate(2025, 4, 21); // May 21, 2025
 
-// Select a date range
-calendar.selectDateRange({
-  start: new Date(2025, 4, 10),
-  end: new Date(2025, 4, 20)
-});`} />
+// Enable range selection mode
+calendar.methods.setRangeSelectionMode(true);
+
+// Select range start and end
+calendar.methods.selectDate(2025, 4, 10); // Start date
+calendar.methods.selectDate(2025, 4, 20); // End date`} />
           </CardContent>
         </Card>
         
@@ -77,12 +78,15 @@ calendar.selectDateRange({
                 <span>Regional first day of week support</span>
               </li>
             </ul>
-            
-            <CodeBlock language="js" code={`// Set locale for date formatting
-calendar.setLocale('fr-FR'); 
+              <CodeBlock language="js" code={`// Create calendar with locale configuration
+const calendar = CalendarController({
+  locale: 'fr-FR',
+  firstDayOfWeek: 1 // Monday
+});
 
-// Get localized weekday names
-const weekdays = calendar.getLocalizedWeekdays();
+// Access localized month and weekday names
+const monthName = calendar.bindings.monthName.current;
+const weekdays = calendar.bindings.weekdays.current;
 // ["dimanche", "lundi", "mardi", ...]`} />
           </CardContent>
         </Card>
@@ -115,11 +119,14 @@ const weekdays = calendar.getLocalizedWeekdays();
                 <span>Year view for broader navigation</span>
               </li>
             </ul>
-            
-            <CodeBlock language="js" code={`// Switch between view modes
-calendar.setViewMode('day');   // Default view
-calendar.setViewMode('month'); // Month selection
-calendar.setViewMode('year');  // Year selection`} />
+              <CodeBlock language="js" code={`// Access different calendar views
+const days = calendar.bindings.calendarDays.current;     // Day view
+const months = calendar.bindings.calendarMonths.current; // Month view  
+const years = calendar.bindings.calendarYears.current;   // Year view
+
+// Navigate between views via method selection
+calendar.methods.selectMonth(3, 2025); // Switch to April 2025
+calendar.methods.selectYear(2026);     // Switch to 2026`} />
           </CardContent>
         </Card>
         
@@ -148,16 +155,18 @@ calendar.setViewMode('year');  // Year selection`} />
                 <span>Special date highlighting</span>
               </li>
             </ul>
-            
-            <CodeBlock language="js" code={`// Set date constraints
-calendar.setMinDate(new Date(2025, 0, 1));
-calendar.setMaxDate(new Date(2025, 11, 31));
+              <CodeBlock language="js" code={`// Create calendar with date constraints
+const calendar = CalendarController({
+  minDate: new Date(2025, 0, 1),  // January 1, 2025
+  maxDate: new Date(2025, 11, 31), // December 31, 2025
+  disabledDates: [
+    new Date(2025, 6, 4),  // July 4th disabled
+    new Date(2025, 11, 25) // Christmas disabled
+  ]
+});
 
-// Disable weekends
-calendar.setDateValidator((date) => {
-  const day = date.getDay();
-  return day !== 0 && day !== 6;
-});`} />
+// Check if a date is disabled
+const isDisabled = calendar.methods.isDateDisabled(new Date(2025, 6, 4));`} />
           </CardContent>
         </Card>
       </div>
@@ -188,19 +197,23 @@ calendar.setDateValidator((date) => {
                 <span>Subscription cleanup handling</span>
               </li>
             </ul>
-            
-            <CodeBlock language="js" code={`// Subscribe to events
-const unsubDateSelected = calendar.onDateSelected((date) => {
-  console.log('Selected:', date);
+              <CodeBlock language="js" code={`// Subscribe to reactive bindings
+const unsubSelectedDate = calendar.bindings.selectedDate.subscribe((date) => {
+  console.log('Selected date:', date);
 });
 
-const unsubViewChanged = calendar.onViewModeChange((mode) => {
-  console.log('New view mode:', mode);
+const unsubCalendarDays = calendar.bindings.calendarDays.subscribe((days) => {
+  console.log('Calendar updated:', days.length, 'days');
 });
 
-// Clean up when done
-unsubDateSelected();
-unsubViewChanged();`} />
+const unsubDateRange = calendar.bindings.selectedDateRange.subscribe((range) => {
+  console.log('Range:', range.startDate, 'to', range.endDate);
+});
+
+// Clean up subscriptions
+unsubSelectedDate.unsubscribe();
+unsubCalendarDays.unsubscribe();
+unsubDateRange.unsubscribe();`} />
           </CardContent>
         </Card>
         
@@ -232,19 +245,19 @@ unsubViewChanged();`} />
             
             <CodeBlock language="ts" code={`import { 
   CalendarController, 
-  CalendarConfig,
-  ViewMode,
+  CalendarOptions,
+  CalendarDate,
   DateRange 
-} from '@uplink/calendar-controller';
+} from '@uplink-protocol/calendar-controller';
 
 // Type-safe configuration
-const config: CalendarConfig = {
-  locale: 'en-US',
+const options: CalendarOptions = {
   firstDayOfWeek: 1,
-  selectionMode: 'range'
+  dateFormat: 'MM/DD/YYYY',
+  initialSelectedDate: new Date()
 };
 
-const calendar = new CalendarController(config);`} />
+const calendar = CalendarController(options);`} />
           </CardContent>
         </Card>
       </div>

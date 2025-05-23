@@ -31,23 +31,31 @@ export default function CalendarControllerOverviewPage() {
   
   // Extract content from documentation components for SEO purposes
   useEffect(() => {
-    // This is a simplified approach - in a real implementation you might
-    // extract actual content from markdown or from the component prop values
     const content = `
-# Calendar Controller
-A flexible, reactive calendar component for date selection, navigation, and internationalization.
+# Calendar Controller Overview
+A full-featured date picker controller class providing functionality for date picking and calendar display with service-oriented architecture.
 
 ## What is Calendar Controller?
-Calendar Controller is a framework-agnostic library designed to handle complex calendar state management with built-in internationalization.
+Calendar Controller (CalendarControllerClass) is a framework-agnostic date management system that uses specialized services for different calendar concerns. It provides comprehensive functionality for date selection, navigation, internationalization, and calendar display through a reactive binding system.
+
+## Core Features
+- Single date, date range, and multi-date selection modes
+- Multiple view modes: day view, month view, and year view with year ranges
+- Service-oriented architecture with specialized services for different concerns
+- Comprehensive internationalization with locale support and date formatting
+- Date constraints and validation with min/max dates and custom validators
+- Reactive binding system for UI synchronization
+- TypeScript support with comprehensive type definitions
+- Framework compatibility with React, Vue, Angular, and vanilla JavaScript
 
 ## How does Calendar Controller work?
-Calendar Controller separates logic from UI, allowing you to implement calendars with any frontend framework.
+The controller uses a service-oriented architecture where core functionality is delegated to specialized services including CalendarService, DateSelectionService, DateValidationService, DateFormattingService, NavigationService, ViewStateService, EventManagerService, ConstraintsService, CalendarGeneratorService, and ConfigurationService.
 
 ## When should I use Calendar Controller?
-Use Calendar Controller when you need date selection, date ranges, or want to decouple calendar logic from UI components.
+Use Calendar Controller for date pickers, booking systems, event schedulers, date range selectors, multi-language applications requiring internationalization, and any application needing complex date manipulation with framework flexibility.
 
-## How do I install Calendar Controller?
-You can install Calendar Controller using npm, yarn, or pnpm with the package name @uplink/calendar-controller.
+## Installation
+Install via npm: npm install @uplink-protocol/calendar-controller
     `;
     setDocContent(content);
   }, []);

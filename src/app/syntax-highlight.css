@@ -3,7 +3,8 @@
   color: #D4D4D4;
   font-family: "Menlo", "Monaco", "Consolas", "Courier New", monospace;
   font-size: 0.9rem;
-  line-height: 1.5;  background-color: #1E1E1E;
+  line-height: 1.5;
+  background-color: #1E1E1E;
   padding: 1rem 0.75rem;
   border-radius: 0 0 0.5rem 0.5rem; /* Adjust border-radius to exclude the top part when headers present */
   overflow-x: auto;
@@ -12,6 +13,7 @@
   position: relative;
   max-width: 100%;
   word-break: break-word;
+  min-width: 0; /* Ensure it can shrink */
 }
 
 /* Copy button styles */
@@ -33,14 +35,38 @@
 }
 
 /* Responsive adjustments for smaller screens */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .syntax-highlight {
     font-size: 0.8rem;
     padding: 0.75rem 0.5rem;
+    overflow-x: auto;
   }
   
   .syntax-highlight .table-cell {
     word-break: break-all;
+    overflow-wrap: break-word;
+  }
+  
+  .syntax-highlight .table-cell.pr-4.text-right {
+    width: 2rem;
+    min-width: 2rem;
+    max-width: 2rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .syntax-highlight {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.25rem;
+  }
+  
+  .syntax-highlight .table-cell.pr-4.text-right {
+    width: 1.5rem;
+    min-width: 1.5rem;
+    max-width: 1.5rem;
+    font-size: 0.7rem;
+    padding-right: 0.25rem;
   }
 }
 
@@ -64,6 +90,7 @@
   display: table;
   table-layout: fixed;
   box-sizing: border-box;
+  min-width: 0;
 }
 
 .syntax-highlight .table-row {
@@ -78,6 +105,7 @@
   white-space: pre-wrap; /* Change to pre-wrap to enable wrapping */
   word-break: break-word;
   max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 /* Special styling for line number cells */
@@ -88,6 +116,7 @@
   width: 2.5rem;
   min-width: 2.5rem;
   max-width: 2.5rem;
+  flex-shrink: 0;
 }
 
 /* Code block header style */

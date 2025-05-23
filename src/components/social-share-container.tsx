@@ -14,9 +14,8 @@ export function SocialShareContainer({ title, description }: SocialShareContaine
   // Only show on content pages
   if (pathname === '/' || pathname === '/404') {
     return null;
-  }
-    return (
-    <div className="mt-10 pt-6 border-t border-border">
+  }    return (
+    <div className="mt-6 sm:mt-8 md:mt-10 pt-4 sm:pt-5 md:pt-6 border-t border-border">
       <SocialShare title={title} summary={description} />
     </div>
   );

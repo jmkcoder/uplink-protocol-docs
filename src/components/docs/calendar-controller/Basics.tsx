@@ -23,14 +23,13 @@ export function Basics() {
         <p className="mb-4">
           Create a new calendar controller with default or custom configuration:
         </p>
-        
-        <CodeBlock language="js" code={`import { CalendarController } from '@uplink/calendar-controller';
+          <CodeBlock language="js" code={`import { CalendarController } from '@uplink-protocol/calendar-controller';
 
 // Create with default settings
-const calendar = new CalendarController();
+const calendar = CalendarController();
 
 // Or with custom configuration
-const customCalendar = new CalendarController({
+const customCalendar = CalendarController({
   firstDayOfWeek: 0,           // Sunday (0) as first day of week
   hideOtherMonthDays: false,   // Show days from adjacent months
   minDate: new Date(2023, 0, 1),    // Jan 1, 2023 as earliest selectable date
@@ -43,39 +42,45 @@ const customCalendar = new CalendarController({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">        <div id="date-selection" className="space-y-4">
           <h3 className="text-xl font-semibold">Date Selection</h3>
           <p>Select dates with full validation against any constraints you've set:</p>
-          
-          <CodeBlock language="js" code={`// Select a specific date
-calendar.selectDate(new Date(2025, 4, 21)); // May 21, 2025
+            <CodeBlock language="js" code={`// Select a specific date using methods
+calendar.methods.selectDate(2025, 4, 21); // May 21, 2025 (year, month, day)
 
-// Get the currently selected date
-const selectedDate = calendar.getSelectedDate();
+// Get the currently selected date from bindings
+const selectedDate = calendar.bindings.selectedDate.current;
 
-// Select a date range (if in range selection mode)
-calendar.selectDateRange({
-  start: new Date(2025, 4, 10),
-  end: new Date(2025, 4, 15)
-});
+// Set range selection mode and select a range
+calendar.methods.setRangeSelectionMode(true);
+calendar.methods.selectDate(2025, 4, 10); // Start date
+calendar.methods.selectDate(2025, 4, 15); // End date
+
+// Get selected range
+const selectedRange = calendar.bindings.selectedDateRange.current;
 
 // Clear selection
-calendar.clearSelection();`} />
+calendar.methods.clearSelection();`} />
         </div>
           <div id="calendar-navigation" className="space-y-4">
           <h3 className="text-xl font-semibold">Calendar Navigation</h3>
           <p>Navigate through the calendar with intuitive methods:</p>
-          
-          <CodeBlock language="js" code={`// Move to next/previous month
-calendar.nextMonth();
-calendar.prevMonth();
+            <CodeBlock language="js" code={`// Move to next/previous month
+calendar.methods.nextMonth();
+calendar.methods.prevMonth();
 
-// Move to next/previous year
-calendar.nextYear();
-calendar.prevYear();
+// Move to next/previous year  
+calendar.methods.nextYear();
+calendar.methods.prevYear();
 
 // Jump to today
-calendar.navigateToToday();
+calendar.methods.goToToday();
 
-// Jump to a specific month and year (months are 0-indexed)
-calendar.navigateToMonth(0, 2025); // January 2025`} />
+// Navigate to a specific month and year
+calendar.methods.selectMonth(0, 2025); // January 2025
+calendar.methods.selectYear(2025);     // Go to 2025
+
+// Switch view modes
+calendar.methods.setViewMode('month'); // Month view
+calendar.methods.setViewMode('year');  // Year view
+calendar.methods.setViewMode('day');   // Day view (default)`} />
         </div>
       </div>
         <div id="rendering-data">
@@ -83,25 +88,24 @@ calendar.navigateToMonth(0, 2025); // January 2025`} />
         <p className="mb-4">
           Generate all the data needed to render your calendar UI:
         </p>
-        
-        <CodeBlock language="js" code={`// Get days to render in the current month view
-const days = calendar.generateCalendarDays();
+          <CodeBlock language="js" code={`// Get days to render in the current day view
+const days = calendar.bindings.calendarDays.current;
 /* Example structure:
 [
   {
     date: Date(2025, 3, 30),         // Date object for April 30
-    dayOfMonth: 30,                  // Day number
+    day: 30,                         // Day number
     isCurrentMonth: false,           // From previous month
     isToday: false,                  // Not today
     isSelected: false,               // Not selected
     isDisabled: false,               // Can be selected
-    isStartOfRange: false,           // Not start of range
-    isEndOfRange: false,             // Not end of range
-    isWithinRange: false             // Not within a range
+    isRangeStart: false,             // Not start of range
+    isRangeEnd: false,               // Not end of range
+    isInRange: false                 // Not within a range
   },
   {
     date: Date(2025, 4, 1),          // Date object for May 1
-    dayOfMonth: 1,                   // Day number
+    day: 1,                          // Day number
     isCurrentMonth: true,            // From current month
     // ...other properties
   },
@@ -109,83 +113,89 @@ const days = calendar.generateCalendarDays();
 ]
 */
 
-// Get localized week day names
-const weekdays = calendar.getLocalizedWeekdays(); 
-// Example: ["Sunday", "Monday", "Tuesday", ...]
+// Get months for month view
+const months = calendar.bindings.calendarMonths.current;
 
-// Get month and year formatted for display
-const monthYear = calendar.getFormattedMonthYear();
-// Example: "May 2025"`} />
+// Get years for year view
+const years = calendar.bindings.calendarYears.current;
+
+// Get current month name and year
+const monthName = calendar.bindings.monthName.current;
+const currentYear = calendar.bindings.currentYear.current;
+// Example: "May", 2025`} />
       </div>
         <div id="event-handling">
         <h3 className="text-xl font-semibold mb-4">Event Handling</h3>
         <p className="mb-4">
           Subscribe to calendar events to react to user interactions:
         </p>
-        
-        <CodeBlock language="js" code={`// Listen for date selection
-const unsubscribeFromDateEvents = calendar.onDateSelected((selectedDate) => {
+          <CodeBlock language="js" code={`// Subscribe to date selection changes
+const unsubscribeFromDateEvents = calendar.bindings.selectedDate.subscribe((selectedDate) => {
   console.log('Date selected:', selectedDate);
   // Update your UI here
 });
 
-// Listen for month/year navigation
-const unsubscribeFromNavigationEvents = calendar.onNavigationChange((state) => {
-  console.log('Current view:', state.currentMonth, state.currentYear);
-  // Update month/year display in your UI
+// Subscribe to month/year navigation changes
+const unsubscribeFromMonthEvents = calendar.bindings.monthName.subscribe((monthName) => {
+  console.log('Current month:', monthName);
 });
 
-// Don't forget to clean up event listeners when done
+const unsubscribeFromYearEvents = calendar.bindings.currentYear.subscribe((year) => {
+  console.log('Current year:', year);
+});
+
+// Subscribe to view mode changes
+const unsubscribeFromViewModeEvents = calendar.bindings.viewMode.subscribe((viewMode) => {
+  console.log('View mode changed to:', viewMode); // 'day', 'month', or 'year'
+});
+
+// Don't forget to clean up subscriptions when done
 unsubscribeFromDateEvents();
-unsubscribeFromNavigationEvents();`} />
+unsubscribeFromMonthEvents();
+unsubscribeFromYearEvents();
+unsubscribeFromViewModeEvents();`} />
       </div>
         <div id="complete-example" className="mt-6 pt-2 border-t border-border">
         <h3 className="text-xl font-semibold mb-4">Complete Basic Example</h3>
         <p className="mb-4">
           Here's a complete example showing a basic React integration:
         </p>
-        
-        <CodeBlock language="tsx" code={`import React, { useEffect, useState } from 'react';
-import { CalendarController, CalendarDay } from '@uplink/calendar-controller';
+          <CodeBlock language="tsx" code={`import React, { useEffect, useState } from 'react';
+import { CalendarController } from '@uplink-protocol/calendar-controller';
 
 function Calendar() {
-  const [calendar] = useState(() => new CalendarController());
-  const [days, setDays] = useState<CalendarDay[]>([]);
-  const [monthYear, setMonthYear] = useState('');
-  const [weekdays, setWeekdays] = useState<string[]>([]);
+  const [calendar] = useState(() => CalendarController());
+  const [days, setDays] = useState([]);
+  const [monthName, setMonthName] = useState('');
+  const [currentYear, setCurrentYear] = useState('');
   
   useEffect(() => {
-    // Initialize calendar display
-    setDays(calendar.generateCalendarDays());
-    setMonthYear(calendar.getFormattedMonthYear());
-    setWeekdays(calendar.getLocalizedWeekdays('short')); // "Sun", "Mon", etc.
+    // Set up subscriptions to reactive bindings
+    const subscriptions = [
+      calendar.bindings.calendarDays.subscribe(setDays),
+      calendar.bindings.monthName.subscribe(setMonthName),
+      calendar.bindings.currentYear.subscribe(setCurrentYear)
+    ];
     
-    // Set up event listeners
-    const unsub1 = calendar.onDateSelected(() => {
-      setDays(calendar.generateCalendarDays()); // Refresh days to show selection
-    });
-    
-    const unsub2 = calendar.onNavigationChange(() => {
-      setDays(calendar.generateCalendarDays());
-      setMonthYear(calendar.getFormattedMonthYear());
-    });
-    
-    // Clean up
+    // Clean up subscriptions
     return () => {
-      unsub1();
-      unsub2();
+      subscriptions.forEach(sub => sub());
     };
   }, [calendar]);
   
   // Navigation handlers
-  const handlePrevMonth = () => calendar.prevMonth();
-  const handleNextMonth = () => calendar.nextMonth();
-  const handleToday = () => calendar.navigateToToday();
+  const handlePrevMonth = () => calendar.methods.prevMonth();
+  const handleNextMonth = () => calendar.methods.nextMonth();
+  const handleToday = () => calendar.methods.goToToday();
   
   // Date selection handler
-  const handleSelectDate = (day: CalendarDay) => {
-    if (!day.isDisabled) {
-      calendar.selectDate(day.date);
+  const handleSelectDate = (day) => {
+    if (!day.isDisabled && day.date) {
+      calendar.methods.selectDate(
+        day.date.getFullYear(),
+        day.date.getMonth(),
+        day.date.getDate()
+      );
     }
   };
   
@@ -193,17 +203,12 @@ function Calendar() {
     <div className="calendar-container">
       <div className="calendar-header">
         <button onClick={handlePrevMonth}>Previous</button>
-        <h2>{monthYear}</h2>
+        <h2>{monthName} {currentYear}</h2>
         <button onClick={handleNextMonth}>Next</button>
         <button onClick={handleToday}>Today</button>
       </div>
       
       <div className="calendar-grid">
-        {/* Weekday headers */}
-        {weekdays.map(day => (
-          <div key={day} className="weekday">{day}</div>
-        ))}
-        
         {/* Calendar days */}
         {days.map((day, index) => (
           <div 
@@ -214,7 +219,7 @@ function Calendar() {
                        \${day.isDisabled ? 'disabled' : ''}\`}
             onClick={() => handleSelectDate(day)}
           >
-            {day.dayOfMonth}
+            {day.day}
           </div>
         ))}
       </div>

@@ -22,8 +22,7 @@ export function RelatedReferences() {
             <p className="text-muted-foreground mb-4">
               The Date Picker component provides a pre-built UI implementation using Calendar Controller as its logical foundation.
             </p>
-            <div className="space-y-4">
-              <CodeBlock language="tsx" code={`import { DatePicker } from '@uplink/date-picker';
+            <div className="space-y-4">              <CodeBlock language="tsx" code={`import { DatePicker } from '@uplink-protocol/date-picker';
 
 function MyDatePicker() {
   return (
@@ -52,7 +51,7 @@ function MyDatePicker() {
             </p>
             <div className="space-y-4">
               <CodeBlock language="tsx" code={`import { useFormController } from '@uplink/form-controller';
-import { CalendarController } from '@uplink/calendar-controller';
+import { CalendarController } from '@uplink-protocol/calendar-controller';
 
 function DateForm() {
   const form = useFormController({
@@ -60,7 +59,7 @@ function DateForm() {
   });
   
   // Create a calendar controller
-  const calendar = new CalendarController();
+  const calendar = CalendarController();
   
   // Connect form and calendar
   calendar.onDateSelected((date) => {
@@ -90,23 +89,18 @@ function DateForm() {
             <h3 className="text-xl font-medium mb-3">Data Handling</h3>
             <p className="text-muted-foreground mb-4">
               Learn how to use Calendar Controller with data fetching and server operations.
-            </p>
-            <div className="space-y-4">
-              <CodeBlock language="tsx" code={`import { CalendarController } from '@uplink/calendar-controller';
+            </p>            <div className="space-y-4">
+              <CodeBlock language="tsx" code={`import { CalendarController } from '@uplink-protocol/calendar-controller';
 import { fetchEvents } from './api';
 
 // Create calendar with event support
-const calendar = new CalendarController();
+const calendar = CalendarController();
 
 // When month changes, fetch events
-calendar.onNavigationChange(async ({ currentMonth, currentYear }) => {
-  const events = await fetchEvents(currentMonth, currentYear);
-  
-  // Highlight days with events
-  events.forEach(event => {
-    const eventDate = new Date(event.date);
-    calendar.setDayData(eventDate, { hasEvent: true });
-  });
+calendar.bindings.currentMonth.subscribe(async (month) => {
+  const year = calendar.bindings.currentYear.current;
+  const events = await fetchEvents(year, month);
+  // Update your UI with events
 });`} />
             </div>
           </CardContent>
@@ -149,7 +143,7 @@ calendar.onNavigationChange(async ({ currentMonth, currentYear }) => {
             <p className="text-sm text-muted-foreground mt-1">Source code, issues, and contribution guidelines</p>
           </a>
           
-          <a href="https://npmjs.com/package/@uplink/calendar-controller" 
+          <a href="https://npmjs.com/package/@uplink-protocol/calendar-controller" 
              target="_blank" 
              rel="noopener noreferrer"
              className="block p-4 border border-border rounded-md hover:bg-muted transition-colors">

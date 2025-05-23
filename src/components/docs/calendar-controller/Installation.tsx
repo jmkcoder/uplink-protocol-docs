@@ -19,17 +19,16 @@ export function Installation() {
           <TabsTrigger value="yarn">yarn</TabsTrigger>
           <TabsTrigger value="pnpm">pnpm</TabsTrigger>
         </TabsList>
-        
-        <TabsContent value="npm">
-          <CodeBlock language="shell" code={`npm install @uplink/calendar-controller`} />
+          <TabsContent value="npm">
+          <CodeBlock language="shell" code={`npm install @uplink-protocol/calendar-controller`} />
         </TabsContent>
         
         <TabsContent value="yarn">
-          <CodeBlock language="shell" code={`yarn add @uplink/calendar-controller`} />
+          <CodeBlock language="shell" code={`yarn add @uplink-protocol/calendar-controller`} />
         </TabsContent>
         
         <TabsContent value="pnpm">
-          <CodeBlock language="shell" code={`pnpm add @uplink/calendar-controller`} />
+          <CodeBlock language="shell" code={`pnpm add @uplink-protocol/calendar-controller`} />
         </TabsContent>
       </Tabs>
       
@@ -57,21 +56,20 @@ export function Installation() {
         <p className="mb-4">
           Calendar Controller includes comprehensive TypeScript type definitions out of the box:
         </p>
-        
-        <CodeBlock language="ts" code={`import { 
+          <CodeBlock language="ts" code={`import { 
   CalendarController, 
-  CalendarConfig, 
-  CalendarDay, 
+  CalendarOptions, 
+  CalendarDate, 
   DateRange 
-} from '@uplink/calendar-controller';
+} from '@uplink-protocol/calendar-controller';
 
 // Types are automatically available
-const config: CalendarConfig = {
-  locale: 'en-US',
-  selectionMode: 'single'
+const options: CalendarOptions = {
+  firstDayOfWeek: 1,
+  dateFormat: 'MM/DD/YYYY'
 };
 
-const calendar = new CalendarController(config);`} />
+const calendar = CalendarController(options);`} />
       </div>
       
       <div className="pt-4">
@@ -88,22 +86,32 @@ const calendar = new CalendarController(config);`} />
           </TabsList>
           
           <TabsContent value="react">
-            <CodeBlock language="tsx" code={`import { useEffect, useState } from 'react';
-import { CalendarController } from '@uplink/calendar-controller';
+            <CodeBlock language="tsx" code={`import { useEffect, useState, useRef } from 'react';
+import { CalendarController } from '@uplink-protocol/calendar-controller';
 
 function CalendarComponent() {
-  const [calendar] = useState(() => new CalendarController());
+  const calendarRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [days, setDays] = useState([]);
   
   useEffect(() => {
-    // Subscribe to date selection events
-    const unsubscribe = calendar.onDateSelected((date) => {
-      setSelectedDate(date);
+    // Initialize calendar
+    calendarRef.current = CalendarController({
+      firstDayOfWeek: 1,
+      dateFormat: 'MM/DD/YYYY'
     });
     
-    // Clean up subscription
-    return () => unsubscribe();
-  }, [calendar]);
+    // Subscribe to calendar changes
+    const subscriptions = [
+      calendarRef.current.bindings.selectedDate.subscribe(setSelectedDate),
+      calendarRef.current.bindings.calendarDays.subscribe(setDays)
+    ];
+    
+    // Clean up subscriptions
+    return () => {
+      subscriptions.forEach(sub => sub.unsubscribe());
+    };
+  }, []);
   
   // Render your UI based on calendar state
 }`} />
@@ -112,45 +120,57 @@ function CalendarComponent() {
           <TabsContent value="vue">
             <CodeBlock language="html" code={`<script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import { CalendarController } from '@uplink/calendar-controller';
+import { CalendarController } from '@uplink-protocol/calendar-controller';
 
 const selectedDate = ref(null);
-const calendar = new CalendarController();
-let unsubscribe;
+const days = ref([]);
+const calendar = CalendarController();
+let subscriptions = [];
 
 onMounted(() => {
-  unsubscribe = calendar.onDateSelected((date) => {
-    selectedDate.value = date;
-  });
+  subscriptions.push(
+    calendar.bindings.selectedDate.subscribe((date) => {
+      selectedDate.value = date;
+    }),
+    calendar.bindings.calendarDays.subscribe((calendarDays) => {
+      days.value = calendarDays;
+    })
+  );
 });
 
 onUnmounted(() => {
-  unsubscribe && unsubscribe();
+  subscriptions.forEach(sub => sub.unsubscribe());
 });
 </script>`} />
           </TabsContent>
           
           <TabsContent value="angular">
             <CodeBlock language="ts" code={`import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CalendarController } from '@uplink/calendar-controller';
+import { CalendarController } from '@uplink-protocol/calendar-controller';
 
 @Component({
   selector: 'app-calendar',
   template: '<!-- Your calendar template -->'
 })
 export class CalendarComponent implements OnInit, OnDestroy {
-  private calendar = new CalendarController();
-  private unsubscribe: Function;
+  private calendar = CalendarController();
+  private subscriptions: Function[] = [];
   selectedDate: Date | null = null;
+  days: any[] = [];
 
   ngOnInit() {
-    this.unsubscribe = this.calendar.onDateSelected((date) => {
-      this.selectedDate = date;
-    });
+    this.subscriptions.push(
+      this.calendar.bindings.selectedDate.subscribe((date) => {
+        this.selectedDate = date;
+      }),
+      this.calendar.bindings.calendarDays.subscribe((days) => {
+        this.days = days;
+      })
+    );
   }
 
   ngOnDestroy() {
-    this.unsubscribe && this.unsubscribe();
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }`} />
           </TabsContent>
