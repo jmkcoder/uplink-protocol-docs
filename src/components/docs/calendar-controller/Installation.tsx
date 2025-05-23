@@ -1,6 +1,7 @@
 'use client'
 
-import { CodeBlock } from "@/components/code-block"
+import { Card, CardContent } from "@/components/ui/card"
+import { SyntaxHighlighter } from "@/components/syntax-highlighter"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export function Installation() {
@@ -13,24 +14,17 @@ export function Installation() {
         </p>
       </div>
       
-      <Tabs defaultValue="npm" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-2">
-          <TabsTrigger value="npm">npm</TabsTrigger>
-          <TabsTrigger value="yarn">yarn</TabsTrigger>
-          <TabsTrigger value="pnpm">pnpm</TabsTrigger>
-        </TabsList>
-          <TabsContent value="npm">
-          <CodeBlock language="shell" code={`npm install @uplink-protocol/calendar-controller`} />
-        </TabsContent>
-        
-        <TabsContent value="yarn">
-          <CodeBlock language="shell" code={`yarn add @uplink-protocol/calendar-controller`} />
-        </TabsContent>
-        
-        <TabsContent value="pnpm">
-          <CodeBlock language="shell" code={`pnpm add @uplink-protocol/calendar-controller`} />
-        </TabsContent>
-      </Tabs>
+      <p className="text-muted-foreground text-lg">
+        Install the calendar controller package:
+      </p>
+      <Card>
+        <CardContent className="p-0 rounded-xl overflow-hidden">
+          <div className="flex items-center p-2 bg-zinc-900 border-b border-zinc-800 code-block-header">
+            <span className="text-zinc-400">npm</span>
+          </div>
+          <SyntaxHighlighter code="npm install @uplink-protocol/calendar-controller" language="shell" />
+        </CardContent>
+      </Card>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
@@ -56,7 +50,13 @@ export function Installation() {
         <p className="mb-4">
           Calendar Controller includes comprehensive TypeScript type definitions out of the box:
         </p>
-          <CodeBlock language="ts" code={`import { 
+        <Card>
+          <CardContent className="p-0 rounded-xl overflow-hidden">
+            <div className="flex items-center p-2 bg-zinc-900 border-b border-zinc-800 code-block-header">
+              <span className="text-zinc-400">typescript</span>
+            </div>
+            <SyntaxHighlighter 
+              code={`import { 
   CalendarController, 
   CalendarOptions, 
   CalendarDate, 
@@ -69,112 +69,90 @@ const options: CalendarOptions = {
   dateFormat: 'MM/DD/YYYY'
 };
 
-const calendar = CalendarController(options);`} />
+const calendar = CalendarController(options);`} 
+              language="ts" 
+            />
+          </CardContent>
+        </Card>
       </div>
       
-      <div className="pt-4">
-        <h3 className="text-xl font-semibold mb-4">Framework Integration</h3>
-        <p className="mb-4">
-          While Calendar Controller is framework-agnostic, here's how to integrate it with popular frameworks:
+      <p className="text-muted-foreground pt-4 mb-2">
+        Then install the integration package for your framework:
+      </p>
+      
+      <Tabs defaultValue="react" className="mt-4">
+        <TabsList className="w-full border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 rounded-lg p-1 mb-4">
+          <TabsTrigger value="react" className="data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-sm gap-2">
+            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+            React
+          </TabsTrigger>
+          <TabsTrigger value="vue" className="data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-sm gap-2">
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            Vue
+          </TabsTrigger>
+          <TabsTrigger value="svelte" className="data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-sm gap-2">
+            <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+            Svelte
+          </TabsTrigger>
+          <TabsTrigger value="vanilla" className="data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-800 data-[state=active]:shadow-sm gap-2">
+            <div className="w-3 h-3 rounded-full bg-gray-700"></div>
+            Vanilla JS
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="react" className="space-y-4">
+          <Card>
+            <CardContent className="p-0 rounded-xl overflow-hidden">
+              <div className="flex items-center p-2 bg-zinc-900 border-b border-zinc-800 code-block-header">
+                <span className="text-zinc-400">npm</span>
+              </div>
+              <SyntaxHighlighter code="npm install @uplink-protocol/react" language="shell" />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="vue" className="space-y-4">
+          <Card>
+            <CardContent className="p-0 rounded-xl overflow-hidden">
+              <div className="flex items-center p-2 bg-zinc-900 border-b border-zinc-800 code-block-header">
+                <span className="text-zinc-400">npm</span>
+              </div>
+              <SyntaxHighlighter code="npm install @uplink-protocol/vue" language="shell" />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="svelte" className="space-y-4">
+          <Card>
+            <CardContent className="p-0 rounded-xl overflow-hidden">
+              <div className="flex items-center p-2 bg-zinc-900 border-b border-zinc-800 code-block-header">
+                <span className="text-zinc-400">npm</span>
+              </div>
+              <SyntaxHighlighter code="npm install @uplink-protocol/svelte" language="shell" />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="vanilla" className="space-y-4">
+          <Card>
+            <CardContent className="p-0 rounded-xl overflow-hidden">
+              <div className="flex items-center p-2 bg-zinc-900 border-b border-zinc-800 code-block-header">
+                <span className="text-zinc-400">npm</span>
+              </div>
+              <SyntaxHighlighter code="# No additional package needed for vanilla JS" language="shell" />
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+      
+      <div className="mt-6 p-5 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800/50">
+        <h3 className="text-xl font-semibold text-amber-800 dark:text-amber-300 mb-3">TypeScript Support</h3>
+        <p className="text-muted-foreground">
+          Calendar Controller comes with full TypeScript support out of the box. No additional type packages are required.
         </p>
-        
-        <Tabs defaultValue="react" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-2">
-            <TabsTrigger value="react">React</TabsTrigger>
-            <TabsTrigger value="vue">Vue</TabsTrigger>
-            <TabsTrigger value="angular">Angular</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="react">
-            <CodeBlock language="tsx" code={`import { useEffect, useState, useRef } from 'react';
-import { CalendarController } from '@uplink-protocol/calendar-controller';
-
-function CalendarComponent() {
-  const calendarRef = useRef(null);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [days, setDays] = useState([]);
-  
-  useEffect(() => {
-    // Initialize calendar
-    calendarRef.current = CalendarController({
-      firstDayOfWeek: 1,
-      dateFormat: 'MM/DD/YYYY'
-    });
-    
-    // Subscribe to calendar changes
-    const subscriptions = [
-      calendarRef.current.bindings.selectedDate.subscribe(setSelectedDate),
-      calendarRef.current.bindings.calendarDays.subscribe(setDays)
-    ];
-    
-    // Clean up subscriptions
-    return () => {
-      subscriptions.forEach(sub => sub.unsubscribe());
-    };
-  }, []);
-  
-  // Render your UI based on calendar state
-}`} />
-          </TabsContent>
-          
-          <TabsContent value="vue">
-            <CodeBlock language="html" code={`<script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import { CalendarController } from '@uplink-protocol/calendar-controller';
-
-const selectedDate = ref(null);
-const days = ref([]);
-const calendar = CalendarController();
-let subscriptions = [];
-
-onMounted(() => {
-  subscriptions.push(
-    calendar.bindings.selectedDate.subscribe((date) => {
-      selectedDate.value = date;
-    }),
-    calendar.bindings.calendarDays.subscribe((calendarDays) => {
-      days.value = calendarDays;
-    })
-  );
-});
-
-onUnmounted(() => {
-  subscriptions.forEach(sub => sub.unsubscribe());
-});
-</script>`} />
-          </TabsContent>
-          
-          <TabsContent value="angular">
-            <CodeBlock language="ts" code={`import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CalendarController } from '@uplink-protocol/calendar-controller';
-
-@Component({
-  selector: 'app-calendar',
-  template: '<!-- Your calendar template -->'
-})
-export class CalendarComponent implements OnInit, OnDestroy {
-  private calendar = CalendarController();
-  private subscriptions: Function[] = [];
-  selectedDate: Date | null = null;
-  days: any[] = [];
-
-  ngOnInit() {
-    this.subscriptions.push(
-      this.calendar.bindings.selectedDate.subscribe((date) => {
-        this.selectedDate = date;
-      }),
-      this.calendar.bindings.calendarDays.subscribe((days) => {
-        this.days = days;
-      })
-    );
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
-  }
-}`} />
-          </TabsContent>
-        </Tabs>
+        <p className="text-sm text-muted-foreground mt-2">
+          This enables code completion, type checking, and better developer experience when working with the library.
+        </p>
       </div>
     </div>
   )
