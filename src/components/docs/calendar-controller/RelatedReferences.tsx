@@ -135,7 +135,7 @@ calendar.bindings.currentMonth.subscribe(async (month) => {
           Additional resources from the Uplink Protocol community:
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <a href="https://github.com/odyssey/uplink-calendar-controller" 
+          <a href="https://github.com/jmkcoder/uplink-protocol-calendar" 
              target="_blank" 
              rel="noopener noreferrer"
              className="block p-4 border border-border rounded-md hover:bg-muted transition-colors">
@@ -149,14 +149,6 @@ calendar.bindings.currentMonth.subscribe(async (month) => {
              className="block p-4 border border-border rounded-md hover:bg-muted transition-colors">
             <h4 className="font-medium">NPM Package</h4>
             <p className="text-sm text-muted-foreground mt-1">Latest releases and installation information</p>
-          </a>
-          
-          <a href="https://discord.gg/uplink-protocol" 
-             target="_blank" 
-             rel="noopener noreferrer"
-             className="block p-4 border border-border rounded-md hover:bg-muted transition-colors">
-            <h4 className="font-medium">Discord Community</h4>
-            <p className="text-sm text-muted-foreground mt-1">Get help and share your implementations</p>
           </a>
         </div>
       </div>
