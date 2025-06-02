@@ -51,17 +51,18 @@ export default function CalendarControllerApiPage() {
   }, []);
 
   return (
-    <>
-      <SEO
-        title="Calendar Controller API | Uplink Protocol"
-        description="Complete API reference for the Calendar Controller component, including all methods, properties, and configurations."
-      />      <DocsPageLayout>        {/* Header & Navigation */}
-        <header className="mb-4 sm:mb-6 md:mb-8">
+    <>      <SEO
+        title="Calendar Controller API v0.2.1 | Uplink Protocol"
+        description="Complete API reference for the Calendar Controller component v0.2.1, including all methods, properties, configurations, and new disabled weekdays functionality."
+      /><DocsPageLayout>        {/* Header & Navigation */}        <header className="mb-4 sm:mb-6 md:mb-8">
           <div className="space-y-1.5 sm:space-y-2 md:space-y-2.5 max-w-full">
-            <Badge variant="outline" className="mb-0.5 sm:mb-1">Logic</Badge>
+            <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
+              <Badge variant="outline">Logic</Badge>
+              <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 border-emerald-300">v0.2.1</Badge>
+            </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight break-words">Calendar Controller API</h1>
             <p className="text-muted-foreground text-sm sm:text-base md:text-lg">
-              Complete API reference for the Calendar Controller component.
+              Complete API reference for the Calendar Controller component with new disabled weekdays functionality.
             </p>
           </div>
 
@@ -149,8 +150,7 @@ export default function CalendarControllerApiPage() {
                     <Book className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" /> Example Usage
                   </h3>
                   <div className="overflow-hidden rounded-md">
-                    <div className="overflow-x-auto scrollbar-thin">
-                      <SyntaxHighlighter
+                    <div className="overflow-x-auto scrollbar-thin">                      <SyntaxHighlighter
                         code={`// Create with default configuration
 const calendar = new CalendarControllerClass();
 
@@ -162,6 +162,13 @@ const calendar = new CalendarControllerClass({
   maxDate: new Date(2025, 11, 31),
   hideOtherMonthDays: true,
   isRangeSelection: true
+});
+
+// Create with disabled weekdays (v0.2.1)
+const businessCalendar = new CalendarControllerClass({
+  disabledDaysOfWeek: [0, 6], // Disable weekends
+  minDate: new Date(), // Only future dates
+  firstDayOfWeek: 1 // Start week on Monday
 });`}
                         language="ts"
                       />
@@ -213,6 +220,12 @@ const calendar = new CalendarControllerClass({
                     <td className="p-3"><code className="text-sm">Date | null</code></td>
                     <td className="p-3 text-sm">null</td>
                     <td className="p-3 text-sm">Maximum selectable date</td>
+                  </tr>
+                  <tr>
+                    <td className="p-3"><code className="text-sm">disabledDaysOfWeek</code></td>
+                    <td className="p-3"><code className="text-sm">number[]</code></td>
+                    <td className="p-3 text-sm">[]</td>
+                    <td className="p-3 text-sm">Array of disabled days of the week (0 = Sunday, 1 = Monday, etc.) <Badge variant="secondary" className="ml-1 text-xs bg-emerald-100 text-emerald-700 border-emerald-300">New in v0.2.1</Badge></td>
                   </tr>
                   <tr>
                     <td className="p-3"><code className="text-sm">locale</code></td>
@@ -270,6 +283,12 @@ const calendar = new CalendarControllerClass({
                     <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">Date | null</code></td>
                     <td className="p-2 sm:p-3 text-xs sm:text-sm">null</td>
                     <td className="p-2 sm:p-3 text-xs sm:text-sm">Maximum selectable date</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">disabledDaysOfWeek</code></td>
+                    <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">number[]</code></td>
+                    <td className="p-2 sm:p-3 text-xs sm:text-sm">[]</td>
+                    <td className="p-2 sm:p-3 text-xs sm:text-sm">Array of disabled days of the week (0 = Sunday, 1 = Monday, etc.) <Badge variant="secondary" className="ml-1 text-xs bg-emerald-100 text-emerald-700 border-emerald-300">New in v0.2.1</Badge></td>
                   </tr>
                   <tr>
                     <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">locale</code></td>
@@ -359,6 +378,11 @@ const calendar = new CalendarControllerClass({
                     <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">locale</code></td>
                     <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">string</code></td>
                     <td className="p-2 sm:p-3 text-sm">Current locale for internationalization</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">disabledDaysOfWeek</code></td>
+                    <td className="p-2 sm:p-3"><code className="text-xs sm:text-sm">number[]</code></td>
+                    <td className="p-2 sm:p-3 text-sm">Array of disabled days of the week (0 = Sunday, 1 = Monday, etc.) <Badge variant="secondary" className="ml-1 text-xs bg-emerald-100 text-emerald-700 border-emerald-300">New in v0.2.1</Badge></td>
                   </tr>
                 </tbody>
               </table>
@@ -614,8 +638,7 @@ const today = days.find(day => day.isToday);`}
                           </div>
                         </Card>
                         <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Sets the minimum selectable date</p>
-                      </div>
-                      <div className="bg-muted p-2 sm:p-3 md:p-4 rounded-md">
+                      </div>                      <div className="bg-muted p-2 sm:p-3 md:p-4 rounded-md">
                         <Card className="overflow-hidden">
                           <div className="overflow-x-auto">
                             <SyntaxHighlighter
@@ -626,7 +649,76 @@ const today = days.find(day => day.isToday);`}
                         </Card>
                         <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Sets the maximum selectable date</p>
                       </div>
-                      <div className="bg-muted p-2 sm:p-3 md:p-4 rounded-md">
+                      <div className="bg-muted/60 p-2 sm:p-3 md:p-4 rounded-md border-l-4 border-emerald-500">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge variant="secondary" className="text-xs bg-emerald-100 text-emerald-700 border-emerald-300">New in v0.2.1</Badge>
+                        </div>
+                        <Card className="overflow-hidden">
+                          <div className="overflow-x-auto">
+                            <SyntaxHighlighter
+                              code="setDisabledDaysOfWeek(days: number[]): number[]"
+                              language="ts"
+                            />
+                          </div>
+                        </Card>
+                        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Sets the disabled days of the week (0 = Sunday, 1 = Monday, etc.). Returns the updated array.</p>
+                      </div>
+                      <div className="bg-muted/60 p-2 sm:p-3 md:p-4 rounded-md border-l-4 border-emerald-500">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge variant="secondary" className="text-xs bg-emerald-100 text-emerald-700 border-emerald-300">New in v0.2.1</Badge>
+                        </div>
+                        <Card className="overflow-hidden">
+                          <div className="overflow-x-auto">
+                            <SyntaxHighlighter
+                              code="addDisabledDayOfWeek(day: number): number[]"
+                              language="ts"
+                            />
+                          </div>
+                        </Card>
+                        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Adds a single day to the disabled days of the week. Returns the updated array.</p>
+                      </div>
+                      <div className="bg-muted/60 p-2 sm:p-3 md:p-4 rounded-md border-l-4 border-emerald-500">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge variant="secondary" className="text-xs bg-emerald-100 text-emerald-700 border-emerald-300">New in v0.2.1</Badge>
+                        </div>
+                        <Card className="overflow-hidden">
+                          <div className="overflow-x-auto">
+                            <SyntaxHighlighter
+                              code="removeDisabledDayOfWeek(day: number): number[]"
+                              language="ts"
+                            />
+                          </div>
+                        </Card>
+                        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Removes a single day from the disabled days of the week. Returns the updated array.</p>
+                      </div>
+                      <div className="bg-muted/60 p-2 sm:p-3 md:p-4 rounded-md border-l-4 border-emerald-500">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge variant="secondary" className="text-xs bg-emerald-100 text-emerald-700 border-emerald-300">New in v0.2.1</Badge>
+                        </div>
+                        <Card className="overflow-hidden">
+                          <div className="overflow-x-auto">
+                            <SyntaxHighlighter
+                              code="getDisabledDaysOfWeek(): number[]"
+                              language="ts"
+                            />
+                          </div>
+                        </Card>
+                        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Gets the current disabled days of the week.</p>
+                      </div>
+                      <div className="bg-muted/60 p-2 sm:p-3 md:p-4 rounded-md border-l-4 border-emerald-500">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge variant="secondary" className="text-xs bg-emerald-100 text-emerald-700 border-emerald-300">New in v0.2.1</Badge>
+                        </div>
+                        <Card className="overflow-hidden">
+                          <div className="overflow-x-auto">
+                            <SyntaxHighlighter
+                              code="isDayOfWeekDisabled(day: number): boolean"
+                              language="ts"
+                            />
+                          </div>
+                        </Card>
+                        <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Checks if a specific day of the week is disabled.</p>
+                      </div>                      <div className="bg-muted p-2 sm:p-3 md:p-4 rounded-md">
                         <Card className="overflow-hidden">
                           <div className="overflow-x-auto">
                             <SyntaxHighlighter
@@ -636,6 +728,50 @@ const today = days.find(day => day.isToday);`}
                           </div>
                         </Card>
                         <p className="mt-2 text-xs sm:text-sm text-muted-foreground">Sets the number of years to display in year view</p>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+                <Card className="border-emerald-200 bg-emerald-50/50">
+                  <CardHeader className="p-4 sm:p-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 border-emerald-300">New in v0.2.1</Badge>
+                    </div>
+                    <CardTitle className="text-base sm:text-lg md:text-xl text-emerald-800">Disabled Weekdays Example</CardTitle>
+                    <CardDescription className="text-xs sm:text-sm text-emerald-700">Comprehensive example demonstrating disabled weekdays functionality</CardDescription>
+                  </CardHeader>
+                  <div className="p-4 sm:p-6 pt-0">
+                    <div className="overflow-hidden rounded-md">
+                      <div className="overflow-x-auto">
+                        <SyntaxHighlighter
+                          code={`// Business calendar - disable weekends
+const businessCalendar = new CalendarControllerClass({
+  disabledDaysOfWeek: [0, 6], // Disable Sunday and Saturday
+  firstDayOfWeek: 1, // Start week on Monday
+  minDate: new Date() // Only future dates
+});
+
+// Dynamic weekday management
+businessCalendar.addDisabledDayOfWeek(5); // Also disable Friday
+console.log(businessCalendar.getDisabledDaysOfWeek()); // [0, 5, 6]
+
+// Check if specific days are disabled
+console.log(businessCalendar.isDayOfWeekDisabled(0)); // true (Sunday)
+console.log(businessCalendar.isDayOfWeekDisabled(1)); // false (Monday)
+
+// Remove a disabled day
+businessCalendar.removeDisabledDayOfWeek(5); // Re-enable Friday
+console.log(businessCalendar.getDisabledDaysOfWeek()); // [0, 6]
+
+// Replace all disabled days
+businessCalendar.setDisabledDaysOfWeek([1, 3]); // Only Monday and Wednesday disabled
+console.log(businessCalendar.getDisabledDaysOfWeek()); // [1, 3]
+
+// Day number reference:
+// 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday
+// 4 = Thursday, 5 = Friday, 6 = Saturday`}
+                          language="ts"
+                        />
                       </div>
                     </div>
                   </div>
@@ -857,12 +993,10 @@ navService.setViewMode('month');`}
                 </div>
               </div>
             </Card>
-          </div>
-
-          {/* Social Share */}
+          </div>          {/* Social Share */}
           <SocialShareContainer
-            title="Calendar Controller API Reference - Uplink Protocol"
-            description="Complete API reference for the Calendar Controller component, including methods, properties, and configurations."
+            title="Calendar Controller API v0.2.1 Reference - Uplink Protocol"
+            description="Complete API reference for the Calendar Controller component v0.2.1, including new disabled weekdays functionality, methods, properties, and configurations."
           />
         </section>
       </DocsPageLayout>
