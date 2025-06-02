@@ -4,11 +4,15 @@ import { CodeBlock } from "@/components/code-block"
 
 export function TypeScriptSupport() {
   return (
-    <div className="space-y-6">
-      <div>
+    <div className="space-y-6">      <div>
         <h2 id="typescript-support" className="text-2xl font-bold tracking-tight mb-4">TypeScript Support</h2>
+        <div className="flex items-center gap-2 mb-4">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
+            Enhanced in v0.2.1
+          </span>
+        </div>
         <p className="text-muted-foreground">
-          Calendar Controller is built with TypeScript and provides comprehensive type definitions to ensure type safety and improve developer experience.
+          Calendar Controller is built with TypeScript and provides comprehensive type definitions to ensure type safety and improve developer experience. Version 0.2.1 includes enhanced type definitions for better development experience.
         </p>
       </div>
       
@@ -17,8 +21,7 @@ export function TypeScriptSupport() {
           <h3 className="text-xl font-semibold">Core Types</h3>
           <p>
             The key TypeScript interfaces and types that power Calendar Controller:
-          </p>
-            <CodeBlock language="ts" code={`// Configuration interface
+          </p>            <CodeBlock language="ts" code={`// Configuration interface
 interface CalendarOptions {
   locale?: string;
   firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -28,6 +31,7 @@ interface CalendarOptions {
   initialSelectedDate?: Date;
   hideOtherMonthDays?: boolean;
   yearRangeSize?: number;
+  disabledDaysOfWeek?: number[]; // NEW in v0.2.1
 }
 
 // Calendar day representation

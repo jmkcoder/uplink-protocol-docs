@@ -28,8 +28,7 @@ export default function CalendarControllerOverviewPage() {
 
   // Store documentation content for structured data generation
   const [docContent, setDocContent] = useState<string>('');
-  
-  // Extract content from documentation components for SEO purposes
+    // Extract content from documentation components for SEO purposes
   useEffect(() => {
     const content = `
 # Calendar Controller Overview
@@ -44,18 +43,26 @@ Calendar Controller (CalendarControllerClass) is a framework-agnostic date manag
 - Service-oriented architecture with specialized services for different concerns
 - Comprehensive internationalization with locale support and date formatting
 - Date constraints and validation with min/max dates and custom validators
+- Disabled weekdays support for business applications (NEW in v0.2.1)
 - Reactive binding system for UI synchronization
 - TypeScript support with comprehensive type definitions
 - Framework compatibility with React, Vue, Angular, and vanilla JavaScript
+- Enhanced example stability and browser compatibility (v0.2.1)
 
 ## How does Calendar Controller work?
 The controller uses a service-oriented architecture where core functionality is delegated to specialized services including CalendarService, DateSelectionService, DateValidationService, DateFormattingService, NavigationService, ViewStateService, EventManagerService, ConstraintsService, CalendarGeneratorService, and ConfigurationService.
 
 ## When should I use Calendar Controller?
-Use Calendar Controller for date pickers, booking systems, event schedulers, date range selectors, multi-language applications requiring internationalization, and any application needing complex date manipulation with framework flexibility.
+Use Calendar Controller for date pickers, booking systems, event schedulers, date range selectors, business applications requiring weekday restrictions, multi-language applications requiring internationalization, and any application needing complex date manipulation with framework flexibility.
 
 ## Installation
 Install via npm: npm install @uplink-protocol/calendar-controller
+
+## Latest Updates (v0.2.1)
+- Enhanced example stability with function scope fixes
+- New disabled weekdays feature for business rules
+- Improved browser compatibility
+- Better TypeScript definitions
     `;
     setDocContent(content);
   }, []);
@@ -66,14 +73,15 @@ Install via npm: npm install @uplink-protocol/calendar-controller
       <SEO
         type="documentation"
         title="Calendar Controller Overview - Uplink Protocol"
-        description="A flexible, reactive calendar component for date selection, navigation, and internationalization."
-        keywords={[
+        description="A flexible, reactive calendar component for date selection, navigation, and internationalization."        keywords={[
           'calendar controller',
           'date picker', 
           'date selection',
           'date range selection',
           'calendar management',
           'internationalization',
+          'disabled weekdays',
+          'business calendar',
           'uplink protocol'
         ]}
         content={docContent}
@@ -85,9 +93,8 @@ Install via npm: npm install @uplink-protocol/calendar-controller
         {/* Header & Navigation */}
         <div className="space-y-2 mb-6 sm:mb-8">
           <Badge variant="outline">Logic</Badge>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Calendar Controller</h1>          
-          <p className="text-muted-foreground text-base sm:text-lg">
-            A flexible, reactive calendar component for date selection, navigation, and internationalization.
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Calendar Controller</h1>            <p className="text-muted-foreground text-base sm:text-lg">
+            A flexible, reactive calendar component for date selection, navigation, internationalization, and business rules with disabled weekdays support.
           </p>
           
           <div className="flex flex-wrap gap-3 sm:gap-4 pt-4 border-b border-border">
@@ -134,10 +141,9 @@ Install via npm: npm install @uplink-protocol/calendar-controller
             <RelatedReferences />
           </div>
           
-          {/* Social Share */}
-          <SocialShareContainer 
+          {/* Social Share */}          <SocialShareContainer 
             title="Calendar Controller Overview - Uplink Protocol"
-            description="A flexible, reactive calendar component for date selection, navigation, and internationalization."
+            description="A flexible, reactive calendar component for date selection, navigation, internationalization, and business rules with disabled weekdays support."
           />
         </section>
       </DocsPageLayout>

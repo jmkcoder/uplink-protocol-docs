@@ -7,12 +7,21 @@ import { SyntaxHighlighter } from "@/components/syntax-highlighter"
 
 export function Basics() {
   return (
-    <div className="space-y-6">
-      <div>
+    <div className="space-y-6">      <div>
         <h2 id="basics" className="text-2xl font-bold tracking-tight mb-4">Basic Usage</h2>
         <p className="text-muted-foreground mb-4">
-          Getting started with Calendar Controller is straightforward. Learn how to initialize, configure, and perform common operations.
+          Getting started with Calendar Controller is straightforward. Learn how to initialize, configure, and perform common operations with the latest v0.2.1 features.
         </p>
+      </div>
+
+      <div className="bg-green-50 dark:bg-green-900/20 border-l-4 border-green-500 p-4 rounded-lg mb-6">
+        <h5 className="text-green-800 dark:text-green-300 font-medium mb-1">✨ What's New in v0.2.1</h5>
+        <div className="text-green-700 dark:text-green-400 text-sm space-y-1">
+          <div>• Enhanced example stability with improved function scope management</div>
+          <div>• New disabled weekdays feature for business applications</div>
+          <div>• Better browser compatibility across all modern browsers</div>
+          <div>• Improved TypeScript definitions for better development experience</div>
+        </div>
       </div>
 
       <div className="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800 p-4 rounded-lg">
@@ -25,8 +34,7 @@ export function Basics() {
         <h3 className="text-xl font-semibold mb-4">Initialization</h3>
         <p className="mb-4">
           Create a new calendar controller with default or custom configuration:
-        </p>
-        <CodeBlock language="js" code={`import { CalendarController } from '@uplink-protocol/calendar-controller';
+        </p>        <CodeBlock language="js" code={`import { CalendarController } from '@uplink-protocol/calendar-controller';
 
 // Create with default settings
 const calendar = CalendarController();
@@ -38,7 +46,8 @@ const customCalendar = CalendarController({
   minDate: new Date(2023, 0, 1),    // Jan 1, 2023 as earliest selectable date
   maxDate: new Date(2025, 11, 31),  // Dec 31, 2025 as latest selectable date
   locale: 'en-US',             // Use US English formatting
-  selectionMode: 'single'      // Allow only single date selection
+  selectionMode: 'single',     // Allow only single date selection
+  disabledDaysOfWeek: [0, 6]   // Disable weekends (Sunday and Saturday)
 });`} />
       </div>
 
@@ -125,8 +134,34 @@ const years = calendar.bindings.calendarYears.current;
 // Get current month name and year
 const monthName = calendar.bindings.monthName.current;
 const currentYear = calendar.bindings.currentYear.current;
-// Example: "May", 2025`} />
+// Example: "May", 2025`} />      </div>
+      
+      <div id="disabled-weekdays" className="space-y-4 mt-8">
+        <h3 className="text-xl font-semibold">Disabled Weekdays Management</h3>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300">
+            New in v0.2.1
+          </span>
+        </div>
+        <p>Disable specific days of the week across all calendar views for business rules and scheduling constraints:</p>
+        <CodeBlock language="js" code={`// Initialize calendar with disabled weekends
+const businessCalendar = CalendarController({
+  disabledDaysOfWeek: [0, 6] // Disable Sunday (0) and Saturday (6)
+});
+
+// Dynamic weekday management
+calendar.setDisabledDaysOfWeek([1, 3, 5]); // Disable Mon, Wed, Fri
+calendar.addDisabledDayOfWeek(2);          // Add Tuesday
+calendar.removeDisabledDayOfWeek(1);       // Remove Monday
+
+// Get current disabled weekdays
+const disabledDays = calendar.getDisabledDaysOfWeek();
+console.log(disabledDays); // [2, 3, 5] (Tue, Wed, Fri)
+
+// Check if a specific weekday is disabled
+const isMondayDisabled = calendar.isDayOfWeekDisabled(1); // false`} />
       </div>
+      
       <div id="event-handling">
         <h3 className="text-xl font-semibold mb-4">Event Handling</h3>
         <p className="mb-4">

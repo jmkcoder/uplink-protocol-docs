@@ -261,6 +261,49 @@ const calendar = CalendarController(options);`} />
           </CardContent>
         </Card>
       </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="overflow-hidden">
+          <CardContent className="p-6 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-medium">Disabled Weekdays</h3>
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300">
+                New in v0.2.1
+              </span>
+            </div>
+            
+            <ul className="space-y-2">
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                <span>Disable specific days of the week globally</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                <span>Dynamic weekday management</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                <span>Business rules and scheduling support</span>
+              </li>
+            </ul>
+            
+            <CodeBlock language="js" code={`// Disable weekends (Saturday and Sunday)
+const calendar = CalendarController({
+  disabledDaysOfWeek: [0, 6] // 0 = Sunday, 6 = Saturday
+});
+
+// Dynamic weekday management
+calendar.setDisabledDaysOfWeek([1, 3]); // Monday and Wednesday
+calendar.addDisabledDayOfWeek(5);       // Add Friday
+calendar.removeDisabledDayOfWeek(0);    // Remove Sunday`} />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

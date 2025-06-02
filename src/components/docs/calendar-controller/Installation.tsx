@@ -6,9 +6,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export function Installation() {
   return (
-    <div className="space-y-6">
-      <div>
+    <div className="space-y-6">      <div>
         <h2 id="installation" className="text-2xl font-bold tracking-tight mb-4">Installation</h2>
+        <div className="flex items-center gap-3 mb-4">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300">
+            Latest: v0.2.1
+          </span>
+          <span className="text-sm text-muted-foreground">Enhanced stability & new features</span>
+        </div>
         <p className="text-muted-foreground">
           Calendar Controller can be installed using npm, yarn, or pnpm. It has minimal dependencies and is designed to be lightweight and framework-agnostic.
         </p>

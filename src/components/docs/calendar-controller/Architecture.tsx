@@ -5,12 +5,16 @@ import { SyntaxHighlighter } from "@/components/syntax-highlighter"
 import { CodeBlock } from "@/components/code-block"
 
 export function Architecture() {
-  return (
-    <div className="space-y-6">
-      <h2 id="architecture" className="text-3xl font-bold tracking-tight">Architecture</h2>
+  return (    <div className="space-y-6">
+      <div className="flex items-center gap-3 mb-4">
+        <h2 id="architecture" className="text-3xl font-bold tracking-tight">Architecture</h2>
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
+          Enhanced in v0.2.1
+        </span>
+      </div>
       <p className="text-muted-foreground text-lg leading-relaxed">
-        Calendar Controller is built using a service-oriented architecture with a reactive state management system, providing a robust foundation for complex calendar management.
-      </p>      
+        Calendar Controller is built using a service-oriented architecture with a reactive state management system, providing a robust foundation for complex calendar management including new disabled weekdays functionality.
+      </p>
       <div className="grid md:grid-cols-2 gap-6 mt-6">
         <div className="space-y-4">
           <h3 className="text-xl font-semibold">Core Components</h3>

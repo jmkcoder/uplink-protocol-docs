@@ -4,14 +4,19 @@ import { Card, CardContent } from "@/components/ui/card"
 
 export function Introduction() {
   return (
-    <div className="space-y-6">
-      <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 sm:p-6 rounded-lg">
+    <div className="space-y-6">      <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 sm:p-6 rounded-lg">
         <h2 id="introduction" className="text-xl sm:text-2xl font-bold text-blue-700 dark:text-blue-300 mb-3 sm:mb-4">Calendar Controller: Full-Featured Date Management</h2>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300">
+            v0.2.1 Latest
+          </span>
+          <span className="text-xs text-muted-foreground">Enhanced stability & new features</span>
+        </div>
         <p className="text-base sm:text-lg mb-3 sm:mb-4">
           CalendarControllerClass is a comprehensive date picker controller that provides functionality for date picking and calendar display. Built with a service-oriented architecture, it delegates core functionality to specialized services for maintainable, extensible date management.
         </p>
         <p className="text-sm sm:text-base text-muted-foreground">
-          The controller offers multiple view modes (day, month, year), comprehensive date selection options (single, range, multi-date), and full internationalization support through a reactive binding system that integrates seamlessly with any frontend framework.
+          The controller offers multiple view modes (day, month, year), comprehensive date selection options (single, range, multi-date), disabled weekdays support, and full internationalization through a reactive binding system that integrates seamlessly with any frontend framework.
         </p>
       </div>
       
@@ -32,19 +37,17 @@ export function Introduction() {
             </div>
             <p className="text-muted-foreground">Specialized services handle calendar operations, date selection, validation, formatting, navigation, and state management for clean separation of concerns.</p>
           </CardContent>
-        </Card>
-
-        <Card className="overflow-hidden border-primary/10 transition-all hover:shadow-md">
+        </Card>        <Card className="overflow-hidden border-primary/10 transition-all hover:shadow-md">
           <CardContent className="p-6 space-y-2">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium">Multiple View Modes</h3>
+              <h3 className="text-xl font-medium">Disabled Weekdays</h3>
             </div>
-            <p className="text-muted-foreground">Day view for date selection, month view for quick navigation, and year view with customizable year ranges for broader time period selection.</p>
+            <p className="text-muted-foreground">Disable specific days of the week across all calendar views. Perfect for business applications, appointment scheduling, and custom date restrictions.</p>
           </CardContent>
         </Card>
         

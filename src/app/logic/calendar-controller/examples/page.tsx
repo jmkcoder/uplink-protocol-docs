@@ -25,7 +25,7 @@ export default function CalendarControllerExamplesPage() {
     <>
       <SEO
         title="Calendar Controller Examples | Uplink Protocol"
-        description="Interactive examples of the Calendar Controller component, showcasing basic usage, date range selection, and internationalization."
+        description="Interactive examples of the Calendar Controller component, showcasing basic usage, date range selection, internationalization, and disabled weekdays functionality."
       />
       
       <DocsPageLayout>
@@ -47,13 +47,13 @@ export default function CalendarControllerExamplesPage() {
         <section className="space-y-4">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Examples</h2>
           <p className="text-muted-foreground text-base sm:text-lg mb-4 sm:mb-6">
-            Explore interactive examples of Calendar Controller in action.
+            Explore interactive examples of Calendar Controller in action, including the new disabled weekdays feature from v0.2.1.
           </p>
 
           {/* Examples Tabs */}         
           <div className="mb-6 sm:mb-8">
             <Tabs defaultValue="basic" className="w-full">
-              <TabsList className="mb-6 sm:mb-4 w-full grid grid-cols-3 sm:flex sm:flex-wrap sm:justify-start gap-2 sm:gap-3">
+              <TabsList className="mb-6 sm:mb-4 w-full grid grid-cols-4 sm:flex sm:flex-wrap sm:justify-start gap-2 sm:gap-3">
                 <TabsTrigger value="basic">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block mr-1">
                     <rect width="18" height="18" x="3" y="3" rx="2" />
@@ -78,8 +78,7 @@ export default function CalendarControllerExamplesPage() {
                   </svg>
                   <span>Date Range</span>
                 </TabsTrigger>
-                
-                <TabsTrigger value="i18n">
+                  <TabsTrigger value="i18n">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block mr-1">
                     <circle cx="12" cy="12" r="10" />
                     <path d="m12 2-2.3 2.3" />
@@ -89,6 +88,18 @@ export default function CalendarControllerExamplesPage() {
                     <path d="M19.8 17.8a10 10 0 1 0-15.6 0" />
                   </svg>
                   <span>Internationalization</span>
+                </TabsTrigger>
+                
+                <TabsTrigger value="disabled-weekdays">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="hidden sm:inline-block mr-1">
+                    <path d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                  </svg>
+                  <span className="flex items-center gap-1">
+                    Disabled Weekdays
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300">
+                      New
+                    </span>
+                  </span>
                 </TabsTrigger>
               </TabsList>
 
@@ -373,6 +384,189 @@ function renderInternationalizedCalendar() {
             )}
           </p>
         )}
+      </div>
+    </div>
+  );
+}`}></SyntaxHighlighter>
+                  </CardContent>
+                </Card>              </TabsContent>
+              
+              <TabsContent value="disabled-weekdays" className="mt-0">
+                <Card className="mb-8">
+                  <CardContent className="pt-6">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2">Disabled Weekdays Example</h3>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300">
+                        New in v0.2.1
+                      </span>
+                    </div>
+                    <p className="text-muted-foreground mb-4">
+                      Disable specific days of the week across all calendar views. Perfect for business applications, appointment scheduling, and custom date restrictions.
+                    </p>
+
+                    <SyntaxHighlighter language="tsx" code={`import React, { useEffect, useState } from 'react';
+import { CalendarController } from '@uplink-protocol/calendar-controller';
+
+function DisabledWeekdaysCalendar() {
+  const [calendar] = useState(() => CalendarController({
+    disabledDaysOfWeek: [0, 6], // Disable weekends (Sunday=0, Saturday=6)
+    firstDayOfWeek: 1 // Start week on Monday
+  }));
+  
+  const [days, setDays] = useState([]);
+  const [monthName, setMonthName] = useState('');
+  const [currentYear, setCurrentYear] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [disabledDays, setDisabledDays] = useState([]);
+  
+  useEffect(() => {
+    // Set up subscriptions to reactive bindings
+    const subscriptions = [
+      calendar.bindings.calendarDays.subscribe(setDays),
+      calendar.bindings.monthName.subscribe(setMonthName),
+      calendar.bindings.currentYear.subscribe(setCurrentYear),
+      calendar.bindings.selectedDate.subscribe(setSelectedDate)
+    ];
+    
+    // Get initial disabled days
+    setDisabledDays(calendar.getDisabledDaysOfWeek());
+    
+    return () => subscriptions.forEach(sub => sub());
+  }, [calendar]);
+  
+  const handleSelectDate = (day) => {
+    if (!day.isDisabled && day.date) {
+      calendar.methods.selectDate(
+        day.date.getFullYear(),
+        day.date.getMonth(),
+        day.date.getDate()
+      );
+    }
+  };
+  
+  const toggleWeekday = (dayIndex) => {
+    if (disabledDays.includes(dayIndex)) {
+      calendar.removeDisabledDayOfWeek(dayIndex);
+    } else {
+      calendar.addDisabledDayOfWeek(dayIndex);
+    }
+    setDisabledDays(calendar.getDisabledDaysOfWeek());
+  };
+  
+  const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  
+  return (
+    <div className="space-y-6">
+      {/* Weekday Toggle Controls */}
+      <div className="p-4 border rounded-lg">
+        <h4 className="font-medium mb-3">Toggle Disabled Weekdays:</h4>
+        <div className="flex flex-wrap gap-2">
+          {weekdays.map((day, index) => (
+            <button
+              key={index}
+              onClick={() => toggleWeekday(index)}
+              className={\`px-3 py-1 rounded text-sm font-medium transition-colors \${
+                disabledDays.includes(index)
+                  ? 'bg-red-100 text-red-800 border border-red-300'
+                  : 'bg-green-100 text-green-800 border border-green-300'
+              }\`}
+            >
+              {day} {disabledDays.includes(index) ? '❌' : '✅'}
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      {/* Calendar Display */}
+      <div className="border rounded-lg p-4">
+        <div className="flex items-center justify-between mb-4">
+          <button 
+            onClick={() => calendar.methods.prevMonth()}
+            className="px-3 py-1 border rounded"
+          >
+            Previous
+          </button>
+          <h3 className="text-lg font-medium">{monthName} {currentYear}</h3>
+          <button 
+            onClick={() => calendar.methods.nextMonth()}
+            className="px-3 py-1 border rounded"
+          >
+            Next
+          </button>
+        </div>
+        
+        <div className="grid grid-cols-7 gap-1 mb-2">
+          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
+            <div key={day} className="p-2 text-center text-sm font-medium text-muted-foreground">
+              {day}
+            </div>
+          ))}
+        </div>
+        
+        <div className="grid grid-cols-7 gap-1">
+          {days.map((day, index) => (
+            <button
+              key={index}
+              onClick={() => handleSelectDate(day)}
+              disabled={day.isDisabled}
+              className={\`p-2 text-center text-sm border rounded transition-colors \${
+                day.isSelected 
+                  ? 'bg-blue-500 text-white border-blue-500' 
+                  : day.isToday
+                  ? 'bg-blue-50 border-blue-200 text-blue-700'
+                  : day.isDisabled
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200'
+                  : day.isCurrentMonth
+                  ? 'hover:bg-gray-50 border-gray-200'
+                  : 'text-gray-400 border-gray-100'
+              }\`}
+            >
+              {day.day}
+            </button>
+          ))}
+        </div>
+        
+        {selectedDate && (
+          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded">
+            <p className="text-sm">
+              <strong>Selected Date:</strong> {selectedDate.toLocaleDateString()}
+            </p>
+          </div>
+        )}
+      </div>
+      
+      {/* Business Rules Examples */}
+      <div className="space-y-3">
+        <h4 className="font-medium">Common Business Scenarios:</h4>
+        <div className="grid gap-2">
+          <button 
+            onClick={() => {
+              calendar.setDisabledDaysOfWeek([0, 6]);
+              setDisabledDays([0, 6]);
+            }}
+            className="p-2 text-left border rounded hover:bg-gray-50"
+          >
+            <strong>Weekends Only:</strong> Disable Saturday & Sunday (common business hours)
+          </button>
+          <button 
+            onClick={() => {
+              calendar.setDisabledDaysOfWeek([1, 3, 5]);
+              setDisabledDays([1, 3, 5]);
+            }}
+            className="p-2 text-left border rounded hover:bg-gray-50"
+          >
+            <strong>Alternating Schedule:</strong> Disable Mon, Wed, Fri
+          </button>
+          <button 
+            onClick={() => {
+              calendar.setDisabledDaysOfWeek([]);
+              setDisabledDays([]);
+            }}
+            className="p-2 text-left border rounded hover:bg-gray-50"
+          >
+            <strong>No Restrictions:</strong> Enable all days
+          </button>
+        </div>
       </div>
     </div>
   );
