@@ -91,7 +91,8 @@ export function DocsSidebar() {
   }
 
   return (
-    <>      {/* Mobile overlay */}
+    <>      
+      {/* Mobile overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
