@@ -6,6 +6,11 @@ import { ViewMode } from '../enums/view-mode.enum';
 import { CalendarControllerClass } from '@uplink-protocol/calendar-controller';
 
 export class MobileAccessibilityService {
+  private isSlideDownInitialized = false;
+  private slideDownTouchStartHandler?: (e: TouchEvent) => void;
+  private slideDownTouchMoveHandler?: (e: TouchEvent) => void;
+  private slideDownTouchEndHandler?: (e: TouchEvent) => void;
+
   constructor(
     private datePicker: DatePicker,
     private navigationService: NavigationService,
@@ -18,93 +23,141 @@ export class MobileAccessibilityService {
    * Initialize responsive behavior and touch gesture support
    */
   public initializeResponsiveBehavior(): void {
-    // Enhanced touch gesture support
+    // Initialize slide-down-to-close only once
+    this.initializeSlideDownToClose();
+
+    // Always recreate horizontal swipe navigation
+    this.initializeHorizontalSwipeNavigation();
+
+    // Handle orientation changes and viewport adjustments
+    window.addEventListener('resize', this.handleViewportChanges.bind(this));
+    window.addEventListener('orientationchange', this.handleViewportChanges.bind(this));
+  }
+
+  /**
+   * Initialize slide-down-to-close functionality (only once)
+   */
+  private initializeSlideDownToClose(): void {
+    if (this.isSlideDownInitialized) {
+      return;
+    }
+
+    const dialogElement = this.datePicker.querySelector('.date-picker-dialog') as HTMLElement;
+    
+    // Enhanced touch gesture support for slide-down-to-close
     let touchStartY = 0;
-    let touchStartX = 0;
     let initialTouchTime = 0;
     const minSwipeDistance = 70; // Minimum swipe distance in pixels
     const maxSwipeTime = 300; // Maximum time for swipe in milliseconds
 
-    const dialogElement = this.datePicker.querySelector('.date-picker-dialog') as HTMLElement;
-    const calendarElement = this.datePicker.querySelector(
-      '.date-picker-calendar'
-    ) as HTMLDivElement;
+    this.slideDownTouchStartHandler = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+      initialTouchTime = Date.now();
+    };
 
-    // Add touch gesture support for swiping to close the calendar
-    dialogElement.addEventListener(
-      'touchstart',
-      (e: TouchEvent) => {
-        touchStartY = e.touches[0].clientY;
-        touchStartX = e.touches[0].clientX;
-        initialTouchTime = Date.now();
-      },
-      { passive: false }
-    );
+    this.slideDownTouchMoveHandler = (e: TouchEvent) => {
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        const touchY = e.touches[0].clientY;
+        const deltaY = touchY - touchStartY;
 
-    dialogElement.addEventListener(
-      'touchmove',
-      (e: TouchEvent) => {
-        if (window.matchMedia('(max-width: 768px)').matches) {
-          const touchY = e.touches[0].clientY;
-          const touchX = e.touches[0].clientX;
-          const deltaY = touchY - touchStartY;
-          const deltaX = touchX - touchStartX;
+        // Always prevent default to stop page scrolling/behavior
+        e.preventDefault();
 
-          // Prevent pull-to-refresh when swiping inside the calendar dialog
-          // This prevents the browser's native pull-to-refresh behavior
-          if (deltaY > 0) {
-            e.preventDefault();
-          }
-
-          // If swiping down, add a visual feedback by following the finger
-          if (deltaY > 0 && Math.abs(deltaY) > Math.abs(deltaX)) {
-            dialogElement.style.transform = `translateY(${deltaY / 3}px)`;
-            dialogElement.style.opacity = `${1 - deltaY / 400}`;
-          }
-          // If swiping horizontally in calendar view, provide visual feedback for month navigation
-          else if (
-            Math.abs(deltaX) > Math.abs(deltaY) &&
-            calendarElement.contains(e.target as Node)
-          ) {
-            // Apply horizontal swipe effect regardless of which view is active
-            calendarElement.style.transform = `translateX(${deltaX / 2}px)`;
-            calendarElement.style.opacity = `${1 - Math.abs(deltaX) / 500}`;
-          }
+        // If swiping down, add visual feedback by following the finger
+        if (deltaY > 0) {
+          dialogElement.style.transform = `translateY(${deltaY / 3}px)`;
+          dialogElement.style.opacity = `${1 - deltaY / 400}`;
         }
-      },
-      { passive: false }
-    );
+      }
+    };
 
-    dialogElement.addEventListener('touchend', (e: TouchEvent) => {
+    this.slideDownTouchEndHandler = (e: TouchEvent) => {
       if (window.matchMedia('(max-width: 768px)').matches) {
         const touchEndY = e.changedTouches[0].clientY;
-        const touchEndX = e.changedTouches[0].clientX;
         const touchEndTime = Date.now();
 
         const deltaY = touchEndY - touchStartY;
-        const deltaX = touchEndX - touchStartX;
         const swipeTime = touchEndTime - initialTouchTime;
 
         // Reset the transform and opacity
         dialogElement.style.transform = '';
         dialogElement.style.opacity = '';
-        calendarElement.style.transform = '';
-        calendarElement.style.opacity = '';
-
-        // Check if it's a vertical or horizontal swipe
-        const isVerticalSwipe = Math.abs(deltaY) > Math.abs(deltaX);
 
         // Close on fast or long downward swipe
         if (
-          isVerticalSwipe &&
           deltaY > minSwipeDistance &&
           (swipeTime < maxSwipeTime || deltaY > window.innerHeight / 3)
         ) {
           this.viewStateService.toggleCalendar();
         }
+      }
+    };
+
+    // Add slide-down-to-close event listeners
+    dialogElement.addEventListener('touchstart', this.slideDownTouchStartHandler, { passive: false });
+    dialogElement.addEventListener('touchmove', this.slideDownTouchMoveHandler, { passive: false });
+    dialogElement.addEventListener('touchend', this.slideDownTouchEndHandler);
+
+    // Add extra accessibility features for mobile
+    dialogElement.setAttribute('role', 'dialog');
+    dialogElement.setAttribute('aria-modal', 'true');
+    dialogElement.setAttribute('aria-label', 'Date picker calendar');
+
+    this.isSlideDownInitialized = true;
+  }
+
+  /**
+   * Initialize horizontal swipe navigation (recreated each time)
+   */
+  private initializeHorizontalSwipeNavigation(): void {
+    const dialogElement = this.datePicker.querySelector('.date-picker-dialog') as HTMLElement;
+    const calendarElement = this.datePicker.querySelector('.date-picker-calendar') as HTMLDivElement;
+
+    // Enhanced touch gesture support for horizontal navigation
+    let touchStartX = 0;
+    let initialTouchTime = 0;
+    const minSwipeDistance = 70; // Minimum swipe distance in pixels
+    const maxSwipeTime = 300; // Maximum time for swipe in milliseconds
+
+    const horizontalTouchStartHandler = (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+      initialTouchTime = Date.now();
+    };
+
+    const horizontalTouchMoveHandler = (e: TouchEvent) => {
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        const touchX = e.touches[0].clientX;
+        const deltaX = touchX - touchStartX;
+
+        // Always prevent default to stop page scrolling/behavior
+        e.preventDefault();
+
+        // If swiping horizontally in calendar view, provide visual feedback for month navigation
+        if (
+          Math.abs(deltaX) > 10 &&
+          calendarElement.contains(e.target as Node)
+        ) {
+          // Apply horizontal swipe effect regardless of which view is active
+          calendarElement.style.transform = `translateX(${deltaX / 2}px)`;
+          calendarElement.style.opacity = `${1 - Math.abs(deltaX) / 500}`;
+        }
+      }
+    };
+
+    const horizontalTouchEndHandler = (e: TouchEvent) => {
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndTime = Date.now();
+
+        const deltaX = touchEndX - touchStartX;
+        const swipeTime = touchEndTime - initialTouchTime;
+
+        // Reset the transform and opacity
+        calendarElement.style.transform = '';
+        calendarElement.style.opacity = '';
+
         // Navigate based on the current view
-        else if (
-          !isVerticalSwipe &&
+        if (
           Math.abs(deltaX) > minSwipeDistance &&
           swipeTime < maxSwipeTime &&
           calendarElement.contains(e.target as Node)
@@ -118,22 +171,12 @@ export class MobileAccessibilityService {
           }
         }
       }
-    });
+    };
 
-    dialogElement.addEventListener('touchmove', (e: TouchEvent) => {
-      if (e.cancelable) {
-        e.preventDefault();
-      }
-    });
-
-    // Add extra accessibility features for mobile
-    dialogElement.setAttribute('role', 'dialog');
-    dialogElement.setAttribute('aria-modal', 'true');
-    dialogElement.setAttribute('aria-label', 'Date picker calendar');
-
-    // Handle orientation changes and viewport adjustments
-    window.addEventListener('resize', this.handleViewportChanges.bind(this));
-    window.addEventListener('orientationchange', this.handleViewportChanges.bind(this));
+    // Add horizontal swipe navigation event listeners (these will be recreated each time)
+    dialogElement.addEventListener('touchstart', horizontalTouchStartHandler, { passive: false });
+    dialogElement.addEventListener('touchmove', horizontalTouchMoveHandler, { passive: false });
+    dialogElement.addEventListener('touchend', horizontalTouchEndHandler, { passive: false });
   }
 
   /**
@@ -256,5 +299,28 @@ export class MobileAccessibilityService {
       dialogElement.style.transform = '';
       dialogElement.style.opacity = '';
     }
+  }
+
+  /**
+   * Clean up only the slide-down-to-close event listeners if needed
+   */
+  public cleanupSlideDown(): void {
+    if (!this.isSlideDownInitialized) {
+      return;
+    }
+
+    const dialogElement = this.datePicker.querySelector('.date-picker-dialog') as HTMLElement;
+    
+    if (dialogElement && this.slideDownTouchStartHandler && this.slideDownTouchMoveHandler && this.slideDownTouchEndHandler) {
+      dialogElement.removeEventListener('touchstart', this.slideDownTouchStartHandler);
+      dialogElement.removeEventListener('touchmove', this.slideDownTouchMoveHandler);
+      dialogElement.removeEventListener('touchend', this.slideDownTouchEndHandler);
+    }
+
+    // Reset handlers
+    this.slideDownTouchStartHandler = undefined;
+    this.slideDownTouchMoveHandler = undefined;
+    this.slideDownTouchEndHandler = undefined;
+    this.isSlideDownInitialized = false;
   }
 }
