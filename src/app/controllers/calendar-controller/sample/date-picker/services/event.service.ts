@@ -261,12 +261,99 @@ export class EventService {
     const digits = value.replace(/\D/g, '');
     let selectedDate: Date | null = null;
 
-    if (digits.length >= 7) {
-      const date = digits.substring(0, 2);
-      const month = digits.substring(2, 4);
-      const year = digits.substring(4, 8);
+    if (digits.length >= 6) {
+      // Get the date format from controller to intelligently parse the input
+      const formatOptions = this.controller.getDateFormatOptions();
+      const dateFormat = this.controller._dateFormat;
+      
+      // Determine date order based on format options or date format string
+      let dateOrder = 'mdy'; // Default to month-day-year (US format)
+      
+      if (formatOptions || !dateFormat) {
+        // Use locale information to determine date order
+        const locale = this.controller.getLocale();
+        const testDate = new Date(2023, 11, 25); // Dec 25, 2023 - more distinct digits
+        const formatted = new Intl.DateTimeFormat(locale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        }).format(testDate);
+        
+        // Analyze the formatted output to determine order
+        const yearPos = formatted.indexOf('2023');
+        const monthPos = formatted.indexOf('12');
+        const dayPos = formatted.indexOf('25');
+        
+        if (yearPos < monthPos && monthPos < dayPos) {
+          dateOrder = 'ymd'; // Year-Month-Day
+        } else if (dayPos < monthPos && monthPos < yearPos) {
+          dateOrder = 'dmy'; // Day-Month-Year
+        } else {
+          dateOrder = 'mdy'; // Month-Day-Year (default)
+        }
+      } else if (dateFormat) {
+        // Parse the date format string to determine order
+        const lowerFormat = dateFormat.toLowerCase();
+        if (lowerFormat.indexOf('dd') < lowerFormat.indexOf('mm')) {
+          dateOrder = 'dmy';
+        } else if (lowerFormat.indexOf('yyyy') < lowerFormat.indexOf('mm')) {
+          dateOrder = 'ymd';
+        }
+        // Otherwise keep default 'mdy'
+      }
+      
+      // Parse digits according to determined order
+      let day: string, month: string, year: string;
+      
+      if (digits.length === 8) {
+        // 8 digits: assume YYYYMMDD, DDMMYYYY, or MMDDYYYY
+        switch (dateOrder) {
+          case 'dmy':
+            day = digits.substring(0, 2);
+            month = digits.substring(2, 4);
+            year = digits.substring(4, 8);
+            break;
+          case 'ymd':
+            year = digits.substring(0, 4);
+            month = digits.substring(4, 6);
+            day = digits.substring(6, 8);
+            break;
+          case 'mdy':
+          default:
+            month = digits.substring(0, 2);
+            day = digits.substring(2, 4);
+            year = digits.substring(4, 8);
+            break;
+        }
+      } else {
+        // 6-7 digits: assume DDMMYY, MMDDYY, or YYMMDD style
+        switch (dateOrder) {
+          case 'dmy':
+            day = digits.substring(0, 2);
+            month = digits.substring(2, 4);
+            year = digits.length >= 6 ? digits.substring(4, 8) : `20${digits.substring(4, 6)}`;
+            break;
+          case 'ymd':
+            if (digits.length >= 7) {
+              year = digits.substring(0, 4);
+              month = digits.substring(4, 6);
+              day = digits.substring(6, 8);
+            } else {
+              year = `20${digits.substring(0, 2)}`;
+              month = digits.substring(2, 4);
+              day = digits.substring(4, 6);
+            }
+            break;
+          case 'mdy':
+          default:
+            month = digits.substring(0, 2);
+            day = digits.substring(2, 4);
+            year = digits.length >= 6 ? digits.substring(4, 8) : `20${digits.substring(4, 6)}`;
+            break;
+        }
+      }
 
-      selectedDate = new Date(Number(year), Number(month) - 1, Number(date));
+      selectedDate = new Date(Number(year), Number(month) - 1, Number(day));
     }
 
     return selectedDate;
