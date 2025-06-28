@@ -30,6 +30,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "remark": "^15.0.1",
+    "sass": "^1.89.2",
     "sitemap": "^7.1.2",
     "strip-markdown": "^6.0.0",
     "tailwind-merge": "^3.3.0"

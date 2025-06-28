@@ -9,6 +9,9 @@ import {
   EventService,
 } from './services';
 
+// Import the SCSS styles
+import '../date-picker.scss';
+
 const template = document.createElement('template');
 
 export class DatePicker extends HTMLElement {
